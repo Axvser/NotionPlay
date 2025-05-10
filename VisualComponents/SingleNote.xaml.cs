@@ -5,10 +5,12 @@ using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents.Enums;
+using NotionPlay.VisualComponents.Models;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WindowsInput;
 
 namespace NotionPlay.VisualComponents
@@ -29,6 +31,7 @@ namespace NotionPlay.VisualComponents
             {
                 try
                 {
+                    Background = SimulatingBrush;
                     Simulator.Keyboard.KeyDown(key);
                     await Task.Delay(MusicTheory.GetSpan(DurationType), source.Token);
                 }
@@ -39,6 +42,7 @@ namespace NotionPlay.VisualComponents
                 finally
                 {
                     Simulator.Keyboard.KeyUp(key);
+                    Background = CurrentTheme == typeof(Dark) ? DarkBackground : LightBackground;
                 }
             }
             return (func, source);
@@ -153,6 +157,14 @@ namespace NotionPlay.VisualComponents
         public IVisualNote? ParentNote { get; set; }
         public int VisualIndex { get; set; } = 0;
         public VisualTypes VisualType { get; set; } = VisualTypes.SingleNote;
+
+        public Brush SimulatingBrush
+        {
+            get { return (Brush)GetValue(SimulatingBrushProperty); }
+            set { SetValue(SimulatingBrushProperty, value); }
+        }
+        public static readonly DependencyProperty SimulatingBrushProperty =
+            DependencyProperty.Register("SimulatingBrush", typeof(Brush), typeof(SingleNote), new PropertyMetadata(Brushes.Transparent));
 
         public DurationTypes DurationType
         {
@@ -351,6 +363,8 @@ namespace NotionPlay.VisualComponents
     [Theme(nameof(BorderBrush), typeof(Light), ["#1e1e1e"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
     [Theme(nameof(Foreground), typeof(Light), ["#1e1e1e"])]
+    [Theme(nameof(SimulatingBrush), typeof(Dark), ["#dfff0000"])]
+    [Theme(nameof(SimulatingBrush), typeof(Light), ["#dfff00ff"])]
     [Hover([nameof(BorderThickness), nameof(Foreground)])]
     public partial class SingleNote
     {

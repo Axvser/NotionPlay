@@ -1,5 +1,5 @@
-﻿using NotionPlay.VisualComponents;
-using NotionPlay.VisualComponents.Enums;
+﻿using NotionPlay.VisualComponents.Enums;
+using NotionPlay.VisualComponents.Models;
 
 namespace NotionPlay.Interfaces
 {

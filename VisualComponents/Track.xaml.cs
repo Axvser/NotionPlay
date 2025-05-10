@@ -1,6 +1,8 @@
-﻿using NotionPlay.Interfaces;
+﻿using MinimalisticWPF.Theme;
+using NotionPlay.Interfaces;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents.Enums;
+using NotionPlay.VisualComponents.Models;
 using System.Diagnostics;
 using System.Windows.Controls;
 using WindowsInput;
@@ -20,12 +22,21 @@ namespace NotionPlay.VisualComponents
             var source = new CancellationTokenSource();
             async Task func()
             {
-                List<(VirtualKeyCode, int)> notes = [];
+                List<(VirtualKeyCode, int, Action, Action)> notes = [];
                 foreach (var item in Children)
                 {
                     if (item is SingleNote note && KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var key))
                     {
-                        notes.Add((key, MusicTheory.GetSpan(note.DurationType)));
+                        notes.Add((key, MusicTheory.GetSpan(note.DurationType),
+                            () =>
+                            {
+                                note.Background = note.SimulatingBrush;
+                            },
+                            () =>
+                            {
+                                note.Background = note.CurrentTheme == typeof(Dark) ? note.DarkBackground : note.LightBackground;
+                            }
+                        ));
                     }
                 }
                 try
@@ -33,8 +44,10 @@ namespace NotionPlay.VisualComponents
                     foreach (var note in notes)
                     {
                         Simulator.Keyboard.KeyDown(note.Item1);
+                        note.Item3.Invoke();
                         await Task.Delay(note.Item2, source.Token);
                         Simulator.Keyboard.KeyUp(note.Item1);
+                        note.Item4.Invoke();
                     }
                 }
                 catch (Exception ex)
@@ -46,6 +59,7 @@ namespace NotionPlay.VisualComponents
                     foreach (var note in notes)
                     {
                         Simulator.Keyboard.KeyUp(note.Item1);
+                        note.Item4.Invoke();
                     }
                 }
             }

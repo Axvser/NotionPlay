@@ -1,6 +1,6 @@
 ﻿using NotionPlay.VisualComponents.Enums;
 
-namespace NotionPlay.VisualComponents
+namespace NotionPlay.VisualComponents.Models
 {
     public sealed class MusicTheory()
     {
@@ -53,6 +53,6 @@ namespace NotionPlay.VisualComponents
             };
         }
 
-        private void ReCalculateBasicValue() => BasicValue = (int)((60000f / Speed) * LeftNum);
+        private void ReCalculateBasicValue() => BasicValue = (int)(60000f / Speed * LeftNum);
     }
 }

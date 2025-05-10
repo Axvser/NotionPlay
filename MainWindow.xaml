@@ -42,8 +42,7 @@
                 <v:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMin},Path=Data}" Click="Minim_Click" Style="{StaticResource nicebutton}"/>
             </StackPanel>
         </Grid>
-        <components:Track x:Name="Drawer" Grid.Row="1" Orientation="Horizontal" Height="50">
-
-        </components:Track>
+        <components:Paragraph x:Name="Drawer" Grid.Row="1">
+        </components:Paragraph>
     </Grid>
 </Window>
