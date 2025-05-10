@@ -23,7 +23,8 @@ namespace NotionPlay
         [Constructor]
         private void InitializeNotes()
         {
-            Drawer.MusicTheory = new();
+            var drawer = new Paragraph() { MusicTheory = new() };
+            drawer.MusicTheory = new();
             var style = Application.Current.TryFindResource("nicebutton2") as Style;
 
             var tk1 = new Track() { MusicTheory = new() };
@@ -48,12 +49,14 @@ namespace NotionPlay
             tk2.Children.Add(s5);
             tk2.Children.Add(s6);
 
-            Drawer.Children.Add(tk1);
-            Drawer.Children.Add(tk2);
+            drawer.Children.Add(tk1);
+            drawer.Children.Add(tk2);
+
+            Editor.AddParagraph(drawer);
 
             GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Z, (s, e) =>
             {
-                SubmitSimulation(Drawer);
+                SubmitSimulation(Editor);
             });
         }
     }

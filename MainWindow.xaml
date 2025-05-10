@@ -31,6 +31,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
+            <!--顶侧栏-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
@@ -42,7 +43,42 @@
                 <v:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMin},Path=Data}" Click="Minim_Click" Style="{StaticResource nicebutton}"/>
             </StackPanel>
         </Grid>
-        <components:Paragraph x:Name="Drawer" Grid.Row="1">
-        </components:Paragraph>
+        <Grid Grid.Row="1">
+            <!--核心区-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <!--核心区左侧-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <!--工具栏-->
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <!--简谱编辑区-->
+                    <components:NumberedMusicalNotationEditor x:Name="Editor"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <!--核心区左侧-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <!--资源管理工具-->
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <!--资源列表-->
+
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
