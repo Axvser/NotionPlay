@@ -42,6 +42,35 @@ namespace NotionPlay.VisualComponents
             }
             return (func, source);
         }
+        public Func<Task> GetSimulation(CancellationTokenSource source)
+        {
+            async Task func()
+            {
+                var span = MusicTheory.GetSpan(DurationTypes.Sixteen);
+                var atoms = CalculateAtoms();
+                try
+                {
+                    foreach (var atom in atoms)
+                    {
+                        atom.Run();
+                        await Task.Delay(span, source.Token);
+                        atom.Release();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                finally
+                {
+                    foreach (var atom in atoms)
+                    {
+                        atom.Release();
+                    }
+                }
+            }
+            return func;
+        }
         private List<SimulationAtom> CalculateAtoms()
         {
             List<SimulationAtom> atoms = [];

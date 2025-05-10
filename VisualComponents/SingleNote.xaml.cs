@@ -357,8 +357,8 @@ namespace NotionPlay.VisualComponents
 
     [ClickModule]
     [FocusModule]
-    [Theme(nameof(Background), typeof(Dark), ["#08ffffff"])]
-    [Theme(nameof(Background), typeof(Light), ["#16ff00ff"])]
+    [Theme(nameof(Background), typeof(Dark), ["Transparent"])]
+    [Theme(nameof(Background), typeof(Light), ["Transparent"])]
     [Theme(nameof(BorderBrush), typeof(Dark), ["White"])]
     [Theme(nameof(BorderBrush), typeof(Light), ["#1e1e1e"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]

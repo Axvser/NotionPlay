@@ -1,4 +1,5 @@
-﻿using MinimalisticWPF.Theme;
+﻿using MinimalisticWPF.SourceGeneratorMark;
+using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents.Enums;
@@ -12,11 +13,6 @@ namespace NotionPlay.VisualComponents
 {
     public partial class Track : StackPanel, IVisualNote, ISimulable
     {
-        public Track()
-        {
-            InitializeComponent();
-        }
-
         public (Func<Task>, CancellationTokenSource) GetSimulation()
         {
             var source = new CancellationTokenSource();
@@ -67,6 +63,9 @@ namespace NotionPlay.VisualComponents
         }
     }
 
+    [Theme(nameof(Background), typeof(Dark), ["Transparent"])]
+    [Theme(nameof(Background), typeof(Light), ["Transparent"])]
+    [Hover([nameof(Background)])]
     public partial class Track
     {
         public InputSimulator Simulator { get; } = new();

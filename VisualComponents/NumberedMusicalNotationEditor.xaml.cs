@@ -2,6 +2,7 @@
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,7 +17,11 @@ namespace NotionPlay.VisualComponents
             var source = new CancellationTokenSource();
             async Task func()
             {
-
+                foreach (Paragraph paragraph in container.Children)
+                {
+                    if (source.IsCancellationRequested) return;
+                    await paragraph.GetSimulation(source).Invoke();
+                }
             }
             return (func, source);
         }
