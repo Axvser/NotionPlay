@@ -43,5 +43,9 @@
 
             <Setter Property="HoveredBorderThickness" Value="1"/>
         </Style>
+        <Style TargetType="components:Paragraph">
+            <Setter Property="DarkHoveredBackground" Value="#10FFFFFF"/>
+            <Setter Property="LightHoveredBackground" Value="#20FF00FF"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -7,7 +7,7 @@
             mc:Ignorable="d"  
             d:DesignHeight="450" d:DesignWidth="800" x:Name="nmn">
     <ScrollViewer x:Name="viewer"
-                  HorizontalScrollBarVisibility="Visible" 
+                  HorizontalScrollBarVisibility="Visible"
                   Foreground="{Binding ElementName=nmn,Path=Foreground}"
                   Background="{Binding ElementName=nmn,Path=Background}">
         <ScrollViewer.Template>
