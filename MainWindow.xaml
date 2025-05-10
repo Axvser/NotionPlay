@@ -1,0 +1,49 @@
+﻿<Window x:Class="NotionPlay.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NotionPlay"
+        xmlns:components="clr-namespace:NotionPlay.VisualComponents"
+        xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
+        mc:Ignorable="d"
+        Title="NotionPlay" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" BorderThickness="0.6">
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Viewbox>
+                <Border CornerRadius="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=CornerRadius}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{TemplateBinding Title}" Foreground="{TemplateBinding Foreground}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" Grid.ZIndex="1"/>
+                        <Border Grid.Row="0" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="0" MouseLeftButtonDown="WindowDragMove"/>
+                        <ContentPresenter Grid.RowSpan="2"/>
+                    </Grid>
+                </Border>
+            </Viewbox>
+        </ControlTemplate>
+    </Window.Template>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="160"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <v:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinClose},Path=Data}" Click="Close_Click" Style="{StaticResource nicebutton}"/>
+                <v:Button x:Name="bt_close" Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMax},Path=Data}" Click="Size_Click" Style="{StaticResource nicebutton}"/>
+                <v:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMin},Path=Data}" Click="Minim_Click" Style="{StaticResource nicebutton}"/>
+            </StackPanel>
+        </Grid>
+        <components:Track x:Name="Drawer" Grid.Row="1" Orientation="Horizontal" Height="50">
+
+        </components:Track>
+    </Grid>
+</Window>

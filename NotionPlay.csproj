@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<NoWarn>NU1701</NoWarn>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="InputSimulator" Version="1.0.4" />
+		<PackageReference Include="MinimalisticWPF" Version="4.9.5" />
+		<PackageReference Include="MinimalisticWPF.Controls" Version="2.0.1" />
+		<PackageReference Include="MinimalisticWPF.Generator" Version="4.2.0" />
+	</ItemGroup>
+
+</Project>
