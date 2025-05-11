@@ -61,7 +61,7 @@ namespace NotionPlay.VisualComponents
                 {
                     if (ParentNote is Track track)
                     {
-                        track.Children.Remove(this);
+                        track.Items.Remove(this);
                         track.UpdateVisualMeta();
                     }
                 }

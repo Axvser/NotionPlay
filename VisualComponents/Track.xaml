@@ -1,9 +1,57 @@
-﻿<StackPanel x:Class="NotionPlay.VisualComponents.Track"
+﻿<ItemsControl x:Class="NotionPlay.VisualComponents.Track"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotionPlay.VisualComponents"
-             mc:Ignorable="d"
-             Orientation="Horizontal">
-</StackPanel>
+             xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
+             mc:Ignorable="d">
+    <ItemsControl.Template>
+        <ControlTemplate TargetType="ItemsControl">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <v:Button Style="{StaticResource trackleftbar_top}"
+                              MouseEnter="Top_MouseEnter"
+                              MouseLeave="Top_MouseLeave"
+                              x:Name="option1"
+                              Grid.Row="0"
+                              Data="+"
+                              Click="option1_Click"/>
+                    <v:Button Style="{StaticResource trackleftbar_bot}"
+                              MouseEnter="Bottom_MouseEnter"
+                              MouseLeave="Bottom_MouseLeave"
+                              x:Name="option2"
+                              Grid.Row="1"
+                              Data="-"
+                              Click="option2_Click"/>
+                </Grid>
+                
+                <Grid Grid.Column="1">
+                    <Border BorderBrush="{Binding ElementName=option1,Path=BorderBrush}"
+                            BorderThickness="0,1,1,1"
+                            Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:Track},Path=TopBorderVisibility}"/>
+                    <Border BorderBrush="{Binding ElementName=option2,Path=BorderBrush}"
+                            BorderThickness="0,1,1,1"
+                            Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:Track},Path=BottomBorderVisibility}"/>
+                    <ItemsPresenter />
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+    </ItemsControl.Template>
+    <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal">
+
+            </StackPanel>
+        </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+</ItemsControl>

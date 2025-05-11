@@ -5,12 +5,13 @@ using NotionPlay.Tools;
 using NotionPlay.VisualComponents.Enums;
 using NotionPlay.VisualComponents.Models;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using WindowsInput;
 
 namespace NotionPlay.VisualComponents
 {
-    public partial class Paragraph : StackPanel, IVisualNote, ISimulable
+    public partial class Paragraph : ItemsControl, IVisualNote, ISimulable
     {
         public (Func<Task>, CancellationTokenSource) GetSimulation()
         {
@@ -74,12 +75,12 @@ namespace NotionPlay.VisualComponents
         private List<SimulationAtom> CalculateAtoms()
         {
             List<SimulationAtom> atoms = [];
-            foreach (var child in Children)
+            foreach (var child in Items)
             {
                 if (child is Track track)
                 {
                     var atomCounter = 0;
-                    foreach (var item in track.Children)
+                    foreach (var item in track.Items)
                     {
                         if (item is SingleNote note)
                         {
@@ -116,6 +117,37 @@ namespace NotionPlay.VisualComponents
             }
             return atoms;
         }
+
+        private void Bottom_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            BottomBorderVisibility = Visibility.Visible;
+        }
+        private void Bottom_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            BottomBorderVisibility = Visibility.Collapsed;
+        }
+        private void Top_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            TopBorderVisibility = Visibility.Visible;
+        }
+        private void Top_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            TopBorderVisibility = Visibility.Collapsed;
+        }
+
+        private void option1_Click(object sender, RoutedEventArgs e)
+        {
+            var track = new Track() { MusicTheory = MusicTheory };
+            Items.Add(track);
+        }
+
+        private void option2_Click(object sender, RoutedEventArgs e)
+        {
+            if (Items.Count > 0)
+            {
+                Items.RemoveAt(Items.Count - 1);
+            }
+        }
     }
 
     [Theme(nameof(Background), typeof(Dark), ["Transparent"])]
@@ -128,5 +160,21 @@ namespace NotionPlay.VisualComponents
         public IVisualNote? ParentNote { get; set; }
         public int VisualIndex { get; set; } = 0;
         public VisualTypes VisualType { get; set; } = VisualTypes.Paragraph;
+
+        internal Visibility BottomBorderVisibility
+        {
+            get { return (Visibility)GetValue(BottomBorderVisibilityProperty); }
+            set { SetValue(BottomBorderVisibilityProperty, value); }
+        }
+        internal static readonly DependencyProperty BottomBorderVisibilityProperty =
+            DependencyProperty.Register("BottomBorderVisibility", typeof(Visibility), typeof(Paragraph), new PropertyMetadata(Visibility.Collapsed));
+
+        internal Visibility TopBorderVisibility
+        {
+            get { return (Visibility)GetValue(TopBorderVisibilityProperty); }
+            set { SetValue(TopBorderVisibilityProperty, value); }
+        }
+        internal static readonly DependencyProperty TopBorderVisibilityProperty =
+            DependencyProperty.Register("TopBorderVisibility", typeof(Visibility), typeof(Paragraph), new PropertyMetadata(Visibility.Collapsed));
     }
 }

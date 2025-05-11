@@ -25,34 +25,6 @@ namespace NotionPlay
         private void InitializeNotes()
         {
             var drawer = new Paragraph() { MusicTheory = new() };
-            drawer.MusicTheory = new();
-            var style = Application.Current.TryFindResource("nicebutton2") as Style;
-
-            var tk1 = new Track() { MusicTheory = new() };
-            var s1 = new SingleNote(Notes.Do, DurationTypes.Four, FrequencyLevels.High) { MusicTheory = new(), Width = 15, Height = 50, Style = style };
-            s1.Click += SingleNote_Click;
-            var s2 = new SingleNote(Notes.Do, DurationTypes.Four, FrequencyLevels.High) { MusicTheory = new(), Width = 15, Height = 50, Style = style };
-            s2.Click += SingleNote_Click;
-            var s3 = new SingleNote(Notes.Do, DurationTypes.Four, FrequencyLevels.High) { MusicTheory = new(), Width = 15, Height = 50, Style = style };
-            s3.Click += SingleNote_Click;
-            tk1.Children.Add(s1);
-            tk1.Children.Add(s2);
-            tk1.Children.Add(s3);
-
-            var tk2 = new Track() { MusicTheory = new() };
-            var s4 = new SingleNote(Notes.Do, DurationTypes.Four, FrequencyLevels.High) { MusicTheory = new(), Width = 15, Height = 50, Style = style };
-            s4.Click += SingleNote_Click;
-            var s5 = new SingleNote(Notes.Do, DurationTypes.Four, FrequencyLevels.High) { MusicTheory = new(), Width = 15, Height = 50, Style = style };
-            s5.Click += SingleNote_Click;
-            var s6 = new SingleNote(Notes.Do, DurationTypes.Four, FrequencyLevels.High) { MusicTheory = new(), Width = 15, Height = 50, Style = style };
-            s6.Click += SingleNote_Click;
-            tk2.Children.Add(s4);
-            tk2.Children.Add(s5);
-            tk2.Children.Add(s6);
-
-            drawer.Children.Add(tk1);
-            drawer.Children.Add(tk2);
-
             Editor.AddParagraph(drawer);
 
             GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Z, (s, e) =>
