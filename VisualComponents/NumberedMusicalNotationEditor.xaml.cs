@@ -50,11 +50,28 @@ namespace NotionPlay.VisualComponents
         {
             viewer.ScrollToVerticalOffset(viewer.VerticalOffset - viewer.ViewportHeight * 0.2);
         }
+
+        private void Viewer_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                if (e.Delta > 0)
+                {
+                    scale.ScaleX = Math.Clamp(scale.ScaleX + 0.1, 1, 5);
+                    scale.ScaleY = Math.Clamp(scale.ScaleY + 0.1, 1, 5);
+                }
+                else
+                {
+                    scale.ScaleX = Math.Clamp(scale.ScaleX - 0.1, 1, 5);
+                    scale.ScaleY = Math.Clamp(scale.ScaleY - 0.1, 1, 5);
+                }
+            }
+        }
     }
 
     [FocusModule]
-    [Theme(nameof(Background), typeof(Dark), ["#1e1e1e"])]
-    [Theme(nameof(Background), typeof(Light), ["White"])]
+    [Theme(nameof(Background), typeof(Dark), ["default"])]
+    [Theme(nameof(Background), typeof(Light), ["default"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
     [Theme(nameof(Foreground), typeof(Light), ["#1e1e1e"])]
     public partial class NumberedMusicalNotationEditor
@@ -67,13 +84,13 @@ namespace NotionPlay.VisualComponents
             container.LayoutTransform = scale;
             LocalHotKey.Register(this, [Key.OemPlus], (s, e) =>
             {
-                scale.ScaleX = Math.Clamp(scale.ScaleX + 0.1, 1, 3);
-                scale.ScaleY = Math.Clamp(scale.ScaleY + 0.1, 1, 3);
+                scale.ScaleX = Math.Clamp(scale.ScaleX + 0.1, 1, 5);
+                scale.ScaleY = Math.Clamp(scale.ScaleY + 0.1, 1, 5);
             });
             LocalHotKey.Register(this, [Key.OemMinus], (s, e) =>
             {
-                scale.ScaleX = Math.Clamp(scale.ScaleX - 0.1, 1, 3);
-                scale.ScaleY = Math.Clamp(scale.ScaleY - 0.1, 1, 3);
+                scale.ScaleX = Math.Clamp(scale.ScaleX - 0.1, 1, 5);
+                scale.ScaleY = Math.Clamp(scale.ScaleY - 0.1, 1, 5);
             });
         }
     }

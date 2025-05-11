@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotionPlay"
-        xmlns:components="clr-namespace:NotionPlay.VisualComponents"
-        xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
+        xmlns:vc="clr-namespace:NotionPlay.VisualComponents"
+        xmlns:ec="clr-namespace:NotionPlay.EditorControls"
+        xmlns:fc="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
         mc:Ignorable="d"
         Title="NotionPlay" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" BorderThickness="0.6">
     <Window.Template>
@@ -38,16 +39,16 @@
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft">
-                <v:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinClose},Path=Data}" Click="Close_Click" Style="{StaticResource nicebutton}"/>
-                <v:Button x:Name="bt_close" Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMax},Path=Data}" Click="Size_Click" Style="{StaticResource nicebutton}"/>
-                <v:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMin},Path=Data}" Click="Minim_Click" Style="{StaticResource nicebutton}"/>
+                <fc:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinClose},Path=Data}" Click="Close_Click" Style="{StaticResource nicebutton}"/>
+                <fc:Button x:Name="bt_close" Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMax},Path=Data}" Click="Size_Click" Style="{StaticResource nicebutton}"/>
+                <fc:Button Width="30" Height="30" ContentScale="0.4" Margin="8,0,8,0" Data="{Binding Source={StaticResource SVG_WinMin},Path=Data}" Click="Minim_Click" Style="{StaticResource nicebutton}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
             <!--核心区-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <!--核心区左侧-->
@@ -57,26 +58,76 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <!--工具栏-->
+                    <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                        <!--文件工具-->
+                        <ec:MenuNode Width="100" Height="30" Header=" 文件" Placement="Bottom" Margin="5,0,5,0">
+                            <ec:MenuNode Width="130" Height="30" Header="  新建" Click="MenuNode_Click">
 
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  保存">
+                                
+                            </ec:MenuNode>
+                        </ec:MenuNode>
+                        <!--编辑工具-->
+                        <ec:MenuNode Width="100" Height="30" Header=" 编辑" Placement="Bottom" Margin="5,0,5,0">
+                            <ec:MenuNode Width="130" Height="30" Header="  查找">
+                                
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  替换">
+                                
+                            </ec:MenuNode>
+                        </ec:MenuNode>
+                        <!--生成工具-->
+                        <ec:MenuNode Width="100" Height="30" Header=" 生成" Placement="Bottom" Margin="5,0,5,0">
+                            <ec:MenuNode Width="130" Height="30" Header="  全部生成">
+
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  片段生成">
+                                
+                            </ec:MenuNode>
+                        </ec:MenuNode>
+                        <!--生成工具-->
+                        <ec:MenuNode Width="100" Height="30" Header=" 设置" Placement="Bottom" Margin="5,0,5,0">
+                            <ec:MenuNode Width="130" Height="30" Header="  存储">
+
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  快捷方式">
+
+                            </ec:MenuNode>
+                        </ec:MenuNode>
+                        <!--生成工具-->
+                        <ec:MenuNode Width="100" Height="30" Header=" 帮助" Placement="Bottom" Margin="5,0,5,0">
+                            <ec:MenuNode Width="130" Height="30" Header="  输入输出">
+
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  快捷方式">
+                                
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  问题反馈">
+
+                            </ec:MenuNode>
+                        </ec:MenuNode>
+                    </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
                     <!--简谱编辑区-->
-                    <components:NumberedMusicalNotationEditor x:Name="Editor"/>
+                    <vc:NumberedMusicalNotationEditor x:Name="Editor"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1">
-                <!--核心区左侧-->
+                <!--核心区右侧-->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <!--资源管理工具-->
-
+                    <TextBlock Text="资源管理器" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,4,0,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <!--资源列表-->
 
+                    <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>
         </Grid>

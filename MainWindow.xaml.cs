@@ -1,4 +1,5 @@
 ﻿global using static NotionPlay.GlobalState;
+using MinimalisticWPF.Controls;
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
@@ -58,6 +59,11 @@ namespace NotionPlay
             {
                 SubmitSimulation(Editor);
             });
+        }
+
+        private void MenuNode_Click(object sender, RoutedEventArgs e)
+        {
+            NotificationBox.Confirm("节点事件被触发");
         }
     }
 
