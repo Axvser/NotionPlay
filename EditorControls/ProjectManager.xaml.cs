@@ -1,39 +1,26 @@
 ﻿using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
-using NotionPlay.Interfaces;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace NotionPlay.VisualComponents
+namespace NotionPlay.EditorControls
 {
-    public partial class NumberedMusicalNotationEditor : UserControl, ISimulable
+    public partial class ProjectManager : UserControl
     {
-        public (Func<Task>, CancellationTokenSource) GetSimulation()
-        {
-            var source = new CancellationTokenSource();
-            async Task func()
-            {
-                foreach (Paragraph paragraph in container.Children)
-                {
-                    if (source.IsCancellationRequested) return;
-                    await paragraph.GetSimulation(source).Invoke();
-                }
-            }
-            return (func, source);
-        }
-        public void AddParagraph(Paragraph paragraph)
-        {
-            container.Children.Add(paragraph);
-        }
-        public void RemoveParagraph(Paragraph paragraph)
-        {
-            container.Children.Remove(paragraph);
-        }
-
         private void Left(object sender, RoutedEventArgs e)
         {
             viewer.ScrollToHorizontalOffset(viewer.HorizontalOffset - viewer.ViewportWidth * 0.2);
@@ -50,7 +37,6 @@ namespace NotionPlay.VisualComponents
         {
             viewer.ScrollToVerticalOffset(viewer.VerticalOffset - viewer.ViewportHeight * 0.2);
         }
-
         private void Viewer_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -74,7 +60,7 @@ namespace NotionPlay.VisualComponents
     [Theme(nameof(Background), typeof(Light), ["default"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
     [Theme(nameof(Foreground), typeof(Light), ["#1e1e1e"])]
-    public partial class NumberedMusicalNotationEditor
+    public partial class ProjectManager
     {
         private readonly ScaleTransform scale = new();
 

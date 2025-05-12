@@ -28,7 +28,18 @@ namespace NotionPlay.EditorControls
             set { SetValue(IsLockedProperty, value); }
         }
         public static readonly DependencyProperty IsLockedProperty =
-            DependencyProperty.Register("IsLocked", typeof(bool), typeof(MenuControl), new PropertyMetadata(false));
+            DependencyProperty.Register("IsLocked", typeof(bool), typeof(MenuControl), new PropertyMetadata(false, (dp, e) =>
+            {
+                if (dp is IFoldableNode note)
+                {
+                    note.IsOpen = (bool)e.OldValue;
+                    note.IsEnabled = (bool)e.OldValue;
+                    if (!(bool)e.OldValue)
+                    {
+                        note.Release();
+                    }
+                }
+            }));
 
         public virtual void Redirect()
         {

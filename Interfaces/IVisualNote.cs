@@ -8,6 +8,6 @@ namespace NotionPlay.Interfaces
         public MusicTheory MusicTheory { get; set; }
         public IVisualNote? ParentNote { get; set; }
         public int VisualIndex { get; set; }
-        public VisualTypes VisualType { get; set; }
+        public VisualTypes VisualType { get; }
     }
 }

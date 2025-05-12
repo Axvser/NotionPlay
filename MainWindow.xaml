@@ -122,11 +122,11 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <!--资源管理工具-->
-                    <TextBlock Text="资源管理器" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,4,0,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
+                    <TextBlock Text="资源管理器" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,4,0,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <!--资源列表-->
-
+                    <ec:ProjectManager x:Name="projects"/>
                     <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>

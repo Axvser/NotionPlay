@@ -8,6 +8,9 @@ namespace NotionPlay.Interfaces
         public IFoldableNode? ParentNode { get; set; }
         public ItemCollection Items { get; }
         public bool IsOpen { get; set; }
+        public bool IsEnabled {  get; set; }
         public PlacementMode Placement { get; set; }
+        public void Redirect();
+        public void Release();
     }
 }
