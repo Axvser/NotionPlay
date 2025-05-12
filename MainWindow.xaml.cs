@@ -13,14 +13,6 @@ namespace NotionPlay
 {
     public partial class MainWindow : Window
     {
-        private void SingleNote_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is SingleNote note)
-            {
-                SingleNoteEditor.Open(note);
-            }
-        }
-
         [Constructor]
         private void InitializeNotes()
         {

@@ -28,7 +28,9 @@
                        Focusable="True"
                        FocusVisualStyle="{x:Null}"
                        AllowsTransparency="True">
-                    <ItemsPresenter />
+                    <Border BorderBrush="White" BorderThickness="1">
+                        <ItemsPresenter />
+                    </Border>
                 </Popup>
             </Grid>
         </ControlTemplate>

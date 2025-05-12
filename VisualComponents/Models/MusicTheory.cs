@@ -2,6 +2,9 @@
 
 namespace NotionPlay.VisualComponents.Models
 {
+    /// <summary>
+    /// ✨ 乐理结构,维系音乐播放时间精度的必要项
+    /// </summary>
     public sealed class MusicTheory()
     {
         private int _basicvalue = 3000;
