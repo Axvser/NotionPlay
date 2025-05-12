@@ -3,8 +3,11 @@ using MinimalisticWPF.Controls;
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
+using NotionPlay.EditorControls;
+using NotionPlay.Tools;
 using NotionPlay.VisualComponents;
 using NotionPlay.VisualComponents.Enums;
+using NotionPlay.VisualComponents.Models;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
@@ -18,6 +21,10 @@ namespace NotionPlay
         {
             var drawer = new Paragraph() { MusicTheory = new() };
             Editor.AddParagraph(drawer);
+            var source = new FileNode() {Header="晴天", Height = 20, Width = 200, MusicTheory = new(), FileType = FileTypes.Project, Value = new Paragraph() { MusicTheory = new() } };
+            Nodes.AddProject(source);
+
+            NotificationBox.Confirm($"{FileHelper.SelectFolder()}");
 
             GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Z, (s, e) =>
             {

@@ -28,7 +28,7 @@
                        Focusable="True"
                        FocusVisualStyle="{x:Null}"
                        AllowsTransparency="True">
-                    <Border BorderBrush="White" BorderThickness="1">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
                         <ItemsPresenter />
                     </Border>
                 </Popup>

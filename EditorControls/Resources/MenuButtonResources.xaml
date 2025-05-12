@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls">
+    <Style TargetType="v:Button" x:Key="menubutton_center">
+        <Setter Property="DarkHoveredForeground" Value="Cyan"/>
+        <Setter Property="DarkNoHoveredForeground" Value="White"/>
+        <Setter Property="LightHoveredForeground" Value="Red"/>
+        <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
+        <Setter Property="DarkHoveredBackground" Value="#6D6D6D"/>
+        <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
+        <Setter Property="LightHoveredBackground" Value="#6D6D6D"/>
+        <Setter Property="LightNoHoveredBackground" Value="White"/>
+        <Setter Property="ContentScale" Value="0.6"/>
+        <Setter Property="ContentHorizontalAlignment" Value="Center"/>
+    </Style>
+    <Style TargetType="v:Button" x:Key="menubutton_left">
+        <Setter Property="DarkHoveredForeground" Value="Cyan"/>
+        <Setter Property="DarkNoHoveredForeground" Value="White"/>
+        <Setter Property="LightHoveredForeground" Value="Red"/>
+        <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
+        <Setter Property="DarkHoveredBackground" Value="#6D6D6D"/>
+        <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
+        <Setter Property="LightHoveredBackground" Value="#6D6D6D"/>
+        <Setter Property="LightNoHoveredBackground" Value="White"/>
+        <Setter Property="ContentScale" Value="0.6"/>
+        <Setter Property="ContentHorizontalAlignment" Value="Left"/>
+    </Style>
+    <Style TargetType="v:Button" x:Key="menubutton_logo">
+        <Setter Property="DarkHoveredForeground" Value="Cyan"/>
+        <Setter Property="DarkNoHoveredForeground" Value="White"/>
+        <Setter Property="LightHoveredForeground" Value="Red"/>
+        <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
+        <Setter Property="ContentScale" Value="0.6"/>
+        <Setter Property="ContentHorizontalAlignment" Value="Left"/>
+    </Style>
+</ResourceDictionary>

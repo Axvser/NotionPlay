@@ -21,6 +21,15 @@ namespace NotionPlay.EditorControls
 {
     public partial class ProjectManager : UserControl
     {
+        public void AddProject(FileNode fileNode)
+        {
+            container.Children.Add(fileNode);
+        }
+        public void RemoveProject(FileNode fileNode)
+        {
+            container.Children.Remove(fileNode);
+        }
+
         private void Left(object sender, RoutedEventArgs e)
         {
             viewer.ScrollToHorizontalOffset(viewer.HorizontalOffset - viewer.ViewportWidth * 0.2);

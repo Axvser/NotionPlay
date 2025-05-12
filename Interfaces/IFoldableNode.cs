@@ -12,5 +12,9 @@ namespace NotionPlay.Interfaces
         public PlacementMode Placement { get; set; }
         public void Redirect();
         public void Release();
+        public void OnExpanded();
+        public void OnFolded();
+        public void OnLocked();
+        public void OnUnLocked();
     }
 }
