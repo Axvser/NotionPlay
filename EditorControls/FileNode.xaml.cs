@@ -7,6 +7,18 @@ namespace NotionPlay.EditorControls
 {
     public partial class FileNode : FileControl
     {
+        [Constructor]
+        private void BuildConnection()
+        {
+            Loaded += (s, e) => RecursiveBuildNodeConnection(this, (node) =>
+            {
+                if (node is FileNode target && target.Items.Count == 0)
+                {
+                    target.ButtonSymbol = string.Empty;
+                }
+            });
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (!IsLocked)
@@ -14,12 +26,14 @@ namespace NotionPlay.EditorControls
                 if (IsOpen)
                 {
                     Release();
-                    ButtonSymbol = "▶";
+                    ButtonSymbol = Items.Count > 0 ? "▶" : string.Empty;
+                    Height = 20;
                 }
                 else
                 {
                     Redirect();
-                    ButtonSymbol = "▼";
+                    ButtonSymbol = Items.Count > 0 ? "▼" : string.Empty;
+                    Height += Items.Count * 20;
                 }
             }
         }
@@ -35,7 +49,7 @@ namespace NotionPlay.EditorControls
 
     public partial class FileNode
     {
-        public required IVisualNote Value { get; set; } // 文件节点托管的可视编辑单元
+        public required IVisualNote? Value { get; set; } // 文件节点托管的可视编辑单元
 
         public string ButtonSymbol
         {

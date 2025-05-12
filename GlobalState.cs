@@ -1,10 +1,12 @@
 ﻿using NotionPlay.Interfaces;
+using NotionPlay.VisualComponents.Models;
 
 namespace NotionPlay
 {
     public static class GlobalState
     {
         public static bool CanEdit { get; set; } = true;
+        public static MusicTheory Theory { get; set; } = new();
 
         private static CancellationTokenSource? SimulationTokenSource;
         public static async void SubmitSimulation(ISimulable container)

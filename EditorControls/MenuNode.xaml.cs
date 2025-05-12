@@ -9,6 +9,12 @@ namespace NotionPlay.EditorControls
     [Theme(nameof(BorderBrush), typeof(Light), ["#1e1e1e"])]
     public partial class MenuNode : MenuControl
     {
+        [Constructor]
+        private void BuildConnection()
+        {
+            Loaded += (s, e) => RecursiveBuildNodeConnection(this);
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (!IsLocked)

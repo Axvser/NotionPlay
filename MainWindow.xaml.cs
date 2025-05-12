@@ -6,8 +6,6 @@ using MinimalisticWPF.Theme;
 using NotionPlay.EditorControls;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents;
-using NotionPlay.VisualComponents.Enums;
-using NotionPlay.VisualComponents.Models;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
@@ -19,22 +17,48 @@ namespace NotionPlay
         [Constructor]
         private void InitializeNotes()
         {
-            var drawer = new Paragraph() { MusicTheory = new() };
-            Editor.AddParagraph(drawer);
-            var source = new FileNode() {Header="晴天", Height = 20, Width = 200, MusicTheory = new(), FileType = FileTypes.Project, Value = new Paragraph() { MusicTheory = new() } };
-            Nodes.AddProject(source);
-
-            NotificationBox.Confirm($"{FileHelper.SelectFolder()}");
-
             GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Z, (s, e) =>
             {
                 SubmitSimulation(Editor);
             });
+            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.X, (s, e) =>
+            {
+                StopSimulation();
+            });
         }
 
-        private void MenuNode_Click(object sender, RoutedEventArgs e)
+        private void CreateNewEditor(object sender, RoutedEventArgs e)
+        {
+            Editor.Clear();
+            var paragraph = new Paragraph() { MusicTheory = Theory };
+            paragraph.Items.Add(new Track() { MusicTheory = Theory });
+            var paragraphNode = new FileNode()
+            {
+                MusicTheory = Theory,
+                Value = paragraph,
+                FileType = FileTypes.Paragraph,
+                Height = 20,
+                Header = "第一段"
+            };
+            var projectNode = new FileNode()
+            {
+                MusicTheory = Theory,
+                Value = null,
+                FileType = FileTypes.Project,
+                Height = 20,
+                Header = "晴天"
+            };
+            projectNode.Items.Add(paragraphNode);
+            FileNodes.AddProject(projectNode);
+            Editor.AddParagraph(paragraph);
+        }
+        private void OpenComponentFile(object sender, RoutedEventArgs e)
         {
             NotificationBox.Confirm("节点事件被触发");
+        }
+        private void UpdateComponentFile(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

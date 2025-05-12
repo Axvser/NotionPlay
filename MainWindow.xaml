@@ -61,20 +61,23 @@
                     <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
                         <!--文件工具-->
                         <ec:MenuNode Width="100" Height="30" Header=" 文件" Placement="Bottom" Margin="5,0,5,0">
-                            <ec:MenuNode Width="130" Height="30" Header="  新建" Click="MenuNode_Click">
+                            <ec:MenuNode Width="130" Height="30" Header="  新建" Click="CreateNewEditor">
 
                             </ec:MenuNode>
-                            <ec:MenuNode Width="130" Height="30" Header="  保存">
-                                
+                            <ec:MenuNode Width="130" Height="30" Header="  读取" Click="OpenComponentFile">
+
+                            </ec:MenuNode>
+                            <ec:MenuNode Width="130" Height="30" Header="  保存" Click="UpdateComponentFile">
+
                             </ec:MenuNode>
                         </ec:MenuNode>
                         <!--编辑工具-->
                         <ec:MenuNode Width="100" Height="30" Header=" 编辑" Placement="Bottom" Margin="5,0,5,0">
                             <ec:MenuNode Width="130" Height="30" Header="  查找">
-                                
+
                             </ec:MenuNode>
                             <ec:MenuNode Width="130" Height="30" Header="  替换">
-                                
+
                             </ec:MenuNode>
                         </ec:MenuNode>
                         <!--生成工具-->
@@ -83,7 +86,7 @@
 
                             </ec:MenuNode>
                             <ec:MenuNode Width="130" Height="30" Header="  片段生成">
-                                
+
                             </ec:MenuNode>
                         </ec:MenuNode>
                         <!--生成工具-->
@@ -101,7 +104,7 @@
 
                             </ec:MenuNode>
                             <ec:MenuNode Width="130" Height="30" Header="  快捷方式">
-                                
+
                             </ec:MenuNode>
                             <ec:MenuNode Width="130" Height="30" Header="  问题反馈">
 
@@ -126,7 +129,7 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <!--资源列表-->
-                    <ec:ProjectManager x:Name="Nodes"/>
+                    <ec:ProjectManager x:Name="FileNodes"/>
                     <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>

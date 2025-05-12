@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NotionPlay.EditorControls"
              xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
              mc:Ignorable="d"
-             d:DesignHeight="30" d:DesignWidth="200">
+             d:DesignHeight="20" d:DesignWidth="200">
     <local:FileControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,42 +18,44 @@
     <local:FileControl.Template>
         <ControlTemplate TargetType="{x:Type local:FileControl}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=local:FileControl},Path=Height}"/>
-                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=local:FileControl},Path=Height}"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--触发按钮-->
-                <v:Button x:Name="bt"
-                          Grid.Column="0"
-                          Data="{Binding RelativeSource={RelativeSource AncestorType=local:FileNode},Path=ButtonSymbol}"
-                          Style="{StaticResource menubutton_center}"
-                          Click="Button_Click"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--触发按钮-->
+                    <v:Button x:Name="bt"
+                              Grid.Column="0"
+                              Data="{Binding RelativeSource={RelativeSource AncestorType=local:FileNode},Path=ButtonSymbol}"
+                              Style="{StaticResource menubutton_center}"
+                              Click="Button_Click"/>
 
-                <v:Button x:Name="logo"
-                          Grid.Column="1"
-                          Data="{TemplateBinding FileTypeSymbol}"
-                          Style="{StaticResource menubutton_logo}"
-                          Click="Logo_Click"/>
+                    <v:Button x:Name="logo"
+                              Grid.Column="1"
+                              Data="{TemplateBinding FileTypeSymbol}"
+                              Style="{StaticResource menubutton_logo}"
+                              Click="Logo_Click"/>
 
-                <v:Button x:Name="title"
-                          Grid.Column="2"
-                          Data="{TemplateBinding Header}"
-                          Style="{StaticResource menubutton_logo}"
-                          Click="Title_Click"
-                          Margin="5,0,0,0"/>
-
-                <!-- 弹出菜单 - 包含子项 -->
-                <Popup x:Name="SubMenuPopup"
-                       IsOpen="{Binding RelativeSource={RelativeSource AncestorType=local:FileNode},Path=IsOpen}"
-                       Placement="{Binding RelativeSource={RelativeSource AncestorType=local:FileNode},Path=Placement}"
-                       StaysOpen="True"
-                       Focusable="True"
-                       FocusVisualStyle="{x:Null}"
-                       AllowsTransparency="True"
-                       HorizontalOffset="{TemplateBinding Height}">
-                    <ItemsPresenter />
-                </Popup>
+                    <v:Button x:Name="title"
+                              Grid.Column="2"
+                              Data="{TemplateBinding Header}"
+                              Style="{StaticResource menubutton_logo}"
+                              Click="Title_Click"
+                              Margin="5,0,0,0"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Margin="20,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Orientation="Vertical">
+                        <ItemsPresenter />
+                    </StackPanel>
+                </Grid>
             </Grid>
         </ControlTemplate>
     </local:FileControl.Template>

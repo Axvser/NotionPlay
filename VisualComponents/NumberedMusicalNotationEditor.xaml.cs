@@ -33,6 +33,10 @@ namespace NotionPlay.VisualComponents
         {
             container.Children.Remove(paragraph);
         }
+        public void Clear()
+        {
+            container.Children.Clear();
+        }
 
         private void Left(object sender, RoutedEventArgs e)
         {

@@ -10,11 +10,6 @@ namespace NotionPlay.EditorControls
     /// </summary>
     public abstract class NodeControl : ItemsControl, IFoldableNode, ILockableNode
     {
-        public NodeControl()
-        {
-            Loaded += (s, e) => RecursiveBuildNodeConnection(this);
-        }
-
         public event Action? ItemsExpanded;
         public event Action? ItemsFolded;
         public event Action? NodeLocked;
@@ -112,7 +107,7 @@ namespace NotionPlay.EditorControls
             NodeUnLocked?.Invoke();
         } // 节点解锁时
 
-        protected static void RecursiveBuildNodeConnection(IFoldableNode startNode) // 递归构建Node之间的父子关系
+        protected static void RecursiveBuildNodeConnection(IFoldableNode startNode, Action<IFoldableNode>? callback = null) // 递归构建Node之间的父子关系
         {
             var targets = startNode.Items.OfType<IFoldableNode>();
             if (!targets.Any()) return;
@@ -120,9 +115,10 @@ namespace NotionPlay.EditorControls
             {
                 target.ParentNode = startNode;
                 RecursiveBuildNodeConnection(target);
+                callback?.Invoke(target);
             }
         }
-        protected static void RecursiveRelease(IFoldableNode? startNode)
+        protected static void RecursiveRelease(IFoldableNode? startNode, Action<IFoldableNode>? callback = null)
         {
             if (startNode is null) return;
             startNode.IsOpen = false;
@@ -132,6 +128,7 @@ namespace NotionPlay.EditorControls
                 {
                     foldable.IsOpen = false;
                     RecursiveRelease(foldable);
+                    callback?.Invoke(foldable);
                 }
             }
         } // 递归释放从指定节点开始的所有节点
