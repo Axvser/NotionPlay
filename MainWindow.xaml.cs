@@ -4,6 +4,7 @@ using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.EditorControls;
+using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents;
 using System.Windows;
@@ -30,27 +31,25 @@ namespace NotionPlay
         private void CreateNewEditor(object sender, RoutedEventArgs e)
         {
             Editor.Clear();
-            var paragraph = new Paragraph() { MusicTheory = Theory };
-            paragraph.Items.Add(new Track() { MusicTheory = Theory });
-            var paragraphNode = new FileNode()
+            Editor.AddParagraph(new() { MusicTheory = Theory });
+            var a = new TreeNode()
             {
-                MusicTheory = Theory,
-                Value = paragraph,
-                FileType = FileTypes.Paragraph,
-                Height = 20,
-                Header = "第一段"
+                Header = "晴天",
+                ItemType = TreeItemTypes.Project,
             };
-            var projectNode = new FileNode()
+            var b = new TreeNode()
             {
-                MusicTheory = Theory,
-                Value = null,
-                FileType = FileTypes.Project,
-                Height = 20,
-                Header = "晴天"
+                Header = "第一段",
+                ItemType = TreeItemTypes.Paragraph,
             };
-            projectNode.Items.Add(paragraphNode);
-            FileNodes.AddProject(projectNode);
-            Editor.AddParagraph(paragraph);
+            var c = new TreeNode()
+            {
+                Header = "第二段",
+                ItemType = TreeItemTypes.Paragraph,
+            };
+            a.AddNode(b);
+            a.AddNode(c);
+            SourceManager.AddProject(a);
         }
         private void OpenComponentFile(object sender, RoutedEventArgs e)
         {

@@ -1,0 +1,64 @@
+﻿<StackPanel x:Class="NotionPlay.EditorControls.TreeNode"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotionPlay.EditorControls"
+             xmlns:wpfc="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
+             xmlns:vm="clr-namespace:NotionPlay.EditorControls.ViewModels"
+             mc:Ignorable="d"
+             Orientation="Vertical"
+             x:Name="RootPanel">
+    <!--使用上下文-->
+    <StackPanel.DataContext>
+        <vm:TreeItemViewModel x:Name="ViewModel"/>
+    </StackPanel.DataContext>
+    
+    <!--绘制节点控制器-->
+    <Grid x:Name="NodeVisual"
+          Height="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!--展开按钮-->
+        <wpfc:Button Grid.Column="0"
+                     Height="20"
+                     Width="20"
+                     Data="{Binding StateIcon}"
+                     Click="OpenOrCloseNode"
+                     ContentScale="0.418"
+                     Style="{StaticResource nicebutton}"/>
+        <!--节点类型的图形显示-->
+        <wpfc:Button Grid.Column="1"
+                     Height="20" 
+                     Width="20"
+                     Data="{Binding TypeIcon}"
+                     ContentScale="0.618"
+                     Style="{StaticResource nicebutton}"/>
+        <!--节点名称-->
+        <TextBlock Grid.Column="2"
+                   Text="{Binding Header}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="5,0,0,0"/>
+    </Grid>
+    
+    <!--绑定子节点-->
+    <ItemsControl x:Name="ItemsPanel"
+                  ItemsSource="{Binding Children}"
+                  Margin="20,0,0,0"
+                  Visibility="{Binding ItemsVisibility}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <local:TreeNode />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</StackPanel>

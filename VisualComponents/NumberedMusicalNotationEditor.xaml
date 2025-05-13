@@ -50,7 +50,7 @@
                                         <RowDefinition Height="20"/>
                                     </Grid.RowDefinitions>
                                     <v:Button Click="Up" Grid.Row="0" Data="▲" Style="{StaticResource scrollbutton}"/>
-                                    <Track x:Name="PART_Track" Grid.Row="1" Orientation="Vertical" Width="20">
+                                    <Track x:Name="PART_Track" Grid.Row="1" Orientation="Vertical" Width="20" IsDirectionReversed="True">
                                         <Track.Thumb>
                                             <Thumb Height="{TemplateBinding ViewportSize}" Width="20" Background="{TemplateBinding Foreground}"/>
                                         </Track.Thumb>

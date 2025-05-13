@@ -129,7 +129,7 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <!--资源列表-->
-                    <ec:ProjectManager x:Name="FileNodes"/>
+                    <ec:SourceViewer x:Name="SourceManager"/>
                     <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>

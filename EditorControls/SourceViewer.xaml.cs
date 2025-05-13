@@ -1,9 +1,10 @@
-﻿using MinimalisticWPF.HotKey;
+﻿using MinimalisticWPF.Controls;
+using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
+using NotionPlay.EditorControls.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +20,35 @@ using System.Windows.Shapes;
 
 namespace NotionPlay.EditorControls
 {
-    public partial class ProjectManager : UserControl
+    /// <summary>
+    /// SourceViewer.xaml 的交互逻辑
+    /// </summary>
+    public partial class SourceViewer : UserControl
     {
-        public void AddProject(FileNode fileNode)
+        public Dictionary<string, TreeNode> TreeNodes { get; set; } = [];
+        public void AddProject(TreeNode project)
         {
-            container.Children.Add(fileNode);
+            if (TreeNodes.ContainsKey(project.Header))
+            {
+                NotificationBox.Confirm($"⚠ 已存在名为 [ {project.Header} ] 的项目");
+                return;
+            }
+            TreeNodes.Add(project.Header, project);
+            container.Children.Add(project);
         }
-        public void RemoveProject(FileNode fileNode)
+        public void RemoveProject(TreeNode project)
         {
-            container.Children.Remove(fileNode);
+            if (TreeNodes.Remove(project.Header))
+            {
+                container.Children.Remove(project);
+            }
+        }
+        public void RemoveProject(string projectName)
+        {
+            if (TreeNodes.TryGetValue(projectName, out var view))
+            {
+                container.Children.Remove(view);
+            }
         }
 
         private void Left(object sender, RoutedEventArgs e)
@@ -46,6 +67,7 @@ namespace NotionPlay.EditorControls
         {
             viewer.ScrollToVerticalOffset(viewer.VerticalOffset - viewer.ViewportHeight * 0.2);
         }
+
         private void Viewer_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -69,7 +91,7 @@ namespace NotionPlay.EditorControls
     [Theme(nameof(Background), typeof(Light), ["default"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
     [Theme(nameof(Foreground), typeof(Light), ["#1e1e1e"])]
-    public partial class ProjectManager
+    public partial class SourceViewer
     {
         private readonly ScaleTransform scale = new();
 
