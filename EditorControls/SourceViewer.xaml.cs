@@ -3,6 +3,7 @@ using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.EditorControls.ViewModels;
+using NotionPlay.VisualComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace NotionPlay.EditorControls
     /// </summary>
     public partial class SourceViewer : UserControl
     {
+        public NumberedMusicalNotationEditor? VisualEditorHost { get; set; }
+
         public Dictionary<string, TreeNode> TreeNodes { get; set; } = [];
         public void AddProject(TreeNode project)
         {

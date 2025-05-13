@@ -27,7 +27,8 @@
                      ContentScale="0.418"
                      Style="{StaticResource nicebutton}"/>
         <!--节点类型的图形显示-->
-        <wpfc:Button Grid.Column="1"
+        <wpfc:Button x:Name="Logo"
+                     Grid.Column="1"
                      Height="20" 
                      Width="20"
                      Data="{Binding TypeIcon}"
@@ -38,7 +39,8 @@
                    Text="{Binding Header}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Margin="5,0,0,0"/>
+                   Margin="5,0,0,0"
+                   Foreground="{Binding ElementName=Logo,Path=Foreground}"/>
     </Grid>
 
     <!--绑定子节点-->

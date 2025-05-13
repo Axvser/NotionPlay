@@ -39,24 +39,24 @@ namespace NotionPlay
             };
             var vmb = new TreeItemViewModel()
             {
-                Header = "段1",
-                Type = TreeItemTypes.Paragraph,
+                Header = "为你翘课的那一天 → 我好想再淋一遍",
+                Type = TreeItemTypes.Package,
                 Parent = vma,
             };
             var vmc = new TreeItemViewModel()
             {
-                Header = "段2",
+                Header = "第 21 段",
                 Type = TreeItemTypes.Paragraph,
                 Parent = vma
             };
             var vmd = new TreeItemViewModel()
             {
-                Header = "音轨2-1",
+                Header = "音轨 1",
                 Type = TreeItemTypes.Track,
                 Parent = vmb,
             };
             vma.Children.Add(vmb);
-            vma.Children.Add(vmc);
+            vmb.Children.Add(vmc);
             vmc.Children.Add(vmd);
             var a = new TreeNode(vma);
             SourceManager.AddProject(a);
