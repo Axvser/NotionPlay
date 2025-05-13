@@ -28,17 +28,17 @@ namespace NotionPlay.EditorControls
         public Dictionary<string, TreeNode> TreeNodes { get; set; } = [];
         public void AddProject(TreeNode project)
         {
-            if (TreeNodes.ContainsKey(project.Header))
+            if (TreeNodes.ContainsKey(project.ViewModel.Header))
             {
-                NotificationBox.Confirm($"⚠ 已存在名为 [ {project.Header} ] 的项目");
+                NotificationBox.Confirm($"⚠ 已存在名为 [ {project.ViewModel.Header} ] 的项目");
                 return;
             }
-            TreeNodes.Add(project.Header, project);
+            TreeNodes.Add(project.ViewModel.Header, project);
             container.Children.Add(project);
         }
         public void RemoveProject(TreeNode project)
         {
-            if (TreeNodes.Remove(project.Header))
+            if (TreeNodes.Remove(project.ViewModel.Header))
             {
                 container.Children.Remove(project);
             }

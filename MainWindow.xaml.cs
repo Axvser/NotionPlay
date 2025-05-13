@@ -32,23 +32,33 @@ namespace NotionPlay
         {
             Editor.Clear();
             Editor.AddParagraph(new() { MusicTheory = Theory });
-            var a = new TreeNode()
+            var vma = new TreeItemViewModel()
             {
                 Header = "晴天",
-                ItemType = TreeItemTypes.Project,
+                Type = TreeItemTypes.Project,
             };
-            var b = new TreeNode()
+            var vmb = new TreeItemViewModel()
             {
-                Header = "第一段",
-                ItemType = TreeItemTypes.Paragraph,
+                Header = "段1",
+                Type = TreeItemTypes.Paragraph,
+                Parent = vma,
             };
-            var c = new TreeNode()
+            var vmc = new TreeItemViewModel()
             {
-                Header = "第二段",
-                ItemType = TreeItemTypes.Paragraph,
+                Header = "段2",
+                Type = TreeItemTypes.Paragraph,
+                Parent = vma
             };
-            a.AddNode(b);
-            a.AddNode(c);
+            var vmd = new TreeItemViewModel()
+            {
+                Header = "音轨2-1",
+                Type = TreeItemTypes.Track,
+                Parent = vmb,
+            };
+            vma.Children.Add(vmb);
+            vma.Children.Add(vmc);
+            vmc.Children.Add(vmd);
+            var a = new TreeNode(vma);
             SourceManager.AddProject(a);
         }
         private void OpenComponentFile(object sender, RoutedEventArgs e)

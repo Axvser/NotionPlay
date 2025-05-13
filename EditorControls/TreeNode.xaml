@@ -9,11 +9,7 @@
              mc:Ignorable="d"
              Orientation="Vertical"
              x:Name="RootPanel">
-    <!--使用上下文-->
-    <StackPanel.DataContext>
-        <vm:TreeItemViewModel x:Name="ViewModel"/>
-    </StackPanel.DataContext>
-    
+
     <!--绘制节点控制器-->
     <Grid x:Name="NodeVisual"
           Height="20">
@@ -44,20 +40,22 @@
                    VerticalAlignment="Center"
                    Margin="5,0,0,0"/>
     </Grid>
-    
+
     <!--绑定子节点-->
     <ItemsControl x:Name="ItemsPanel"
                   ItemsSource="{Binding Children}"
                   Margin="20,0,0,0"
-                  Visibility="{Binding ItemsVisibility}">
+                  Visibility="{Binding ItemsVisibility}"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Vertical" />
+                <VirtualizingStackPanel Orientation="Vertical"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <local:TreeNode />
+                <local:TreeNode DataContext="{Binding Local}" />
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
