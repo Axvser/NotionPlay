@@ -94,8 +94,8 @@
                 </Grid>
             </ControlTemplate>
         </ScrollViewer.Template>
-        <WrapPanel x:Name="container" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <UniformGrid x:Name="container" HorizontalAlignment="Left" VerticalAlignment="Top">
 
-        </WrapPanel>
+        </UniformGrid>
     </ScrollViewer>
 </UserControl>

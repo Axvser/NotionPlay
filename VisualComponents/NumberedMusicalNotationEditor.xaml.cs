@@ -88,7 +88,7 @@ namespace NotionPlay.VisualComponents
     [Theme(nameof(Foreground), typeof(Light), ["#1e1e1e"])]
     public partial class NumberedMusicalNotationEditor
     {
-        private readonly ScaleTransform scale = new();
+        private readonly ScaleTransform scale = new(2.2,2.2);
 
         [Constructor]
         private void SetContentScale()
