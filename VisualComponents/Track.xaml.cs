@@ -19,32 +19,37 @@ namespace NotionPlay.VisualComponents
             var source = new CancellationTokenSource();
             async Task func()
             {
-                List<(VirtualKeyCode, int, Action, Action)> notes = [];
+                var canKey = CanSimulate;
+                var canPre = CanPreview;
+                var canHig = CanHightLight;
+                List<(int, Action, Action)> notes = [];
                 foreach (var item in Items)
                 {
                     if (item is SingleNote note && KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var key))
                     {
-                        notes.Add((key, MusicTheory.GetSpan(note.DurationType),
-                            () =>
-                            {
-                                note.Background = note.SimulatingBrush;
-                            },
-                            () =>
-                            {
-                                note.Background = note.CurrentTheme == typeof(Dark) ? note.DarkBackground : note.LightBackground;
-                            }
-                        ));
+                        void action1()
+                        {
+                            if (canHig) note.Background = note.SimulatingBrush;
+                            if (canKey) Simulator.Keyboard.KeyDown(key);
+                            if (canPre) AudioHelper.PlayNote(key);
+                        }
+                        void action2()
+                        {
+                            if (canHig) note.Background = note.CurrentTheme == typeof(Dark) ? note.DarkBackground : note.LightBackground;
+                            if (canKey) Simulator.Keyboard.KeyUp(key);
+                            if (canPre) AudioHelper.StopNote(key);
+                        }
+                        notes.Add((MusicTheory.GetSpan(note.DurationType), action1, action2));
                     }
                 }
                 try
                 {
                     foreach (var note in notes)
                     {
-                        Simulator.Keyboard.KeyDown(note.Item1);
+
+                        note.Item2.Invoke();
+                        await Task.Delay(note.Item1, source.Token);
                         note.Item3.Invoke();
-                        await Task.Delay(note.Item2, source.Token);
-                        Simulator.Keyboard.KeyUp(note.Item1);
-                        note.Item4.Invoke();
                     }
                 }
                 catch (Exception ex)
@@ -55,8 +60,7 @@ namespace NotionPlay.VisualComponents
                 {
                     foreach (var note in notes)
                     {
-                        Simulator.Keyboard.KeyUp(note.Item1);
-                        note.Item4.Invoke();
+                        note.Item3.Invoke();
                     }
                 }
             }

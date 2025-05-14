@@ -1,42 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows;
+using WindowsInput.Native;
 
 namespace NotionPlay.Tools
 {
     public static class AudioHelper
     {
-        private static readonly Dictionary<Key, string> _audioFileMappings = new()
+        private static readonly Dictionary<VirtualKeyCode, string> _audioFileMappings = new()
         {
-            { Key.Q, "Q.mp3" },
-            { Key.W, "W.mp3" },
-            { Key.E, "E.mp3" },
-            { Key.R, "R.mp3" },
-            { Key.T, "T.mp3" },
-            { Key.Y, "Y.mp3" },
-            { Key.U, "U.mp3" },
+            { VirtualKeyCode.VK_Q, "Q.mp3" },
+            { VirtualKeyCode.VK_W, "W.mp3" },
+            { VirtualKeyCode.VK_E, "E.mp3" },
+            { VirtualKeyCode.VK_R, "R.mp3" },
+            { VirtualKeyCode.VK_T, "T.mp3" },
+            { VirtualKeyCode.VK_Y, "Y.mp3" },
+            { VirtualKeyCode.VK_U, "U.mp3" },
 
-            { Key.A, "A.mp3" },
-            { Key.S, "S.mp3" },
-            { Key.D, "D.mp3" },
-            { Key.F, "F.mp3" },
-            { Key.G, "G.mp3" },
-            { Key.H, "H.mp3" },
-            { Key.J, "J.mp3" },
+            { VirtualKeyCode.VK_A, "A.mp3" },
+            { VirtualKeyCode.VK_S, "S.mp3" },
+            { VirtualKeyCode.VK_D, "D.mp3" },
+            { VirtualKeyCode.VK_F, "F.mp3" },
+            { VirtualKeyCode.VK_G, "G.mp3" },
+            { VirtualKeyCode.VK_H, "H.mp3" },
+            { VirtualKeyCode.VK_J, "J.mp3" },
 
-            { Key.Z, "Z.mp3" },
-            { Key.X, "X.mp3" },
-            { Key.C, "C.mp3" },
-            { Key.V, "V.mp3" },
-            { Key.B, "B.mp3" },
-            { Key.N, "N.mp3" },
-            { Key.M, "M.mp3" }
+            { VirtualKeyCode.VK_Z, "Z.mp3" },
+            { VirtualKeyCode.VK_X, "X.mp3" },
+            { VirtualKeyCode.VK_C, "C.mp3" },
+            { VirtualKeyCode.VK_V, "V.mp3" },
+            { VirtualKeyCode.VK_B, "B.mp3" },
+            { VirtualKeyCode.VK_N, "N.mp3" },
+            { VirtualKeyCode.VK_M, "M.mp3" }
         };
 
-        private static readonly Dictionary<Key, MediaPlayer> _activePlayers = [];
+        private static readonly Dictionary<VirtualKeyCode, MediaPlayer> _activePlayers = [];
         private static readonly string _audioDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AudioSources");
 
         public static void Initialize()
@@ -58,7 +55,7 @@ namespace NotionPlay.Tools
             }
         }
 
-        public static void PlayNote(Key key)
+        public static void PlayNote(VirtualKeyCode key)
         {
             if (_activePlayers.TryGetValue(key, out var player))
             {
@@ -68,7 +65,7 @@ namespace NotionPlay.Tools
             }
         }
 
-        public static void StopNote(Key key)
+        public static void StopNote(VirtualKeyCode key)
         {
             if (_activePlayers.TryGetValue(key, out var player))
             {

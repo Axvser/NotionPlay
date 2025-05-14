@@ -1,6 +1,4 @@
-﻿using MinimalisticWPF.Controls;
-using MinimalisticWPF.HotKey;
-using MinimalisticWPF.SourceGeneratorMark;
+﻿using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
@@ -85,6 +83,9 @@ namespace NotionPlay.VisualComponents
         private List<SimulationAtom> CalculateAtoms()
         {
             List<SimulationAtom> atoms = [];
+            var canKey = CanSimulate;
+            var canPre = CanPreview;
+            var canHig = CanHightLight;
             foreach (var child in Items)
             {
                 if (child is Track track)
@@ -105,19 +106,27 @@ namespace NotionPlay.VisualComponents
                                 atoms[atomCounter].Span = MusicTheory.GetSpan(note.DurationType);
                                 _ = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
 
-                                var currentNote = note;
-                                atoms[atomCounter].KeyDowns += () =>
+                                if (i == 0)
                                 {
-                                    Simulator.Keyboard.KeyDown(virtualKey);
-                                    currentNote.Background = currentNote.SimulatingBrush;
-                                };
-                                atoms[atomCounter].KeyUps += () =>
+                                    atoms[atomCounter].KeyDowns += () =>
+                                    {
+                                        if (canKey) Simulator.Keyboard.KeyDown(virtualKey);
+                                        if (canPre) AudioHelper.PlayNote(virtualKey);
+                                        if (canHig) note.Background = note.SimulatingBrush;
+                                    };
+                                }
+
+                                if (i == steps - 1)
                                 {
-                                    Simulator.Keyboard.KeyUp(virtualKey);
-                                    currentNote.Background = currentNote.CurrentTheme == typeof(Dark)
-                                        ? currentNote.DarkBackground
-                                        : currentNote.LightBackground;
-                                };
+                                    atoms[atomCounter].KeyUps += () =>
+                                    {
+                                        if (canKey) Simulator.Keyboard.KeyUp(virtualKey);
+                                        if (canPre) AudioHelper.StopNote(virtualKey);
+                                        if (canHig) note.Background = note.CurrentTheme == typeof(Dark)
+                                            ? note.DarkBackground
+                                            : note.LightBackground;
+                                    };
+                                }
 
                                 atomCounter++;
                             }
@@ -150,7 +159,6 @@ namespace NotionPlay.VisualComponents
             var track = new Track() { MusicTheory = MusicTheory };
             Items.Add(track);
         }
-
         private void Option2_Click(object sender, RoutedEventArgs e)
         {
             if (Items.Count > 0)

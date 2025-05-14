@@ -29,10 +29,14 @@ namespace NotionPlay.VisualComponents
             KeyValueHelper.TryGetKeyCode((Note, FrequencyLevel), out var key);
             async Task func()
             {
+                var canKey = CanSimulate;
+                var canPre = CanPreview;
+                var canHig = CanHightLight;
                 try
                 {
-                    Background = SimulatingBrush;
-                    Simulator.Keyboard.KeyDown(key);
+                    if (canHig) Background = SimulatingBrush;
+                    if (canKey) Simulator.Keyboard.KeyDown(key);
+                    if (canPre) AudioHelper.PlayNote(key);
                     await Task.Delay(MusicTheory.GetSpan(DurationType), source.Token);
                 }
                 catch (Exception ex)
@@ -41,8 +45,9 @@ namespace NotionPlay.VisualComponents
                 }
                 finally
                 {
-                    Simulator.Keyboard.KeyUp(key);
-                    Background = CurrentTheme == typeof(Dark) ? DarkBackground : LightBackground;
+                    if (canKey) Simulator.Keyboard.KeyUp(key);
+                    if (canPre) AudioHelper.StopNote(key);
+                    if (canHig) Background = CurrentTheme == typeof(Dark) ? DarkBackground : LightBackground;
                 }
             }
             return (func, source);
