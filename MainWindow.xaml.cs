@@ -1,5 +1,4 @@
 ﻿global using static NotionPlay.GlobalState;
-using MinimalisticWPF.Controls;
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;

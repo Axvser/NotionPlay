@@ -2,22 +2,11 @@
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
-using NotionPlay.EditorControls.ViewModels;
-using NotionPlay.VisualComponents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NotionPlay.VisualComponents.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace NotionPlay.EditorControls
 {
@@ -27,6 +16,9 @@ namespace NotionPlay.EditorControls
     public partial class SourceViewer : UserControl
     {
         public Dictionary<string, TreeNode> TreeNodes { get; set; } = [];
+        public Dictionary<TreeNode, SingleNoteViewModel> SingleNoteViewModels { get; set; }
+        public Dictionary<TreeNode, TrackViewModel> TrackViewModels { get; set; }
+        public Dictionary<TreeNode, ParagraphViewModel> ParagraphViewModels { get; set; }
         public void AddProject(TreeNode project)
         {
             if (TreeNodes.ContainsKey(project.ViewModel.Header))

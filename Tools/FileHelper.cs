@@ -1,7 +1,4 @@
 ﻿using Microsoft.Win32;
-using MinimalisticWPF.Controls;
-using System.Diagnostics;
-using System.IO;
 
 namespace NotionPlay.Tools
 {

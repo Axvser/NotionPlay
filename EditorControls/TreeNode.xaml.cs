@@ -1,6 +1,5 @@
 ﻿using MinimalisticWPF.Controls;
 using NotionPlay.EditorControls.ViewModels;
-using NotionPlay.VisualComponents;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -41,35 +40,52 @@ namespace NotionPlay.EditorControls
 
         private void Menu_AddChild(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.Type == TreeItemTypes.Track)
+            var meta = NodeInfoSetter.Open(ViewModel);
+            if (meta?.Item3 ?? false) return;
+            if (meta is null)
             {
-                NotificationBox.Confirm("⚠ 不可为音轨添加子项", "错误");
+                NotificationBox.Confirm("⚠ 输入了不合法的节点名", "错误");
                 return;
             }
-            else
+            if (ViewModel.Children.Any(c => c.Header == meta.Value.Item1))
             {
-                var meta = NodeInfoSetter.Open(ViewModel);
-                if (meta?.Item3 ?? false) return;
-                if (meta is null)
+                NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
+                return;
+            }
+            var vm = new TreeItemViewModel()
+            {
+                Header = meta.Value.Item1,
+                Type = meta.Value.Item2,
+                Parent = ViewModel,
+            };
+            vm.UpdateVisual();
+            ViewModel.Children.Add(vm);
+            ViewModel.UpdateVisual();
+            ViewModel.IsOpened = true;
+        }
+        private void Menu_Rename(object sender, RoutedEventArgs e)
+        {
+            if (NodeInfoSetter.Rename(out var value))
+            {
+                if (ViewModel.Type == TreeItemTypes.Project)
                 {
-                    NotificationBox.Confirm("⚠ 输入了不合法的节点名", "错误");
-                    return;
+                    if (SourceViewerHost?.TreeNodes.ContainsKey(value) ?? false)
+                    {
+                        NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
+                        return;
+                    }
                 }
-                if (ViewModel.Children.Any(c => c.Header == meta.Value.Item1))
+                else
                 {
-                    NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
-                    return;
+                    if (ViewModel.Parent.Children.Any(v => v.Header == value))
+                    {
+                        NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
+                        return;
+                    }
                 }
-                var vm = new TreeItemViewModel()
-                {
-                    Header = meta.Value.Item1,
-                    Type = meta.Value.Item2,
-                    Parent = ViewModel,
-                };
-                vm.UpdateVisual();
-                ViewModel.Children.Add(vm);
-                ViewModel.UpdateVisual();
-                ViewModel.IsOpened = true;
+                SourceViewerHost?.TreeNodes.Remove(ViewModel.Header);
+                ViewModel.Header = value;
+                SourceViewerHost?.TreeNodes.Add(value, this);
             }
         }
         private void Menu_Delete(object sender, RoutedEventArgs e)

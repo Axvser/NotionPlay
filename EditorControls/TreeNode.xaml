@@ -10,12 +10,28 @@
              Orientation="Vertical"
              x:Name="RootPanel">
     <StackPanel.ContextMenu>
-        <ContextMenu ContextMenuService.IsEnabled="{Binding IsContextMenuEnabled}">
-            <MenuItem Header="+ 添加子项" Click="Menu_AddChild">
-                
+        <ContextMenu ContextMenuService.IsEnabled="{Binding IsContextMenuEnabled}"
+                     BorderThickness="1">
+            <MenuItem Header="{Binding AddedName}" Click="Menu_AddChild" Visibility="{Binding CanAddChild}">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
             </MenuItem>
-            <MenuItem Header="× 删除" Click="Menu_Delete">
-
+            <MenuItem Header="⇢ 重命名" Click="Menu_Rename">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
+            </MenuItem>
+            <MenuItem Header="{Binding RemovedName}" Click="Menu_Delete">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
             </MenuItem>
         </ContextMenu>
     </StackPanel.ContextMenu>

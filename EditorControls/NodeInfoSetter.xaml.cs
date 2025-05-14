@@ -20,21 +20,18 @@ namespace NotionPlay.EditorControls
                 {
                     TreeItemTypes.Project => "添加分组",
                     TreeItemTypes.Package => "添加段落",
-                    TreeItemTypes.Paragraph => " 添加音轨",
                     _ => string.Empty
                 },
                 type = viewModel.Type switch
                 {
                     TreeItemTypes.Project => TreeItemTypes.Package,
                     TreeItemTypes.Package => TreeItemTypes.Paragraph,
-                    TreeItemTypes.Paragraph => TreeItemTypes.Track,
                     _ => TreeItemTypes.None
                 },
                 ValueSymbol = viewModel.Type switch
                 {
                     TreeItemTypes.Project => "组名 : ",
                     TreeItemTypes.Package => "段落名 : ",
-                    TreeItemTypes.Paragraph => "音轨名 : ",
                     _ => string.Empty
                 },
             };
@@ -53,7 +50,24 @@ namespace NotionPlay.EditorControls
             };
             window.inputer.Focus();
             window.ShowDialog();
-            if (window.HeaderValidator.Validate(window.header) && !sources.TreeNodes.ContainsKey(window.header))
+            if (window.HeaderValidator.Validate(window.header) && !window.isCancled && !sources.TreeNodes.ContainsKey(window.header))
+            {
+                value = window.header;
+                return true;
+            }
+            value = string.Empty;
+            return false;
+        }
+        public static bool Rename(out string value)
+        {
+            var window = new NodeInfoSetter()
+            {
+                Title = "重命名",
+                ValueSymbol = "新名字 :",
+            };
+            window.inputer.Focus();
+            window.ShowDialog();
+            if (window.HeaderValidator.Validate(window.header) && !window.isCancled)
             {
                 value = window.header;
                 return true;

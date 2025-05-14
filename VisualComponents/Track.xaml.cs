@@ -81,7 +81,7 @@ namespace NotionPlay.VisualComponents
         }
 
         private void option1_Click(object sender, RoutedEventArgs e)
-        {   
+        {
             var note = new SingleNote(Notes.None, DurationTypes.Sixteen, FrequencyLevels.Middle) { MusicTheory = MusicTheory, Width = 15, Height = 50, Style = default_notestyle };
             Items.Add(note);
         }
@@ -114,7 +114,7 @@ namespace NotionPlay.VisualComponents
         }
         internal static readonly DependencyProperty BottomBorderVisibilityProperty =
             DependencyProperty.Register("BottomBorderVisibility", typeof(Visibility), typeof(Track), new PropertyMetadata(Visibility.Collapsed));
-        
+
         internal Visibility TopBorderVisibility
         {
             get { return (Visibility)GetValue(TopBorderVisibilityProperty); }
