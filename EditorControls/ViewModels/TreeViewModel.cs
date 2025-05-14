@@ -19,6 +19,7 @@ namespace NotionPlay.EditorControls.ViewModels
     [JsonSerializable(typeof(TreeItemViewModel))]
     public partial class TreeItemViewModel
     {
+        [JsonIgnore]
         public static TreeItemViewModel Empty { get; private set; } = new();
 
         [Constructor]
