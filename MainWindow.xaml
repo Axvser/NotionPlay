@@ -56,6 +56,9 @@
                     <ec:MenuNode Width="130" Height="30" Header="  读取" Click="OpenComponentFile">
 
                     </ec:MenuNode>
+                    <ec:MenuNode Width="130" Height="30" Header="  保存" Click="OpenComponentFile">
+
+                    </ec:MenuNode>
                 </ec:MenuNode>
                 <!--帮助-->
                 <ec:MenuNode Width="100" Height="30" Header=" 帮助" HorizontalContentAlignment="Center" Placement="Bottom" Margin="5,0,5,0">

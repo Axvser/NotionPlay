@@ -18,15 +18,9 @@ namespace NotionPlay.VisualComponents
     public partial class Paragraph : ItemsControl, IVisualNote, ISimulable
     {
         public event Action? Saved;
-
-        [Constructor]
-        private void RegisterSaveHotKey()
+        public void RunSaved()
         {
-            LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], (s, e) =>
-            {
-                NotificationBox.Confirm("已保存");
-                Saved?.Invoke();
-            });
+            Saved?.Invoke();
         }
 
         public (Func<Task>, CancellationTokenSource) GetSimulation()
@@ -134,30 +128,30 @@ namespace NotionPlay.VisualComponents
             return atoms;
         }
 
-        private void Bottom_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Bottom_MouseEnter(object sender, MouseEventArgs e)
         {
             BottomBorderVisibility = Visibility.Visible;
         }
-        private void Bottom_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Bottom_MouseLeave(object sender, MouseEventArgs e)
         {
             BottomBorderVisibility = Visibility.Collapsed;
         }
-        private void Top_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Top_MouseEnter(object sender, MouseEventArgs e)
         {
             TopBorderVisibility = Visibility.Visible;
         }
-        private void Top_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Top_MouseLeave(object sender, MouseEventArgs e)
         {
             TopBorderVisibility = Visibility.Collapsed;
         }
 
-        private void option1_Click(object sender, RoutedEventArgs e)
+        private void Option1_Click(object sender, RoutedEventArgs e)
         {
             var track = new Track() { MusicTheory = MusicTheory };
             Items.Add(track);
         }
 
-        private void option2_Click(object sender, RoutedEventArgs e)
+        private void Option2_Click(object sender, RoutedEventArgs e)
         {
             if (Items.Count > 0)
             {

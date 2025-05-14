@@ -36,6 +36,15 @@ namespace NotionPlay.VisualComponents
         {
             container.Children.Clear();
         }
+        public void SaveData()
+        {
+            CanEdit = false;
+            foreach (Paragraph paragraph in container.Children)
+            {
+                paragraph.RunSaved();
+            }
+            CanEdit = true;
+        }
 
         private void Left(object sender, RoutedEventArgs e)
         {

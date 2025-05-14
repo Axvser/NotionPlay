@@ -1,10 +1,12 @@
 ﻿global using static NotionPlay.GlobalState;
+using MinimalisticWPF.Controls;
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.EditorControls;
 using NotionPlay.EditorControls.ViewModels;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -23,13 +25,13 @@ namespace NotionPlay
             {
                 StopSimulation();
             });
+            GlobalHotKey.Register(VirtualModifiers.Ctrl, VirtualKeys.S, (s, e) =>
+            {
+                Editor.SaveData();
+                NotificationBox.Confirm("√ 已保存");
+            });
             EditorHost = Editor;
             SourceViewerHost = SourceManager;
-        }
-
-        private void UpdateEditor()
-        {
-
         }
 
         private void CreateNewProject(object sender, RoutedEventArgs e)

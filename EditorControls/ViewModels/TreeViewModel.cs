@@ -59,7 +59,8 @@ namespace NotionPlay.EditorControls.ViewModels
 
     public partial class TreeItemViewModel
     {
-        public List<List<NoteModel>> Notes = [];
+        [Observable]
+        public List<List<NoteModel>> notes = [];
     }
 
     public partial class TreeItemViewModel
