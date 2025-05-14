@@ -80,13 +80,13 @@ namespace NotionPlay.VisualComponents
             TopBorderVisibility = Visibility.Collapsed;
         }
 
-        private void option1_Click(object sender, RoutedEventArgs e)
+        private void Option1_Click(object sender, RoutedEventArgs e)
         {
-            var note = new SingleNote(Notes.None, DurationTypes.Sixteen, FrequencyLevels.Middle) { MusicTheory = MusicTheory, Width = 15, Height = 50, Style = default_notestyle };
+            var note = new SingleNote(Notes.None, DurationTypes.Sixteen, FrequencyLevels.Middle) { MusicTheory = MusicTheory };
             Items.Add(note);
         }
 
-        private void option2_Click(object sender, RoutedEventArgs e)
+        private void Option2_Click(object sender, RoutedEventArgs e)
         {
             if (Items.Count > 0)
             {
@@ -100,7 +100,6 @@ namespace NotionPlay.VisualComponents
     [Hover([nameof(Background)])]
     public partial class Track
     {
-        private readonly static Style? default_notestyle = Application.Current.TryFindResource("nicebutton2") as Style;
         public InputSimulator Simulator { get; } = new();
         public required MusicTheory MusicTheory { get; set; }
         public IVisualNote? ParentNote { get; set; }

@@ -2,6 +2,7 @@
 using NotionPlay.Interfaces;
 using NotionPlay.VisualComponents;
 using NotionPlay.VisualComponents.Models;
+using System.Windows;
 
 namespace NotionPlay
 {
@@ -11,6 +12,8 @@ namespace NotionPlay
         public static MusicTheory Theory { get; set; } = new();
         public static SourceViewer? SourceViewerHost { get; set; }
         public static NumberedMusicalNotationEditor? EditorHost { get; set; }
+        public static Style? Default_NoteStyle { get;private set; } = Application.Current.TryFindResource("nicebutton2") as Style;
+
 
         private static CancellationTokenSource? SimulationTokenSource;
         public static async void SubmitSimulation(ISimulable container)

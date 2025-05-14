@@ -55,6 +55,7 @@ namespace NotionPlay.VisualComponents
         private void InitializeDefaultNote()
         {
             Loaded += (s, e) => UpdateNote();
+            Style = Default_NoteStyle;
             LocalHotKey.Register(this, [Key.Delete], (s, e) =>
             {
                 if (NotificationBox.Choose("⚠ 删除操作不可撤销 , 确定继续吗 ?"))
@@ -357,8 +358,8 @@ namespace NotionPlay.VisualComponents
 
     [ClickModule]
     [FocusModule]
-    [Theme(nameof(Background), typeof(Dark), ["Transparent"])]
-    [Theme(nameof(Background), typeof(Light), ["Transparent"])]
+    [Theme(nameof(Background), typeof(Dark), ["#01ffffff"])]
+    [Theme(nameof(Background), typeof(Light), ["#01ffffff"])]
     [Theme(nameof(BorderBrush), typeof(Dark), ["White"])]
     [Theme(nameof(BorderBrush), typeof(Light), ["#1e1e1e"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]

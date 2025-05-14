@@ -25,14 +25,14 @@
                               x:Name="option1"
                               Grid.Row="0"
                               Data="+"
-                              Click="option1_Click"/>
+                              Click="Option1_Click"/>
                     <v:Button Style="{StaticResource trackleftbar_bot}"
                               MouseEnter="Bottom_MouseEnter"
                               MouseLeave="Bottom_MouseLeave"
                               x:Name="option2"
                               Grid.Row="1"
                               Data="-"
-                              Click="option2_Click"/>
+                              Click="Option2_Click"/>
                 </Grid>
                 
                 <Grid Grid.Column="1">
