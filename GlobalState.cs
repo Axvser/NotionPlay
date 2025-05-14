@@ -1,4 +1,6 @@
-﻿using NotionPlay.Interfaces;
+﻿using NotionPlay.EditorControls;
+using NotionPlay.Interfaces;
+using NotionPlay.VisualComponents;
 using NotionPlay.VisualComponents.Models;
 
 namespace NotionPlay
@@ -7,6 +9,8 @@ namespace NotionPlay
     {
         public static bool CanEdit { get; set; } = true;
         public static MusicTheory Theory { get; set; } = new();
+        public static SourceViewer? SourceViewerHost { get; set; }
+        public static NumberedMusicalNotationEditor? EditorHost { get; set; }
 
         private static CancellationTokenSource? SimulationTokenSource;
         public static async void SubmitSimulation(ISimulable container)

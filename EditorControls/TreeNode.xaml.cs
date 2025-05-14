@@ -1,6 +1,8 @@
 ﻿using MinimalisticWPF.Controls;
+using NotionPlay.EditorControls.Models;
 using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Interfaces;
+using NotionPlay.VisualComponents;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -30,8 +32,6 @@ namespace NotionPlay.EditorControls
         }
 
         public TreeItemViewModel ViewModel { get; set; } = TreeItemViewModel.Empty;
-
-        public SourceViewer? SourceViewerHost { get; set; }
 
         private void OpenOrCloseNode(object sender, RoutedEventArgs e)
         {
@@ -75,6 +75,12 @@ namespace NotionPlay.EditorControls
                         NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
                         return;
                     }
+                    else
+                    {
+                        SourceViewerHost?.TreeNodes.Remove(ViewModel.Header);
+                        ViewModel.Header = value;
+                        SourceViewerHost?.TreeNodes.Add(value, this);
+                    }
                 }
                 else
                 {
@@ -83,10 +89,11 @@ namespace NotionPlay.EditorControls
                         NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
                         return;
                     }
+                    else
+                    {
+                        ViewModel.Header = value;
+                    }
                 }
-                SourceViewerHost?.TreeNodes.Remove(ViewModel.Header);
-                ViewModel.Header = value;
-                SourceViewerHost?.TreeNodes.Add(value, this);
             }
         }
         private void Menu_Delete(object sender, RoutedEventArgs e)
@@ -104,20 +111,82 @@ namespace NotionPlay.EditorControls
 
         private void ShowEditor(object sender, RoutedEventArgs e)
         {
+            var editors = ViewModel.Type switch
+            {
+                TreeItemTypes.Paragraph => CreateEditorAtParagraph(),
+                TreeItemTypes.Package => CreateEditorAtPackage(),
+                TreeItemTypes.Project => CreateEditorAtProject(),
+                _ => null
+            };
 
+            EditorHost?.Clear();
+            if (editors is not null)
+            {
+                foreach (var editor in editors)
+                {
+                    EditorHost?.AddParagraph(editor);
+                }
+            }
         }
 
-        //private IVisualNote CreateEditorAtParagraph()
-        //{
-
-        //}
-        //private IVisualNote CreateEditorAtPackage()
-        //{
-
-        //}
-        //private IVisualNote CreateEditorAtProject()
-        //{
-
-        //}
+        private List<Paragraph> CreateEditorAtParagraph()
+        {
+            return [BuildParagraph(ViewModel)];
+        }
+        private List<Paragraph> CreateEditorAtPackage()
+        {
+            List<Paragraph> result = [];
+            foreach (TreeItemViewModel vm_paragraph in ViewModel.Children) // 遍历段落视图模型
+            {
+                result.Add(BuildParagraph(vm_paragraph));
+            }
+            return result;
+        }
+        private List<Paragraph> CreateEditorAtProject()
+        {
+            List<Paragraph> result = [];
+            foreach (TreeItemViewModel vm_packages in ViewModel.Children) // 遍历包视图模型
+            {
+                foreach (TreeItemViewModel vm_paragraph in vm_packages.Children) // 遍历段落视图模型
+                {
+                    result.Add(BuildParagraph(vm_paragraph));
+                }
+            }
+            return result;
+        }
+        private static Paragraph BuildParagraph(TreeItemViewModel viewModel)
+        {
+            var paragraph = new Paragraph() { MusicTheory = Theory };
+            var notegroups = viewModel.Notes.Select(list => list.Select(v => new SingleNote() { MusicTheory = Theory, Note = v.Note, FrequencyLevel = v.FrequencyLevel, DurationType = v.DurationType }));
+            foreach (var notegroup in notegroups)
+            {
+                var track = new Track() { MusicTheory = Theory };
+                foreach (var note in notegroup)
+                {
+                    track.Items.Add(note);
+                }
+                paragraph.Items.Add(track);
+            }
+            paragraph.Saved += () =>
+            {
+                var newValue = new List<List<NoteModel>>();
+                foreach (Track track in paragraph.Items)
+                {
+                    var list = new List<NoteModel>();
+                    newValue.Add(list);
+                    foreach (SingleNote note in track.Items)
+                    {
+                        list.Add(new NoteModel()
+                        {
+                            Note = note.Note,
+                            FrequencyLevel = note.FrequencyLevel,
+                            DurationType = note.DurationType,
+                        });
+                    }
+                }
+                viewModel.Notes = newValue;
+            };
+            return paragraph;
+        }
     }
 }

@@ -59,6 +59,11 @@ namespace NotionPlay.EditorControls.ViewModels
 
     public partial class TreeItemViewModel
     {
+        public List<List<NoteModel>> Notes = [];
+    }
+
+    public partial class TreeItemViewModel
+    {
         partial void OnIsOpenedChanged(bool oldValue, bool newValue)
         {
             UpdateVisual();

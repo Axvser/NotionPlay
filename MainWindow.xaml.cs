@@ -23,13 +23,15 @@ namespace NotionPlay
             {
                 StopSimulation();
             });
+            EditorHost = Editor;
+            SourceViewerHost = SourceManager;
         }
 
         private void UpdateEditor()
         {
 
         }
-        
+
         private void CreateNewProject(object sender, RoutedEventArgs e)
         {
             if (NodeInfoSetter.Open(SourceManager, out var value))
@@ -39,10 +41,7 @@ namespace NotionPlay
                     Header = value,
                     Type = TreeItemTypes.Project,
                 };
-                var a = new TreeNode(vma)
-                {
-                    SourceViewerHost = SourceManager
-                };
+                var a = new TreeNode(vma);
                 SourceManager.AddProject(a);
             }
         }
@@ -51,10 +50,7 @@ namespace NotionPlay
             var vm = await TreeItemViewModel.FromFile();
             if (vm == TreeItemViewModel.Empty) return;
             SourceManager.RemoveProject(vm.Header);
-            var node = new TreeNode(vm)
-            {
-                SourceViewerHost = SourceManager
-            };
+            var node = new TreeNode(vm);
             SourceManager.AddProject(node);
         }
     }

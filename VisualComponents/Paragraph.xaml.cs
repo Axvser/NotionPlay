@@ -1,4 +1,6 @@
-﻿using MinimalisticWPF.SourceGeneratorMark;
+﻿using MinimalisticWPF.Controls;
+using MinimalisticWPF.HotKey;
+using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
@@ -7,12 +9,26 @@ using NotionPlay.VisualComponents.Models;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WindowsInput;
 
 namespace NotionPlay.VisualComponents
 {
+    [FocusModule]
     public partial class Paragraph : ItemsControl, IVisualNote, ISimulable
     {
+        public event Action? Saved;
+
+        [Constructor]
+        private void RegisterSaveHotKey()
+        {
+            LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], (s, e) =>
+            {
+                NotificationBox.Confirm("已保存");
+                Saved?.Invoke();
+            });
+        }
+
         public (Func<Task>, CancellationTokenSource) GetSimulation()
         {
             var source = new CancellationTokenSource();
