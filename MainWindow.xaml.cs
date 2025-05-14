@@ -5,8 +5,6 @@ using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.EditorControls;
 using NotionPlay.EditorControls.ViewModels;
-using NotionPlay.Tools;
-using NotionPlay.VisualComponents;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
@@ -30,40 +28,27 @@ namespace NotionPlay
 
         private void CreateNewEditor(object sender, RoutedEventArgs e)
         {
-            Editor.Clear();
-            Editor.AddParagraph(new() { MusicTheory = Theory });
-            var vma = new TreeItemViewModel()
+            if (NodeInfoSetter.Open(SourceManager, out var value))
             {
-                Header = "晴天",
-                Type = TreeItemTypes.Project,
-            };
-            var vmb = new TreeItemViewModel()
-            {
-                Header = "为你翘课的那一天 → 我好想再淋一遍",
-                Type = TreeItemTypes.Package,
-                Parent = vma,
-            };
-            var vmc = new TreeItemViewModel()
-            {
-                Header = "第 21 段",
-                Type = TreeItemTypes.Paragraph,
-                Parent = vma
-            };
-            var vmd = new TreeItemViewModel()
-            {
-                Header = "音轨 1",
-                Type = TreeItemTypes.Track,
-                Parent = vmb,
-            };
-            vma.Children.Add(vmb);
-            vmb.Children.Add(vmc);
-            vmc.Children.Add(vmd);
-            var a = new TreeNode(vma);
-            SourceManager.AddProject(a);
+                Editor.Clear();
+                Editor.AddParagraph(new() { MusicTheory = Theory });
+                var vma = new TreeItemViewModel()
+                {
+                    Header = value,
+                    Type = TreeItemTypes.Project,
+                };
+                var a = new TreeNode(vma);
+                a.SourceViewerHost = SourceManager;
+                SourceManager.AddProject(a);
+            }
         }
-        private void OpenComponentFile(object sender, RoutedEventArgs e)
+        private async void OpenComponentFile(object sender, RoutedEventArgs e)
         {
-            NotificationBox.Confirm("节点事件被触发");
+            var vm = await TreeItemViewModel.FromFile();
+            if (vm == TreeItemViewModel.Empty) return;
+            SourceManager.RemoveProject(vm.Header);
+            var node = new TreeNode(vm);
+            SourceManager.AddProject(node);
         }
         private void UpdateComponentFile(object sender, RoutedEventArgs e)
         {

@@ -1,5 +1,9 @@
-﻿using MinimalisticWPF.SourceGeneratorMark;
+﻿using Microsoft.Win32;
+using MinimalisticWPF.Controls;
+using MinimalisticWPF.SourceGeneratorMark;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
 
@@ -41,6 +45,10 @@ namespace NotionPlay.EditorControls.ViewModels
         private TreeItemTypes type = TreeItemTypes.None;
         [Observable(Validations.None)]
         private Visibility itemsVisibility = Visibility.Collapsed;
+        [Observable(Validations.None)]
+        private bool isContextMenuEnabled = false;
+        [Observable(Validations.None)]
+        private int paragraphIndex = 0;
         [Observable]
         private ObservableCollection<TreeItemViewModel> children = [];
     }
@@ -61,11 +69,75 @@ namespace NotionPlay.EditorControls.ViewModels
                 TreeItemTypes.Package => PackageSVG,
                 _ => string.Empty
             };
+            IsContextMenuEnabled = newValue switch
+            {
+                TreeItemTypes.Project => true,
+                TreeItemTypes.Paragraph => true,
+                TreeItemTypes.Package => true,
+                _ => false
+            };
         }
         public void UpdateVisual()
         {
             StateIcon = Children.Count > 0 ? (IsOpened ? OpenedSVG : ClosedSVG) : string.Empty;
             ItemsVisibility = IsOpened ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+
+    public partial class TreeItemViewModel
+    {
+        private static readonly JsonSerializerOptions jsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true
+        };
+
+        public static async Task Save(TreeItemViewModel itemToSave)
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                Title = "保存项目为JSON文件",
+                DefaultExt = ".json",
+                AddExtension = true
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    await using var fileStream = saveFileDialog.OpenFile();
+                    await JsonSerializer.SerializeAsync(fileStream, itemToSave, jsonOptions);
+                    NotificationBox.Confirm("✔ 项目保存成功", "成功");
+                }
+                catch (Exception)
+                {
+                    NotificationBox.Confirm("❌ 项目保存失败", "失败");
+                }
+            }
+        }
+        public static async Task<TreeItemViewModel> FromFile()
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                Title = "选择 JSON 文件",
+                Multiselect = false
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    await using var fileStream = openFileDialog.OpenFile();
+                    return await JsonSerializer.DeserializeAsync<TreeItemViewModel>(fileStream, jsonOptions) ?? Empty;
+                }
+                catch (Exception)
+                {
+                    NotificationBox.Confirm("⚠ 无法将指定的Json文件转换为项目", "错误");
+                }
+            }
+
+            return Empty;
         }
     }
 

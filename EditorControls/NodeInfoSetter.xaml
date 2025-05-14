@@ -1,0 +1,61 @@
+﻿<Window x:Class="NotionPlay.EditorControls.NodeInfoSetter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NotionPlay.EditorControls"
+        xmlns:wpfc="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
+        mc:Ignorable="d"
+        Title="NodeInfoSetter" 
+        Height="360" Width="640" 
+        WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
+        BorderThickness="1">
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Viewbox>
+                <Border BorderBrush="{TemplateBinding Foreground}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid Width="{TemplateBinding Width}" 
+                          Height="{TemplateBinding Height}" 
+                          Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{TemplateBinding Title}" Foreground="{TemplateBinding Foreground}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" Grid.ZIndex="1"/>
+                        <Border Grid.Row="0" Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="0" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
+                        <ContentPresenter Grid.RowSpan="2"/>
+                    </Grid>
+                </Border>
+            </Viewbox>
+        </ControlTemplate>
+    </Window.Template>
+    <Viewbox>
+        <Grid Height="360" Width="640">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=local:NodeInfoSetter},Path=ValueSymbol}" TextAlignment="Center" VerticalAlignment="Center" FontSize="30" Grid.Row="1" 
+                       Foreground="{Binding RelativeSource={RelativeSource AncestorType=local:NodeInfoSetter},Path=Foreground}"
+                       Margin="10,125,458,125"/>
+            <TextBox x:Name="inputer" Grid.Row="1" Height="40" TextChanged="TextBox_TextChanged"
+                     FontSize="30"
+                     TextAlignment="Center"
+                     Background="{Binding RelativeSource={RelativeSource AncestorType=local:NodeInfoSetter},Path=Background}" 
+                     Foreground="{Binding RelativeSource={RelativeSource AncestorType=local:NodeInfoSetter},Path=Foreground}" 
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Width="400" Margin="182,0,0,0"/>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <wpfc:Button Click="Finish" Grid.Column="0" Data="创建" ContentScale="0.618" Style="{StaticResource nicebutton}"/>
+                <wpfc:Button Click="Cancle" Grid.Column="1" Data="取消" ContentScale="0.618" Style="{StaticResource nicebutton}"/>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>

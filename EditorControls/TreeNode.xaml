@@ -9,6 +9,16 @@
              mc:Ignorable="d"
              Orientation="Vertical"
              x:Name="RootPanel">
+    <StackPanel.ContextMenu>
+        <ContextMenu ContextMenuService.IsEnabled="{Binding IsContextMenuEnabled}">
+            <MenuItem Header="+ 添加子项" Click="Menu_AddChild">
+                
+            </MenuItem>
+            <MenuItem Header="× 删除" Click="Menu_Delete">
+
+            </MenuItem>
+        </ContextMenu>
+    </StackPanel.ContextMenu>
 
     <!--绘制节点控制器-->
     <Grid x:Name="NodeVisual"
