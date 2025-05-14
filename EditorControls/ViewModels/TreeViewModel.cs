@@ -43,17 +43,17 @@ namespace NotionPlay.EditorControls.ViewModels
         private string addedName = string.Empty;
         [Observable]
         private string removedName = string.Empty;
-        [Observable(Validations.None)]
+        [Observable]
         private bool isOpened = false;
-        [Observable(Validations.None)]
+        [Observable]
         private TreeItemTypes type = TreeItemTypes.None;
-        [Observable(Validations.None)]
+        [Observable]
         private Visibility itemsVisibility = Visibility.Collapsed;
-        [Observable(Validations.None)]
+        [Observable]
         private bool isContextMenuEnabled = false;
-        [Observable(Validations.None)]
+        [Observable]
         private Visibility canAddChild = Visibility.Visible;
-        [Observable(Validations.None)]
+        [Observable]
         private Visibility canOutput = Visibility.Visible;
         [Observable]
         private ObservableCollection<TreeItemViewModel> children = [];
