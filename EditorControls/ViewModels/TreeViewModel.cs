@@ -97,6 +97,7 @@ namespace NotionPlay.EditorControls.ViewModels
             {
                 TreeItemTypes.Project => "× 删除项目",
                 TreeItemTypes.Package => "× 删除分组",
+                TreeItemTypes.Paragraph => "× 删除段落",
                 _ => string.Empty,
             };
             CanAddChild = newValue switch

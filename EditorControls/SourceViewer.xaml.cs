@@ -31,7 +31,7 @@ namespace NotionPlay.EditorControls
         }
         public void RemoveProject(string projectName)
         {
-            if (TreeNodes.TryGetValue(projectName, out var view))
+            if (TreeNodes.Remove(projectName, out var view))
             {
                 container.Children.Remove(view);
             }

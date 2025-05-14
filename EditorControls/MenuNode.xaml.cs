@@ -24,7 +24,15 @@ namespace NotionPlay.EditorControls
             {
                 if (IsOpen)
                 {
-                    Release();
+                    if (Items.Count > 0)
+                    {
+                        Release();
+                    }
+                    else
+                    {
+                        var root = FindRoot(ParentNode);
+                        if (root is not null) root.IsOpen = false;
+                    }
                 }
                 else
                 {
@@ -168,5 +176,10 @@ namespace NotionPlay.EditorControls
                 }
             }
         } // 递归释放从指定节点开始的所有节点
+        private static IFoldableNode? FindRoot(IFoldableNode? startNode)
+        {
+            if (startNode?.ParentNode is null) return startNode;
+            return FindRoot(startNode.ParentNode);
+        }
     }
 }

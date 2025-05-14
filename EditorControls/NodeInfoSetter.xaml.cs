@@ -40,7 +40,7 @@ namespace NotionPlay.EditorControls
             if (window.isCancled) return (string.Empty, TreeItemTypes.None, true);
             return (window.HeaderValidator.Validate(window.header) && window.type != TreeItemTypes.None) ? (window.header, window.type, false) : null;
         }
-        public static bool Open(SourceViewer sources, out string value)
+        public static bool NewProject(out string value)
         {
             var window = new NodeInfoSetter()
             {
@@ -50,7 +50,7 @@ namespace NotionPlay.EditorControls
             };
             window.inputer.Focus();
             window.ShowDialog();
-            if (window.HeaderValidator.Validate(window.header) && !window.isCancled && !sources.TreeNodes.ContainsKey(window.header))
+            if (window.HeaderValidator.Validate(window.header) && !window.isCancled)
             {
                 value = window.header;
                 return true;

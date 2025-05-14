@@ -42,9 +42,7 @@
             <Setter Property="DarkNoHoveredForeground" Value="White"/>
             <Setter Property="LightHoveredForeground" Value="Red"/>
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
-            <Setter Property="DarkHoveredBackground" Value="#6D6D6D"/>
             <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
-            <Setter Property="LightHoveredBackground" Value="#6D6D6D"/>
             <Setter Property="LightNoHoveredBackground" Value="White"/>
             <Setter Property="ContentScale" Value="0.6"/>
             <Setter Property="ContentHorizontalAlignment" Value="Left"/>

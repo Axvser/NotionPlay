@@ -36,7 +36,7 @@ namespace NotionPlay
 
         private void CreateNewProject(object sender, RoutedEventArgs e)
         {
-            if (NodeInfoSetter.Open(SourceManager, out var value))
+            if (NodeInfoSetter.NewProject(out var value))
             {
                 var vma = new TreeItemViewModel()
                 {
