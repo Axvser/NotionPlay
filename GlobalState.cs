@@ -10,7 +10,7 @@ namespace NotionPlay
     {
         public static bool CanEdit { get; set; } = true;
 
-        public static bool CanSimulate { get; set; } = true;
+        public static bool CanSimulate { get; set; } = false;
         public static bool CanPreview { get; set; } = true;
         public static bool CanHightLight { get; set; } = true;
 

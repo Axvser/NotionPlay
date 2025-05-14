@@ -44,7 +44,7 @@
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
             <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
             <Setter Property="LightNoHoveredBackground" Value="White"/>
-            <Setter Property="ContentScale" Value="0.6"/>
+            <Setter Property="ContentScale" Value="0.8"/>
             <Setter Property="ContentHorizontalAlignment" Value="Left"/>
         </Style>
         <Style TargetType="v:Button" x:Key="paragraphleftbar_top">
