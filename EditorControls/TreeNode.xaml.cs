@@ -108,6 +108,11 @@ namespace NotionPlay.EditorControls
                 }
             }
         }
+        private async void MenuItem_Save(object sender, RoutedEventArgs e)
+        {
+            await TreeItemViewModel.Save(ViewModel);
+        }
+
 
         private void ShowEditor(object sender, RoutedEventArgs e)
         {

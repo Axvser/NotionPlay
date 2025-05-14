@@ -53,6 +53,8 @@ namespace NotionPlay.EditorControls.ViewModels
         private bool isContextMenuEnabled = false;
         [Observable(Validations.None)]
         private Visibility canAddChild = Visibility.Visible;
+        [Observable(Validations.None)]
+        private Visibility canOutput = Visibility.Visible;
         [Observable]
         private ObservableCollection<TreeItemViewModel> children = [];
     }
@@ -102,6 +104,11 @@ namespace NotionPlay.EditorControls.ViewModels
                 TreeItemTypes.Paragraph => Visibility.Collapsed,
                 _ => Visibility.Visible,
             };
+            CanOutput = newValue switch
+            {
+                TreeItemTypes.Project => Visibility.Visible,
+                _ => Visibility.Collapsed
+            };
         }
         public void UpdateVisual()
         {
@@ -115,7 +122,8 @@ namespace NotionPlay.EditorControls.ViewModels
         private static readonly JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
-            WriteIndented = true
+            WriteIndented = true,
+            ReferenceHandler = ReferenceHandler.Preserve
         };
 
         public static async Task Save(TreeItemViewModel itemToSave)
@@ -138,7 +146,7 @@ namespace NotionPlay.EditorControls.ViewModels
                 }
                 catch (Exception)
                 {
-                    NotificationBox.Confirm("❌ 项目保存失败", "失败");
+                    NotificationBox.Confirm($"❌ 项目保存失败", "失败");
                 }
             }
         }

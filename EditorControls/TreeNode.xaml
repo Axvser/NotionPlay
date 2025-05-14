@@ -33,6 +33,13 @@
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
+            <MenuItem Header="保存至" Click="MenuItem_Save" Visibility="{Binding CanOutput}">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
+            </MenuItem>
         </ContextMenu>
     </StackPanel.ContextMenu>
 
