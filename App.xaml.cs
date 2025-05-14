@@ -1,4 +1,5 @@
 ﻿using MinimalisticWPF.Theme;
+using NotionPlay.Tools;
 using System.Windows;
 
 namespace NotionPlay
@@ -8,6 +9,7 @@ namespace NotionPlay
         public App()
         {
             DynamicTheme.FollowSystem(typeof(Dark));
+            AudioHelper.Initialize();
         }
     }
 }

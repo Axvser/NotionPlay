@@ -9,11 +9,15 @@ namespace NotionPlay
     public static class GlobalState
     {
         public static bool CanEdit { get; set; } = true;
+
+        public static bool CanSimulate { get; set; } = true;
+        public static bool CanPreview { get; set; } = true;
+        public static bool CanHightLight { get; set; } = true;
+
         public static MusicTheory Theory { get; set; } = new();
         public static SourceViewer? SourceViewerHost { get; set; }
         public static NumberedMusicalNotationEditor? EditorHost { get; set; }
-        public static Style? Default_NoteStyle { get;private set; } = Application.Current.TryFindResource("nicebutton2") as Style;
-
+        public static Style? Default_NoteStyle { get; private set; } = Application.Current.TryFindResource("nicebutton2") as Style;
 
         private static CancellationTokenSource? SimulationTokenSource;
         public static async void SubmitSimulation(ISimulable container)
