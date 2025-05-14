@@ -1,5 +1,6 @@
 ﻿using MinimalisticWPF.Controls;
 using NotionPlay.EditorControls.ViewModels;
+using NotionPlay.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -100,5 +101,23 @@ namespace NotionPlay.EditorControls
                 }
             }
         }
+
+        private void ShowEditor(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        //private IVisualNote CreateEditorAtParagraph()
+        //{
+
+        //}
+        //private IVisualNote CreateEditorAtPackage()
+        //{
+
+        //}
+        //private IVisualNote CreateEditorAtProject()
+        //{
+
+        //}
     }
 }

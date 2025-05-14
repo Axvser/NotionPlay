@@ -25,19 +25,24 @@ namespace NotionPlay
             });
         }
 
-        private void CreateNewEditor(object sender, RoutedEventArgs e)
+        private void UpdateEditor()
+        {
+
+        }
+        
+        private void CreateNewProject(object sender, RoutedEventArgs e)
         {
             if (NodeInfoSetter.Open(SourceManager, out var value))
             {
-                Editor.Clear();
-                Editor.AddParagraph(new() { MusicTheory = Theory });
                 var vma = new TreeItemViewModel()
                 {
                     Header = value,
                     Type = TreeItemTypes.Project,
                 };
-                var a = new TreeNode(vma);
-                a.SourceViewerHost = SourceManager;
+                var a = new TreeNode(vma)
+                {
+                    SourceViewerHost = SourceManager
+                };
                 SourceManager.AddProject(a);
             }
         }
@@ -46,12 +51,11 @@ namespace NotionPlay
             var vm = await TreeItemViewModel.FromFile();
             if (vm == TreeItemViewModel.Empty) return;
             SourceManager.RemoveProject(vm.Header);
-            var node = new TreeNode(vm);
+            var node = new TreeNode(vm)
+            {
+                SourceViewerHost = SourceManager
+            };
             SourceManager.AddProject(node);
-        }
-        private void UpdateComponentFile(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 

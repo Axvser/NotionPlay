@@ -59,6 +59,7 @@
                      Width="20"
                      Data="{Binding TypeIcon}"
                      ContentScale="0.618"
+                     Click="ShowEditor"
                      Style="{StaticResource nicebutton}"/>
         <!--节点名称-->
         <TextBlock Grid.Column="2"

@@ -2,7 +2,6 @@
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
-using NotionPlay.VisualComponents.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,15 +9,9 @@ using System.Windows.Media;
 
 namespace NotionPlay.EditorControls
 {
-    /// <summary>
-    /// SourceViewer.xaml 的交互逻辑
-    /// </summary>
     public partial class SourceViewer : UserControl
     {
         public Dictionary<string, TreeNode> TreeNodes { get; set; } = [];
-        public Dictionary<TreeNode, SingleNoteViewModel> SingleNoteViewModels { get; set; }
-        public Dictionary<TreeNode, TrackViewModel> TrackViewModels { get; set; }
-        public Dictionary<TreeNode, ParagraphViewModel> ParagraphViewModels { get; set; }
         public void AddProject(TreeNode project)
         {
             if (TreeNodes.ContainsKey(project.ViewModel.Header))
