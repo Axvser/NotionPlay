@@ -69,6 +69,7 @@ namespace NotionPlay.EditorControls
                 vm.UpdateVisual();
                 ViewModel.Children.Add(vm);
                 ViewModel.UpdateVisual();
+                ViewModel.IsOpened = true;
             }
         }
         private void Menu_Delete(object sender, RoutedEventArgs e)
