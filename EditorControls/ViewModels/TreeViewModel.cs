@@ -107,11 +107,6 @@ namespace NotionPlay.EditorControls.ViewModels
                 TreeItemTypes.Paragraph => Visibility.Collapsed,
                 _ => Visibility.Visible,
             };
-            CanOutput = newValue switch
-            {
-                TreeItemTypes.Project => Visibility.Visible,
-                _ => Visibility.Collapsed
-            };
         }
         public void UpdateVisual()
         {
@@ -171,7 +166,29 @@ namespace NotionPlay.EditorControls.ViewModels
             }
             catch
             {
-                
+
+            }
+        }
+        public static async Task<bool> SaveSnapshot(TreeItemViewModel itemToSave, string folderPath, string snapshotName)
+        {
+            if (itemToSave == null || string.IsNullOrWhiteSpace(folderPath))
+            {
+                return false;
+            }
+
+            try
+            {
+                Directory.CreateDirectory(folderPath);
+                var invalidChars = Path.GetInvalidFileNameChars();
+                var fileName = string.Join("_", snapshotName.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries)) + ".json";
+                var fullPath = Path.Combine(folderPath, fileName);
+                await using var fileStream = File.Create(fullPath);
+                await JsonSerializer.SerializeAsync(fileStream, SimulationSequenceModel.FromTreeItemViewModel(itemToSave), jsonOptions);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

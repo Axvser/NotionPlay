@@ -75,6 +75,23 @@ namespace NotionPlay.EditorControls
             value = string.Empty;
             return false;
         }
+        public static bool Snapshot(out string value)
+        {
+            var window = new NodeInfoSetter()
+            {
+                Title = "创建快照",
+                ValueSymbol = "快照名 :",
+            };
+            window.inputer.Focus();
+            window.ShowDialog();
+            if (window.HeaderValidator.Validate(window.header) && !window.isCancled)
+            {
+                value = window.header;
+                return true;
+            }
+            value = string.Empty;
+            return false;
+        }
 
         private void Border_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

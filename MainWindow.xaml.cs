@@ -67,8 +67,8 @@ namespace NotionPlay
             CanSimulate = GameMaskVisibility != Visibility.Collapsed;
             CanPreview = GameMaskVisibility == Visibility.Collapsed;
             CanHightLight = GameMaskVisibility == Visibility.Collapsed;
-            menu1.BeginTransition(GameMaskVisibility == Visibility.Collapsed ? ts_buttonExpended : ts_buttonFolded);
-            menu2.BeginTransition(GameMaskVisibility == Visibility.Collapsed ? ts_buttonExpended : ts_buttonFolded);
+            menu1.BeginTransition(GameMaskVisibility == Visibility.Collapsed ? ts_menuExpended : ts_menuFolded);
+            menu2.BeginTransition(GameMaskVisibility == Visibility.Collapsed ? ts_buttonFolded : ts_buttonExpended);
         }
     }
 

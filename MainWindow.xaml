@@ -62,7 +62,7 @@
                     </ec:MenuNode>
                 </ec:MenuNode>
                 <!--输出窗口-->
-                <fc:Button x:Name="menu2" Width="100" Height="30"  
+                <fc:Button x:Name="menu2" Width="0" Height="30"
                            Style="{StaticResource nicebutton}"
                            ContentScale="0.8"
                            Data="M512 640a32 32 0 0 0-32 32v96a32 32 0 1 0 64 0v-96a32 32 0 0 0-32-32zM333.312 317.888a12.8 12.8 0 0 0 9.056 3.744H480V544a32 32 0 1 0 64 0v-222.368h139.904a12.8 12.8 0 0 0 9.056-21.856l-170.752-170.752a12.8 12.8 0 0 0-18.112 0l-170.752 170.752a12.8 12.8 0 0 0-0.032 18.112z

@@ -33,7 +33,7 @@
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
-            <MenuItem Header="◩ 保存项目" Click="MenuItem_Save" Visibility="{Binding CanOutput}">
+            <MenuItem Header="◩ 创建快照" Click="MenuItem_Snapshot" Visibility="{Binding CanOutput}">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
                         <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
