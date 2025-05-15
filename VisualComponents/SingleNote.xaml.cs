@@ -64,13 +64,10 @@ namespace NotionPlay.VisualComponents
             Style = Default_NoteStyle;
             LocalHotKey.Register(this, [Key.Delete], (s, e) =>
             {
-                if (NotificationBox.Choose("⚠ 删除操作不可撤销 , 确定继续吗 ?"))
+                if (ParentNote is Track track)
                 {
-                    if (ParentNote is Track track)
-                    {
-                        track.Items.Remove(this);
-                        track.UpdateVisualMeta();
-                    }
+                    track.Items.Remove(this);
+                    track.UpdateVisualMeta();
                 }
             });
             LocalHotKey.Register(this, [Key.W], (s, e) =>

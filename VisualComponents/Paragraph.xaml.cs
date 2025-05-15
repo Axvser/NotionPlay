@@ -12,7 +12,6 @@ using WindowsInput;
 
 namespace NotionPlay.VisualComponents
 {
-    [FocusModule]
     public partial class Paragraph : ItemsControl, IVisualNote, ISimulable
     {
         public event Action? Saved;

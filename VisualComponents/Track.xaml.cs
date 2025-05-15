@@ -14,24 +14,8 @@ using WindowsInput;
 
 namespace NotionPlay.VisualComponents
 {
-    [FocusModule]
     public partial class Track : ItemsControl, IVisualNote, ISimulable
     {
-        [Constructor]
-        private void AddLocalHotKey()
-        {
-            LocalHotKey.Register(this, [Key.Delete], (s, e) =>
-            {
-                if (NotificationBox.Choose("⚠ 删除操作不可撤销 , 确定继续吗 ?"))
-                {
-                    if (ParentNote is Paragraph paragraph)
-                    {
-                        paragraph.Items.Remove(this);
-                    }
-                }
-            });
-        }
-
         public (Func<Task>, CancellationTokenSource) GetSimulation()
         {
             var source = new CancellationTokenSource();
@@ -85,29 +69,28 @@ namespace NotionPlay.VisualComponents
             return (func, source);
         }
 
-        private void Bottom_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Bottom_MouseEnter(object sender, MouseEventArgs e)
         {
             BottomBorderVisibility = Visibility.Visible;
         }
-        private void Bottom_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Bottom_MouseLeave(object sender, MouseEventArgs e)
         {
             BottomBorderVisibility = Visibility.Collapsed;
         }
-        private void Top_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Top_MouseEnter(object sender, MouseEventArgs e)
         {
             TopBorderVisibility = Visibility.Visible;
         }
-        private void Top_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Top_MouseLeave(object sender, MouseEventArgs e)
         {
             TopBorderVisibility = Visibility.Collapsed;
         }
 
         private void Option1_Click(object sender, RoutedEventArgs e)
         {
-            var note = new SingleNote(Notes.None, DurationTypes.Sixteen, FrequencyLevels.Middle) { MusicTheory = MusicTheory };
+            var note = new SingleNote(Notes.None, DurationTypes.Sixteen, FrequencyLevels.Middle) { MusicTheory = MusicTheory, ParentNote = this };
             Items.Add(note);
         }
-
         private void Option2_Click(object sender, RoutedEventArgs e)
         {
             if (Items.Count > 0)
