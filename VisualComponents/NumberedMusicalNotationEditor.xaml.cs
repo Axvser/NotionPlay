@@ -1,4 +1,5 @@
-﻿using MinimalisticWPF.HotKey;
+﻿using MinimalisticWPF.Controls;
+using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
@@ -93,7 +94,7 @@ namespace NotionPlay.VisualComponents
         }
     }
 
-    [FocusModule] 
+    [FocusModule]
     [Theme(nameof(Background), typeof(Dark), ["#01ffffff"])]
     [Theme(nameof(Background), typeof(Light), ["#01ffffff"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
@@ -115,6 +116,11 @@ namespace NotionPlay.VisualComponents
             {
                 scale.ScaleX = Math.Clamp(scale.ScaleX - 0.1, 1, 5);
                 scale.ScaleY = Math.Clamp(scale.ScaleY - 0.1, 1, 5);
+            });
+            LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], (s, e) =>
+            {
+                EditorHost?.SaveData();
+                NotificationBox.Confirm("√ 已保存");
             });
         }
     }

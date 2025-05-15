@@ -6,6 +6,8 @@ using MinimalisticWPF.Theme;
 using MinimalisticWPF.TransitionSystem;
 using NotionPlay.EditorControls;
 using NotionPlay.EditorControls.ViewModels;
+using NotionPlay.Tools;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,11 +27,6 @@ namespace NotionPlay
             GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.X, (s, e) =>
             {
                 StopSimulation();
-            });
-            LocalHotKey.Register(Editor, [Key.LeftCtrl, Key.S], (s, e) =>
-            {
-                Editor.SaveData();
-                NotificationBox.Confirm("√ 已保存");
             });
             EditorHost = Editor;
             SourceViewerHost = SourceManager;
@@ -55,6 +52,7 @@ namespace NotionPlay
             var vm = await TreeItemViewModel.FromFile();
             if (vm == TreeItemViewModel.Empty) return;
             SourceManager.RemoveProject(vm.Header);
+            Editor.Clear();
             var node = new TreeNode(vm);
             SourceManager.AddProject(node);
         }
@@ -129,8 +127,9 @@ namespace NotionPlay
                 DragMove();
             }
         }
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private async void Close_Click(object sender, RoutedEventArgs e)
         {
+            await FileHelper.SaveProjectsToDefaultPosition();
             Close();
         }
         private void Size_Click(object sender, RoutedEventArgs e)

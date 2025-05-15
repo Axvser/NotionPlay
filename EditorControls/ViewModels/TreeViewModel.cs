@@ -2,7 +2,9 @@
 using MinimalisticWPF.Controls;
 using MinimalisticWPF.SourceGeneratorMark;
 using NotionPlay.EditorControls.Models;
+using NotionPlay.Tools;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -151,13 +153,36 @@ namespace NotionPlay.EditorControls.ViewModels
                 }
             }
         }
+        public static async Task Save(TreeItemViewModel itemToSave, string folderPath)
+        {
+            if (itemToSave == null || string.IsNullOrWhiteSpace(folderPath))
+            {
+                return;
+            }
+
+            try
+            {
+                Directory.CreateDirectory(folderPath);
+                var invalidChars = Path.GetInvalidFileNameChars();
+                var fileName = string.Join("_", itemToSave.Header.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries)) + ".json";
+                var fullPath = Path.Combine(folderPath, fileName);
+                await using var fileStream = File.Create(fullPath);
+                await JsonSerializer.SerializeAsync(fileStream, itemToSave, jsonOptions);
+            }
+            catch
+            {
+                
+            }
+        }
+
         public static async Task<TreeItemViewModel> FromFile()
         {
             var openFileDialog = new OpenFileDialog
             {
                 Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
                 Title = "选择 JSON 文件",
-                Multiselect = false
+                Multiselect = false,
+                DefaultDirectory = FileHelper.ProjectsFolder,
             };
             if (openFileDialog.ShowDialog() == true)
             {
