@@ -79,16 +79,28 @@ namespace NotionPlay.VisualComponents
                 }
             }
         }
+
+        void ScrollViewer_KeyDown(object sender, KeyEventArgs e)
+        {
+            var temporaryEventArgs =
+              new KeyEventArgs(e.KeyboardDevice, e.InputSource, e.Timestamp, e.Key)
+              {
+                  RoutedEvent = e.RoutedEvent
+              };
+            if (sender is ScrollViewer) return;
+            ((ScrollViewer)sender).RaiseEvent(temporaryEventArgs);
+            e.Handled = temporaryEventArgs.Handled;
+        }
     }
 
-    [FocusModule]
-    [Theme(nameof(Background), typeof(Dark), ["default"])]
-    [Theme(nameof(Background), typeof(Light), ["default"])]
+    [FocusModule] 
+    [Theme(nameof(Background), typeof(Dark), ["#01ffffff"])]
+    [Theme(nameof(Background), typeof(Light), ["#01ffffff"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
     [Theme(nameof(Foreground), typeof(Light), ["#1e1e1e"])]
     public partial class NumberedMusicalNotationEditor
     {
-        private readonly ScaleTransform scale = new(2.2,2.2);
+        private readonly ScaleTransform scale = new(2.2, 2.2);
 
         [Constructor]
         private void SetContentScale()

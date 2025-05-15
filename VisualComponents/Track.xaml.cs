@@ -1,4 +1,6 @@
-﻿using MinimalisticWPF.SourceGeneratorMark;
+﻿using MinimalisticWPF.Controls;
+using MinimalisticWPF.HotKey;
+using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
@@ -7,13 +9,29 @@ using NotionPlay.VisualComponents.Models;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WindowsInput;
-using WindowsInput.Native;
 
 namespace NotionPlay.VisualComponents
 {
+    [FocusModule]
     public partial class Track : ItemsControl, IVisualNote, ISimulable
     {
+        [Constructor]
+        private void AddLocalHotKey()
+        {
+            LocalHotKey.Register(this, [Key.Delete], (s, e) =>
+            {
+                if (NotificationBox.Choose("⚠ 删除操作不可撤销 , 确定继续吗 ?"))
+                {
+                    if (ParentNote is Paragraph paragraph)
+                    {
+                        paragraph.Items.Remove(this);
+                    }
+                }
+            });
+        }
+
         public (Func<Task>, CancellationTokenSource) GetSimulation()
         {
             var source = new CancellationTokenSource();
@@ -99,8 +117,8 @@ namespace NotionPlay.VisualComponents
         }
     }
 
-    [Theme(nameof(Background), typeof(Dark), ["Transparent"])]
-    [Theme(nameof(Background), typeof(Light), ["Transparent"])]
+    [Theme(nameof(Background), typeof(Dark), ["#01ffffff"])]
+    [Theme(nameof(Background), typeof(Light), ["#01ffffff"])]
     [Hover([nameof(Background)])]
     public partial class Track
     {

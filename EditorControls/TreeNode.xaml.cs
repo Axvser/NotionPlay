@@ -165,9 +165,10 @@ namespace NotionPlay.EditorControls
             var notegroups = viewModel.Notes.Select(list => list.Select(v => new SingleNote() { MusicTheory = Theory, Note = v.Note, FrequencyLevel = v.FrequencyLevel, DurationType = v.DurationType }));
             foreach (var notegroup in notegroups)
             {
-                var track = new Track() { MusicTheory = Theory };
+                var track = new Track() { MusicTheory = Theory, ParentNote = paragraph };
                 foreach (var note in notegroup)
                 {
+                    note.ParentNote = track;
                     track.Items.Add(note);
                 }
                 paragraph.Items.Add(track);

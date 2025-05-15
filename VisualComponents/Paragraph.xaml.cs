@@ -168,8 +168,8 @@ namespace NotionPlay.VisualComponents
         }
     }
 
-    [Theme(nameof(Background), typeof(Dark), ["Transparent"])]
-    [Theme(nameof(Background), typeof(Light), ["Transparent"])]
+    [Theme(nameof(Background), typeof(Dark), ["#01ffffff"])]
+    [Theme(nameof(Background), typeof(Light), ["#01ffffff"])]
     [Hover([nameof(Background)])]
     public partial class Paragraph
     {

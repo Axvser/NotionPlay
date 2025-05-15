@@ -60,6 +60,7 @@ namespace NotionPlay.VisualComponents
         private void InitializeDefaultNote()
         {
             Loaded += (s, e) => UpdateNote();
+            MouseEnter += (s, e) => Focus();
             Style = Default_NoteStyle;
             LocalHotKey.Register(this, [Key.Delete], (s, e) =>
             {
@@ -74,34 +75,42 @@ namespace NotionPlay.VisualComponents
             });
             LocalHotKey.Register(this, [Key.W], (s, e) =>
             {
+                if (!CanEdit) return;
                 Up_Frequency();
             });
             LocalHotKey.Register(this, [Key.S], (s, e) =>
             {
+                if (!CanEdit) return;
                 Down_Frequency();
             });
             LocalHotKey.Register(this, [Key.D], (s, e) =>
             {
+                if (!CanEdit) return;
                 Up_Duration();
             });
             LocalHotKey.Register(this, [Key.A], (s, e) =>
             {
+                if (!CanEdit) return;
                 Down_Duration();
             });
             LocalHotKey.Register(this, [Key.Up], (s, e) =>
             {
+                if (!CanEdit) return;
                 Up_Frequency();
             });
             LocalHotKey.Register(this, [Key.Down], (s, e) =>
             {
+                if (!CanEdit) return;
                 Down_Frequency();
             });
             LocalHotKey.Register(this, [Key.Right], (s, e) =>
             {
+                if (!CanEdit) return;
                 Up_Duration();
             });
             LocalHotKey.Register(this, [Key.Left], (s, e) =>
             {
+                if (!CanEdit) return;
                 Down_Duration();
             });
             LocalHotKey.Register(this, [Key.D0], (s, e) =>

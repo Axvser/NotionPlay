@@ -7,12 +7,13 @@
             mc:Ignorable="d"  
             d:DesignHeight="450" 
             d:DesignWidth="800" 
-            x:Name="nmn" 
+            x:Name="nmn"
             PreviewMouseWheel="Viewer_MouseWheel">
     <ScrollViewer x:Name="viewer"
                   HorizontalScrollBarVisibility="Visible"
                   Foreground="{Binding ElementName=nmn,Path=Foreground}"
-                  Background="{Binding ElementName=nmn,Path=Background}">
+                  Background="{Binding ElementName=nmn,Path=Background}"
+                  KeyDown="ScrollViewer_KeyDown">
         <ScrollViewer.Template>
             <ControlTemplate TargetType="ScrollViewer">
                 <Grid>
