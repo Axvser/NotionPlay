@@ -3,6 +3,7 @@ using MinimalisticWPF.Controls;
 using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
+using MinimalisticWPF.TransitionSystem;
 using NotionPlay.EditorControls;
 using NotionPlay.EditorControls.ViewModels;
 using System.Windows;
@@ -25,7 +26,7 @@ namespace NotionPlay
             {
                 StopSimulation();
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl, VirtualKeys.S, (s, e) =>
+            LocalHotKey.Register(Editor, [Key.LeftCtrl, Key.S], (s, e) =>
             {
                 Editor.SaveData();
                 NotificationBox.Confirm("√ 已保存");
@@ -36,6 +37,7 @@ namespace NotionPlay
 
         private void CreateNewProject(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             if (NodeInfoSetter.NewProject(out var value))
             {
                 var vma = new TreeItemViewModel()
@@ -49,12 +51,43 @@ namespace NotionPlay
         }
         private async void OpenComponentFile(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             var vm = await TreeItemViewModel.FromFile();
             if (vm == TreeItemViewModel.Empty) return;
             SourceManager.RemoveProject(vm.Header);
             var node = new TreeNode(vm);
             SourceManager.AddProject(node);
         }
+        private void OpenOutputWindow(object sender, RoutedEventArgs e)
+        {
+            StopSimulation();
+        }
+        private void ChangeRunMode(object sender, RoutedEventArgs e)
+        {
+            StopSimulation();
+            GameMaskVisibility = GameMaskVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            CanSimulate = GameMaskVisibility != Visibility.Collapsed;
+            CanPreview = GameMaskVisibility == Visibility.Collapsed;
+            CanHightLight = GameMaskVisibility == Visibility.Collapsed;
+            menu1.BeginTransition(GameMaskVisibility == Visibility.Collapsed ? ts_buttonExpended : ts_buttonFolded);
+            menu2.BeginTransition(GameMaskVisibility == Visibility.Collapsed ? ts_buttonExpended : ts_buttonFolded);
+        }
+    }
+
+    public partial class MainWindow
+    {
+        private static TransitionBoard<MenuNode> ts_menuFolded = Transition.Create<MenuNode>()
+            .SetProperty(menu => menu.Width, 0)
+            .SetParams(TransitionParams.Hover);
+        private static TransitionBoard<MenuNode> ts_menuExpended = Transition.Create<MenuNode>()
+            .SetProperty(menu => menu.Width, 100)
+            .SetParams(TransitionParams.Hover);
+        private static TransitionBoard<Button> ts_buttonFolded = Transition.Create<Button>()
+            .SetProperty(button => button.Width, 0)
+            .SetParams(TransitionParams.Hover);
+        private static TransitionBoard<Button> ts_buttonExpended = Transition.Create<Button>()
+            .SetProperty(button => button.Width, 100)
+            .SetParams(TransitionParams.Hover);
     }
 
     [Theme(nameof(Background), typeof(Light), ["White"])]
@@ -80,6 +113,14 @@ namespace NotionPlay
         }
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(MainWindow), new PropertyMetadata(new CornerRadius(10d)));
+
+        public Visibility GameMaskVisibility
+        {
+            get { return (Visibility)GetValue(GameMaskVisibilityProperty); }
+            set { SetValue(GameMaskVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty GameMaskVisibilityProperty =
+            DependencyProperty.Register("GameMaskVisibility", typeof(Visibility), typeof(MainWindow), new PropertyMetadata(Visibility.Collapsed));
 
         private void WindowDragMove(object sender, MouseButtonEventArgs e)
         {
