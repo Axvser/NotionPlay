@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotionPlay.VisualComponents"
              xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Margin="5">
     <ItemsControl.Template>
         <ControlTemplate TargetType="ItemsControl">
             <Grid>

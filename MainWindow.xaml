@@ -101,7 +101,7 @@
                     <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>
-            <Grid Grid.ColumnSpan="3" Grid.ZIndex="1"
+            <Grid Grid.ColumnSpan="2" Grid.ZIndex="1"
                   Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Background}"
                   Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=GameMaskVisibility}">
                 <Grid.ColumnDefinitions>
