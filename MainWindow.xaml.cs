@@ -166,6 +166,10 @@ namespace NotionPlay
         {
             OpenSettings();
         }
+        private void ChangeTheme(object sender, RoutedEventArgs e)
+        {
+            DynamicTheme.Apply(DynamicTheme.CurrentTheme == typeof(Dark) ? typeof(Light) : typeof(Dark));
+        }
     }
 
     public partial class MainWindow
@@ -186,7 +190,7 @@ namespace NotionPlay
             .SetProperty(button => button.Width, 0)
             .SetParams(TransitionParams.Hover);
         private static TransitionBoard<StackPanel> ts_theorysetterExpended = Transition.Create<StackPanel>()
-            .SetProperty(button => button.Width, 400)
+            .SetProperty(button => button.Width, 600)
             .SetParams(TransitionParams.Hover);
     }
 

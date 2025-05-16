@@ -69,7 +69,7 @@
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
             <Setter Property="DarkHoveredBorderBrush" Value="Cyan"/>
             <Setter Property="DarkNoHoveredBorderBrush" Value="White"/>
-            <Setter Property="LightHoveredBorderBrush" Value="Violet"/>
+            <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,1,0,0"/>
         </Style>
@@ -80,7 +80,7 @@
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
             <Setter Property="DarkHoveredBorderBrush" Value="Cyan"/>
             <Setter Property="DarkNoHoveredBorderBrush" Value="White"/>
-            <Setter Property="LightHoveredBorderBrush" Value="Violet"/>
+            <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,0,0,1"/>
         </Style>
@@ -91,7 +91,7 @@
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
             <Setter Property="DarkHoveredBorderBrush" Value="Cyan"/>
             <Setter Property="DarkNoHoveredBorderBrush" Value="White"/>
-            <Setter Property="LightHoveredBorderBrush" Value="Violet"/>
+            <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,1,0,0"/>
         </Style>
@@ -102,7 +102,7 @@
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
             <Setter Property="DarkHoveredBorderBrush" Value="Cyan"/>
             <Setter Property="DarkNoHoveredBorderBrush" Value="White"/>
-            <Setter Property="LightHoveredBorderBrush" Value="Violet"/>
+            <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,0,0,1"/>
         </Style>
