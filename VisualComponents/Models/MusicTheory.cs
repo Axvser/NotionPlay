@@ -11,7 +11,7 @@ namespace NotionPlay.VisualComponents.Models
         public int BasicValue
         {
             get => _basicvalue;
-            set => _basicvalue = value > 0 ? value : 3000;
+            set => _basicvalue = value > 0 ? value : _basicvalue;
         }
 
         private int _speed = 80;
@@ -43,18 +43,7 @@ namespace NotionPlay.VisualComponents.Models
             }
         }
 
-        public int GetSpan(DurationTypes durationType)
-        {
-            return durationType switch
-            {
-                DurationTypes.Sixteen => BasicValue / 16,
-                DurationTypes.Eight => BasicValue / 8,
-                DurationTypes.Four => BasicValue / 4,
-                DurationTypes.Two => BasicValue / 2,
-                DurationTypes.One => BasicValue,
-                _ => 0
-            };
-        }
+        public int GetSpan(DurationTypes durationType) => BasicValue / Math.Clamp((int)durationType, 1, 64);
 
         private void ReCalculateBasicValue() => BasicValue = (int)(60000f / Speed * LeftNum);
     }

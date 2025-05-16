@@ -289,7 +289,7 @@ namespace NotionPlay.VisualComponents
         }
         public void Up_Duration()
         {
-            if (CanEdit) DurationType = (DurationTypes)Math.Clamp((int)DurationType / 2, 1, 16);
+            if (CanEdit) DurationType = (DurationTypes)Math.Clamp((int)DurationType / 2, 1, 64);
         }
         public void Down_Note()
         {
@@ -301,15 +301,23 @@ namespace NotionPlay.VisualComponents
         }
         public void Down_Duration()
         {
-            if (CanEdit) DurationType = (DurationTypes)Math.Clamp((int)DurationType * 2, 1, 16);
+            if (CanEdit) DurationType = (DurationTypes)Math.Clamp((int)DurationType * 2, 1, 64);
         }
 
         private void UpdateSize() => FontSize = Math.Clamp(ActualHeight * FontSizeScale, 0.1d, double.MaxValue);
-        private void UpdateWidth() => Width = ((double)DurationTypes.Sixteen / (double)DurationType) * UnitWidth;
+        private void UpdateWidth() => Width = Math.Clamp(((double)DurationTypes.Sixteen / (double)DurationType) * UnitWidth, 15d, double.MaxValue);
         private void UpdateDurationSymbol()
         {
             switch (DurationType)
             {
+                case DurationTypes.SixtyFour:
+                    DurationSymbol = SixtyFourSymbol;
+                    DurationSuffix = string.Empty;
+                    break;
+                case DurationTypes.ThirtyTwo:
+                    DurationSymbol = ThirtyTwoSymbol;
+                    DurationSuffix = string.Empty;
+                    break;
                 case DurationTypes.Sixteen:
                     DurationSymbol = SixteenthSymbol;
                     DurationSuffix = string.Empty;
@@ -382,6 +390,8 @@ namespace NotionPlay.VisualComponents
     {
         const double UnitWidth = 15d;
         const double FontSizeScale = 0.25d;
+        const string SixtyFourSymbol = "«";
+        const string ThirtyTwoSymbol = "‹";
         const string SixteenthSymbol = "=";
         const string EighthSymbol = "—";
         const string TwoSymbol = "——";

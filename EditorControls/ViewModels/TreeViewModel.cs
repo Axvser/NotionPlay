@@ -199,7 +199,7 @@ namespace NotionPlay.EditorControls.ViewModels
                 Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
                 Title = "选择 JSON 文件",
                 Multiselect = false,
-                DefaultDirectory = FileHelper.ProjectsFolder,
+                InitialDirectory = FileHelper.ProjectsFolder,
             };
             if (openFileDialog.ShowDialog() == true)
             {

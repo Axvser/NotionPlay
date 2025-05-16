@@ -25,7 +25,7 @@ namespace NotionPlay.VisualComponents
             var source = new CancellationTokenSource();
             async Task func()
             {
-                var span = MusicTheory.GetSpan(DurationTypes.Sixteen);
+                var span = MusicTheory.GetSpan(DurationTypes.SixtyFour);
                 var atoms = CalculateAtoms();
                 try
                 {
@@ -54,7 +54,7 @@ namespace NotionPlay.VisualComponents
         {
             async Task func()
             {
-                var span = MusicTheory.GetSpan(DurationTypes.Sixteen);
+                var span = MusicTheory.GetSpan(DurationTypes.SixtyFour);
                 var atoms = CalculateAtoms();
                 try
                 {
@@ -94,7 +94,7 @@ namespace NotionPlay.VisualComponents
                     {
                         if (item is SingleNote note)
                         {
-                            int steps = 16 / (int)note.DurationType;
+                            int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
                             for (int i = 0; i < steps; i++)
                             {
                                 while (atomCounter >= atoms.Count)
