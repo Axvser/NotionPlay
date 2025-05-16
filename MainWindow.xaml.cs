@@ -110,9 +110,9 @@ namespace NotionPlay
             StopSimulation();
             var condition = GameMaskVisibility == Visibility.Collapsed;
             GameMaskVisibility = condition ? Visibility.Visible : Visibility.Collapsed;
-            CanSimulate = GameMaskVisibility != Visibility.Collapsed;
-            CanPreview = condition;
-            CanHightLight = condition;
+            CanSimulate = condition;
+            CanPreview = !condition;
+            CanHightLight = !condition;
             menu1.BeginTransition(condition ? ts_menuFolded : ts_menuExpended);
             menu2.BeginTransition(condition ? ts_buttonExpended : ts_buttonFolded);
             theorysetter.BeginTransition(ts_theorysetterFolded);
