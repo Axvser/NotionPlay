@@ -8,7 +8,8 @@ namespace NotionPlay.Tools
     {
         public static readonly string AppRootPath = AppDomain.CurrentDomain.BaseDirectory;
         public static readonly string ProjectsFolder = Path.Combine(AppRootPath, "Projects");
-        public static readonly string SnapshotFolder = Path.Combine(AppRootPath, "Snapshots");
+        public static readonly string SnapshotsFolder = Path.Combine(AppRootPath, "Snapshots");
+        public static readonly string ConfigsFolder = Path.Combine(AppRootPath, "Configs");
 
         private static bool CanSaveProjects = true;
 

@@ -8,7 +8,11 @@
         xmlns:ec="clr-namespace:NotionPlay.EditorControls"
         xmlns:fc="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
         mc:Ignorable="d"
-        Title="NotionPlay" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" BorderThickness="0.6">
+        Title="NotionPlay" Height="450" Width="800" 
+        WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" 
+        BorderThickness="0.6"
+        InputMethod.PreferredImeState="Off"
+        InputMethod.PreferredImeConversionMode="Alphanumeric">
     <Window.Template>
         <ControlTemplate TargetType="Window">
             <Viewbox>
@@ -46,8 +50,12 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <!--工具栏-->
-            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+            <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Column="0">
                 <!--文件工具-->
                 <ec:MenuNode x:Name="menu1" Width="100" Height="30" Header="M114.8 592.6V301.1c0-119.5 70.2-194.3 194.3-194.3h291.5c124.2 0 194.3 79.4 194.3 194.3v103.3h56.7V276.8c0-125.2-101.5-226.7-226.7-226.7H284.8c-125.2 0-226.7 101.5-226.7 226.7V617c0 125.2 101.5 226.7 226.7 226.7h127.5V787H309.1c-118 0-194.3-79.4-194.3-194.4zM936.7 702H766.6V531.9c0-15.6-12.6-28.4-28.4-28.4-15.6 0-28.4 12.7-28.4 28.4V702h-170c-15.7 0-28.4 12.6-28.4 28.3 0 15.7 12.6 28.4 28.4 28.4h170v170.1c0 15.6 12.7 28.4 28.4 28.4s28.4-12.7 28.4-28.4V758.6h170.1c15.6 0 28.3-12.7 28.3-28.4S952.3 702 936.7 702z" Placement="Bottom">
                     <ec:MenuNode Click="CreateNewProject" Width="100" Height="30"
@@ -67,6 +75,9 @@
                            ContentScale="0.8"
                            Data="M512 640a32 32 0 0 0-32 32v96a32 32 0 1 0 64 0v-96a32 32 0 0 0-32-32zM333.312 317.888a12.8 12.8 0 0 0 9.056 3.744H480V544a32 32 0 1 0 64 0v-222.368h139.904a12.8 12.8 0 0 0 9.056-21.856l-170.752-170.752a12.8 12.8 0 0 0-18.112 0l-170.752 170.752a12.8 12.8 0 0 0-0.032 18.112z
                                  M892.384 186.496l-174.176-86.08a32.032 32.032 0 0 0-28.384 57.376L864 243.872v502.848l-352 147.52-352-147.52V243.872l174.176-86.08a32 32 0 0 0-28.32-57.376l-174.208 86.08A63.648 63.648 0 0 0 96 243.872v502.848c0 25.888 15.424 49.056 39.264 59.008l364.384 152.704a31.936 31.936 0 0 0 24.768 0l364.352-152.672A63.84 63.84 0 0 0 928 746.72V243.872a63.68 63.68 0 0 0-35.616-57.376z"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <!--模式切换-->
                 <fc:Button x:Name="menu3" Width="100" Height="30"  
                            Style="{StaticResource nicebutton}"
@@ -75,7 +86,29 @@
                            Data="M990.08 111.36a32 32 0 0 0-32 32V960H140.16a32 32 0 0 0 0 64h849.92a32 32 0 0 0 32-32V143.36a32 32 0 0 0-32-32z
                            M393.6 841.6a32 32 0 0 0-32-32H64V64h745.6v300.8a32 32 0 0 0 64 0V32a32 32 0 0 0-32-32H32a32 32 0 0 0-32 32v809.6a32 32 0 0 0 32 32h329.6a32 32 0 0 0 32-32z
                            M625.28 841.6a32 32 0 0 0 32 32h184.32a32 32 0 0 0 32-32v-183.68a32 32 0 1 0-64 0v106.24L256 210.56h106.24a32 32 0 0 0 0-64H178.56a32 32 0 0 0-32 32v184.96a32 32 0 0 0 64 0V256l553.6 553.6h-106.88a32 32 0 0 0-32 32z"/>
-
+                <!--设置-->
+                <fc:Button x:Name="menu4" Width="100" Height="30"
+                           Style="{StaticResource nicebutton}"
+                           ContentScale="0.8"
+                           Click="OpenSettings"
+                           AllowHoverRotate="True"
+                           Data="M416.4 958h191.2V849.7c0-12.7 6.4-25.5 19.1-31.9 31.9-12.7 63.7-31.9 89.2-51 12.7-6.4 25.5-6.4 38.2 0l95.6 57.3 95.6-165.7-95.6-57.3C837 588.5 830.6 575.7 
+                           837 563c0-19.1 6.4-31.9 6.4-51s0-31.9-6.4-51c0-12.7 6.4-25.5 12.7-31.9l95.6-57.3-95.6-165.7-95.6 57.3c-12.7 6.4-25.5 6.4-38.2 0-25.5-19.1-57.3-38.2-89.2-51-12.7-12.7-19.1-25.5-19.1-38.2V66H416.4v108.3c0 
+                           12.7-6.4 25.5-19.1 31.9-31.9 12.7-63.7 31.9-89.2 51-12.7 6.4-25.5 6.4-38.2 0l-95.6-51-95.6 165.6 95.6 57.3c12.7 6.4 19.1 19.1 12.7 31.9 0 19.1-6.4 31.9-6.4 51s0 31.9 6.4 51c6.4 12.7 0 25.5-12.7 31.9l-95.6 57.3 
+                           95.6 165.7 95.6-57.3c12.7-6.4 25.5-6.4 38.2 0 25.5 19.1 57.3 38.2 89.2 51 12.7 6.4 19.1 19.1 19.1 31.9V958z m223 63.7H384.6c-19.1 0-31.9-12.7-31.9-31.9v-121c-25.5-12.7-51-25.5-70.1-38.2l-101.9 63.7c-12.7 6.4-31.9 6.4-44.6-12.7L8.6 
+                           658.6c-12.7-19.1-6.4-38.2 12.7-44.6l101.9-63.7v-76.5L21.4 410.1c-19.1-6.4-25.5-25.5-12.7-44.6l127.4-223c6.4-12.7 25.5-19.1 44.6-6.4l101.9 63.7c19.1-12.7 44.6-31.9 70.1-38.2V34.1c0-19.1 12.7-31.9 31.9-31.9h254.9c19.1 0 31.9 12.7 31.9 
+                           31.9v121.1c25.5 12.7 51 25.5 70.1 38.2l101.9-63.7c12.7-6.4 31.9-6.4 44.6 12.7l127.4 223c12.7 19.1 6.4 38.2-12.7 44.6l-101.9 63.7v76.5l101.9 63.7c12.7 6.4 19.1 25.5 12.7 44.6L888 881.5c-6.4 12.7-25.5 19.1-44.6 12.7l-101.9-63.7c-19.1 12.7-44.6 
+                           31.9-70.1 38.2v121.1c-0.1 19.2-12.8 31.9-32 31.9zM512 703.2c-108.3 0-191.2-82.8-191.2-191.2S403.7 320.8 512 320.8 703.2 403.7 703.2 512 620.3 703.2 512 703.2z m0-318.6c-70.1 0-127.4 57.3-127.4 127.4S441.9 639.4 512 639.4 639.4 582.1 639.4 512 582.1 384.6 512 384.6z"/>
+                <StackPanel x:Name="theorysetter" Orientation="Horizontal" HorizontalAlignment="Left" Width="0">
+                    <fc:Button x:Name="menu5" Width="200" Height="30"
+                               Style="{StaticResource theorysetter}"
+                               ContentScale="0.618"
+                               Data="速度 ⇢ 80"/>
+                    <fc:Button x:Name="menu6" Width="200" Height="30"
+                               Style="{StaticResource theorysetter}"
+                               ContentScale="0.618"
+                               Data="拍号 ⇢ 4/4"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">

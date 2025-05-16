@@ -113,7 +113,7 @@ namespace NotionPlay.EditorControls
         {
             if (NodeInfoSetter.Snapshot(out var fileName))
             {
-                var result = await TreeItemViewModel.SaveSnapshot(ViewModel, FileHelper.SnapshotFolder, fileName);
+                var result = await TreeItemViewModel.SaveSnapshot(ViewModel, FileHelper.SnapshotsFolder, fileName);
                 if (result)
                 {
                     NotificationBox.Confirm("✔ 快照已存储","成功 !");

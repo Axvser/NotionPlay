@@ -20,6 +20,21 @@
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
             <Setter Property="LightNoHoveredBackground" Value="White"/>
         </Style>
+        <Style TargetType="v:Button" x:Key="theorysetter">
+            <Setter Property="DarkHoveredForeground" Value="Cyan"/>
+            <Setter Property="DarkNoHoveredForeground" Value="White"/>
+            <Setter Property="LightHoveredForeground" Value="Red"/>
+            <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
+            <Setter Property="DarkHoveredBorderBrush" Value="Cyan"/>
+            <Setter Property="DarkNoHoveredBorderBrush" Value="White"/>
+            <Setter Property="LightHoveredBorderBrush" Value="Red"/>
+            <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
+            <Setter Property="LightHoveredBackground" Value="White"/>
+            <Setter Property="LightNoHoveredBackground" Value="White"/>
+            <Setter Property="HoveredBorderThickness" Value="6,1,6,1"/>
+            <Setter Property="NoHoveredBorderThickness" Value="0"/>
+        </Style>
         <Style TargetType="components:SingleNote" x:Key="nicebutton2">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
             <Setter Property="DarkNoHoveredForeground" Value="White"/>

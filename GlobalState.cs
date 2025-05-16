@@ -1,4 +1,5 @@
 ﻿using NotionPlay.EditorControls;
+using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Interfaces;
 using NotionPlay.VisualComponents;
 using NotionPlay.VisualComponents.Models;
@@ -13,11 +14,15 @@ namespace NotionPlay
         public static bool CanSimulate { get; set; } = false;
         public static bool CanPreview { get; set; } = true;
         public static bool CanHightLight { get; set; } = true;
+        
+        public static bool CanTheorySetter { get; set; } = false;
 
         public static MusicTheory Theory { get; set; } = new();
         public static SourceViewer? SourceViewerHost { get; set; }
         public static NumberedMusicalNotationEditor? EditorHost { get; set; }
         public static Style? Default_NoteStyle { get; private set; } = Application.Current.TryFindResource("nicebutton2") as Style;
+
+        public static SettingsViewModel Settings { get; set; } = SettingsViewModel.Default;
 
         private static CancellationTokenSource? SimulationTokenSource;
         public static async void SubmitSimulation(ISimulable container)

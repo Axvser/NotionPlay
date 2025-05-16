@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using System.Windows.Media;
 using WindowsInput.Native;
 
@@ -54,7 +55,6 @@ namespace NotionPlay.Tools
                 }
             }
         }
-
         public static void PlayNote(VirtualKeyCode key)
         {
             if (_activePlayers.TryGetValue(key, out var player))
@@ -64,7 +64,6 @@ namespace NotionPlay.Tools
                 player.Play();
             }
         }
-
         public static void StopNote(VirtualKeyCode key)
         {
             if (_activePlayers.TryGetValue(key, out var player))
@@ -73,7 +72,6 @@ namespace NotionPlay.Tools
                 player.Position = TimeSpan.Zero;
             }
         }
-
         public static void StopAllNotes()
         {
             foreach (var player in _activePlayers.Values)
