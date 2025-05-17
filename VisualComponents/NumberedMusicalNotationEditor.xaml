@@ -95,7 +95,7 @@
                 </Grid>
             </ControlTemplate>
         </ScrollViewer.Template>
-        <UniformGrid x:Name="container" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <UniformGrid x:Name="container" HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="1080">
 
         </UniformGrid>
     </ScrollViewer>

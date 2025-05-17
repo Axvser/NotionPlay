@@ -18,6 +18,7 @@
                 <!--触发按钮-->
                 <v:Button x:Name="bt"
                           Data="{Binding ElementName=Root,Path=Header}" 
+                          ContentScale="0.9"
                           Style="{StaticResource menubutton}"
                           Click="Button_Click"/>
 

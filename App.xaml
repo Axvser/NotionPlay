@@ -14,11 +14,13 @@
         <Style TargetType="v:Button" x:Key="nicebutton">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
             <Setter Property="DarkNoHoveredForeground" Value="White"/>
-            <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
             <Setter Property="LightHoveredForeground" Value="Red"/>
-            <Setter Property="LightHoveredBackground" Value="White"/>
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
-            <Setter Property="LightNoHoveredBackground" Value="White"/>
+
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
         </Style>
         <Style TargetType="v:Button" x:Key="theorysetter">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
@@ -28,10 +30,10 @@
             <Setter Property="DarkHoveredBorderBrush" Value="Cyan"/>
             <Setter Property="DarkNoHoveredBorderBrush" Value="White"/>
             <Setter Property="LightHoveredBorderBrush" Value="Red"/>
-            <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
-            <Setter Property="DarkNoHoveredBackground" Value="#1e1e1e"/>
-            <Setter Property="LightHoveredBackground" Value="White"/>
-            <Setter Property="LightNoHoveredBackground" Value="White"/>
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
             <Setter Property="HoveredBorderThickness" Value="6,1,6,1"/>
             <Setter Property="NoHoveredBorderThickness" Value="0"/>
         </Style>
@@ -47,10 +49,10 @@
             <Setter Property="DarkNoHoveredForeground" Value="White"/>
             <Setter Property="LightHoveredForeground" Value="Red"/>
             <Setter Property="LightNoHoveredForeground" Value="#1e1e1e"/>
-            <Setter Property="DarkHoveredBackground" Value="Transparent"/>
-            <Setter Property="DarkNoHoveredBackground" Value="Transparent"/>
-            <Setter Property="LightHoveredBackground" Value="Transparent"/>
-            <Setter Property="LightNoHoveredBackground" Value="Transparent"/>
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
         </Style>
         <Style TargetType="v:Button" x:Key="menubutton">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
@@ -72,6 +74,10 @@
             <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,1,0,0"/>
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
         </Style>
         <Style TargetType="v:Button" x:Key="paragraphleftbar_bot">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
@@ -83,6 +89,10 @@
             <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,0,0,1"/>
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
         </Style>
         <Style TargetType="v:Button" x:Key="trackleftbar_top">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
@@ -94,6 +104,10 @@
             <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,1,0,0"/>
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
         </Style>
         <Style TargetType="v:Button" x:Key="trackleftbar_bot">
             <Setter Property="DarkHoveredForeground" Value="Cyan"/>
@@ -105,6 +119,10 @@
             <Setter Property="LightHoveredBorderBrush" Value="Red"/>
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,0,0,1"/>
+            <Setter Property="DarkHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="DarkNoHoveredBackground" Value="#01ffffff"/>
+            <Setter Property="LightNoHoveredBackground" Value="#01ffffff"/>
         </Style>
         <Style TargetType="components:Paragraph">
             <Setter Property="DarkHoveredBackground" Value="#20FFFFFF"/>

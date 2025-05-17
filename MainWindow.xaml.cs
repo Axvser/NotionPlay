@@ -168,7 +168,12 @@ namespace NotionPlay
         }
         private void ChangeTheme(object sender, RoutedEventArgs e)
         {
+            if (DynamicTheme.IsThemeChanging) return;
             DynamicTheme.Apply(DynamicTheme.CurrentTheme == typeof(Dark) ? typeof(Light) : typeof(Dark));
+        }
+        private void OpenHotKeySetter(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 

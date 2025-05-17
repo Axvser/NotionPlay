@@ -56,8 +56,6 @@ namespace NotionPlay.EditorControls.ViewModels
         [Observable]
         private Visibility canAddChild = Visibility.Visible;
         [Observable]
-        private Visibility canOutput = Visibility.Visible;
-        [Observable]
         private ObservableCollection<TreeItemViewModel> children = [];
     }
 

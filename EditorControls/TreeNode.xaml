@@ -15,28 +15,28 @@
             <MenuItem Header="{Binding AddedName}" Click="Menu_AddChild" Visibility="{Binding CanAddChild}">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
-                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
             <MenuItem Header="⇢ 重命名" Click="Menu_Rename">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
-                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
             <MenuItem Header="{Binding RemovedName}" Click="Menu_Delete">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
-                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
-            <MenuItem Header="◩ 创建快照" Click="MenuItem_Snapshot" Visibility="{Binding CanOutput}">
+            <MenuItem Header="◩ 创建快照" Click="MenuItem_Snapshot">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
-                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource nicebutton}"/>
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
