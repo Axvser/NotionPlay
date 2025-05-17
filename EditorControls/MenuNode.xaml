@@ -14,12 +14,12 @@
              x:Name="Root">
     <ItemsControl.Template>
         <ControlTemplate TargetType="{x:Type ItemsControl}">
-            <Grid>
+            <Grid Background="{TemplateBinding Background}">
                 <!--触发按钮-->
                 <v:Button x:Name="bt"
                           Data="{Binding ElementName=Root,Path=Header}" 
                           ContentScale="0.9"
-                          Style="{StaticResource menubutton}"
+                          Style="{StaticResource nicebutton}"
                           Click="Button_Click"/>
 
                 <!-- 弹出菜单 - 包含子项 -->

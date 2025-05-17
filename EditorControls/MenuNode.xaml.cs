@@ -10,6 +10,8 @@ namespace NotionPlay.EditorControls
     [ClickModule]
     [Theme(nameof(BorderBrush), typeof(Dark), ["White"])]
     [Theme(nameof(BorderBrush), typeof(Light), ["#1e1e1e"])]
+    [Theme(nameof(Background), typeof(Dark), ["#1e1e1e"])]
+    [Theme(nameof(Background), typeof(Light), ["White"])]
     public partial class MenuNode : ItemsControl, IFoldableNode, ILockableNode
     {
         [Constructor]
