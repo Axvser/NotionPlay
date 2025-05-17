@@ -16,6 +16,9 @@ namespace NotionPlay.EditorControls.ViewModels
         public static SettingsViewModel Default { get; private set; } = new();
 
         [Observable]
+        private bool isDark = true;
+
+        [Observable]
         private int speed = 80;
         [Observable]
         private int leftNum = 4;

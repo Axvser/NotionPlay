@@ -22,7 +22,7 @@
 	<ItemGroup>
 		<PackageReference Include="InputSimulator" Version="1.0.4" />
 		<PackageReference Include="MinimalisticWPF" Version="4.9.9" />
-		<PackageReference Include="MinimalisticWPF.Controls" Version="2.0.4" />
+		<PackageReference Include="MinimalisticWPF.Controls" Version="2.0.5" />
 		<PackageReference Include="MinimalisticWPF.Generator" Version="4.4.0" />
 	</ItemGroup>
 

@@ -35,82 +35,10 @@ namespace NotionPlay
             Theory.Speed = Settings.Speed;
             Theory.LeftNum = Settings.LeftNum;
             Theory.RightNum = Settings.RightNum;
-
-            GlobalHotKey.Register(Settings.HotKey_Start_Left, Settings.HotKey_Start_Right, (s, e) =>
-            {
-                SubmitSimulation(Editor);
-            });
-            GlobalHotKey.Register(Settings.HotKey_Stop_Left, Settings.HotKey_Stop_Right, (s, e) =>
-            {
-                StopSimulation();
-            });
-            GlobalHotKey.Register(Settings.HotKey_ChangeMode_Left, Settings.HotKey_ChangeMode_Right, (s, e) =>
-            {
-                StopSimulation();
-                ChangeRunMode();
-            });
-            GlobalHotKey.Register(Settings.HotKey_OpenSetting_Left, Settings.HotKey_OpenSetting_Right, (s, e) =>
-            {
-                StopSimulation();
-                OpenSettings();
-            });
-            GlobalHotKey.Register(Settings.HotKey_PlusSpeed_Left, Settings.HotKey_PlusSpeed_Right, (s, e) =>
-            {
-                StopSimulation();
-                var newValue = Math.Clamp(Theory.Speed + 1, 1, int.MaxValue);
-                Settings.Speed = newValue;
-                Theory.Speed = newValue;
-                menu5.Data = $"速度 ⇢ {newValue}";
-            });
-            GlobalHotKey.Register(Settings.HotKey_MinuSpeed_Left, Settings.HotKey_MinuSpeed_Right, (s, e) =>
-            {
-                StopSimulation();
-                var newValue = Math.Clamp(Theory.Speed - 1, 1, int.MaxValue);
-                Settings.Speed = newValue;
-                Theory.Speed = newValue;
-                menu5.Data = $"速度 ⇢ {newValue}";
-            });
-            GlobalHotKey.Register(Settings.HotKey_PlusLeftNum_Left, Settings.HotKey_PlusLeftNum_Right, (s, e) =>
-            {
-                StopSimulation();
-                var newValue = Math.Clamp(Theory.LeftNum + 1, 1, int.MaxValue);
-                Settings.LeftNum = newValue;
-                Theory.LeftNum = newValue;
-                menu6.Data = $"拍号 ⇢ {newValue} / {Theory.RightNum}";
-            });
-            GlobalHotKey.Register(Settings.HotKey_MinuLeftNum_Left, Settings.HotKey_MinuLeftNum_Right, (s, e) =>
-            {
-                StopSimulation();
-                var newValue = Math.Clamp(Theory.LeftNum - 1, 1, int.MaxValue);
-                Settings.LeftNum = newValue;
-                Theory.LeftNum = newValue;
-                menu6.Data = $"拍号 ⇢ {newValue} / {Theory.RightNum}";
-            });
-            GlobalHotKey.Register(Settings.HotKey_PlusRightNum_Left, Settings.HotKey_PlusRightNum_Right, (s, e) =>
-            {
-                StopSimulation();
-                var newValue = Math.Clamp(Theory.RightNum *= 2, 1, 64);
-                Settings.RightNum = newValue;
-                Theory.RightNum = newValue;
-                menu6.Data = $"拍号 ⇢ {Theory.LeftNum} / {newValue}";
-            });
-            GlobalHotKey.Register(Settings.HotKey_MinuRightNum_Left, Settings.HotKey_MinuRightNum_Right, (s, e) =>
-            {
-                StopSimulation();
-                var newValue = Math.Clamp(Theory.RightNum /= 2, 1, 64);
-                Settings.RightNum = newValue;
-                Theory.RightNum = newValue;
-                menu6.Data = $"拍号 ⇢ {Theory.LeftNum} / {newValue}";
-            });
-
             Loaded += (s, e) => UpdateTheoryText();
         }
-
-        private void UpdateTheoryText()
+        public void UpdateTheoryText()
         {
-            Theory.Speed = Settings.Speed;
-            Theory.LeftNum = Settings.LeftNum;
-            Theory.RightNum = Settings.RightNum;
             menu5.Data = $"速度 ⇢ {Settings.Speed}";
             menu6.Data = $"拍号 ⇢ {Settings.LeftNum} / {Settings.RightNum}";
         }
@@ -257,9 +185,9 @@ namespace NotionPlay
         }
         private async void Close_Click(object sender, RoutedEventArgs e)
         {
-            HotKeySetter.Instance.Close();
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
+            HotKeySetter.Instance.Close();
             Close();
         }
         private void Size_Click(object sender, RoutedEventArgs e)

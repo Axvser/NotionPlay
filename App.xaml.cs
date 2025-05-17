@@ -11,9 +11,14 @@ namespace NotionPlay
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            DynamicTheme.FollowSystem(typeof(Dark));
-            AudioHelper.Initialize();
             Settings = await SettingsViewModel.FromFile();
+            DynamicTheme.ThemeChangeLoaded += (s, e) =>
+            {
+                Settings.IsDark = DynamicTheme.CurrentTheme == typeof(Dark);
+            };
+            DynamicTheme.FollowSystem(Settings.IsDark ? typeof(Dark) : typeof(Light));
+            AudioHelper.Initialize();
+            HotKeySetter.Instance.DataContext = Settings;
         }
     }
 }

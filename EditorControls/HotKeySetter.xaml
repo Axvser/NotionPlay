@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotionPlay.EditorControls"
         xmlns:wpfc="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
+        xmlns:cvt="clr-namespace:NotionPlay.EditorControls.Converters"
         mc:Ignorable="d"
         x:Name="Root"
         Title="HotKeySetter" Height="450" Width="800"
@@ -22,8 +23,11 @@
             <Setter Property="LightNoHoveredBorderBrush" Value="#1e1e1e"/>
             <Setter Property="HoveredBorderThickness" Value="10,1,10,1"/>
             <Setter Property="NoHoveredBorderThickness" Value="1,0,0,0"/>
+            <Setter Property="CanDefaultHotKeyText" Value="False"/>
             <Setter Property="Margin" Value="0,0,20,0"/>
         </Style>
+        <cvt:ModifierCvt x:Key="modifierCvt"/>
+        <cvt:KeyCvt x:Key="keyCvt"/>
     </Window.Resources>
     <Window.Template>
         <ControlTemplate TargetType="Window">
@@ -79,16 +83,16 @@
                 <TextBlock Text="减每节拍数" Grid.Row="7" Grid.Column="0" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding ElementName=Root,Path=Foreground}"/>
                 <TextBlock Text="加每拍持续" Grid.Row="8" Grid.Column="0" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding ElementName=Root,Path=Foreground}"/>
                 <TextBlock Text="减每拍持续" Grid.Row="9" Grid.Column="0" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding ElementName=Root,Path=Foreground}"/>
-                <wpfc:HotKeyBox Grid.Row="0" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="1" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="2" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="3" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="4" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="5" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="6" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="7" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="8" Grid.Column="1" />
-                <wpfc:HotKeyBox Grid.Row="9" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK1" ModifiersChanged="HK1_ModifiersChanged" KeyChanged="HK1_KeyChanged" RecordedModifiers="{Binding HotKey_Start_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_Start_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="Start" Grid.Row="0" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK2" ModifiersChanged="HK2_ModifiersChanged" KeyChanged="HK2_KeyChanged" RecordedModifiers="{Binding HotKey_Stop_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_Stop_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="Stop" Grid.Row="1" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK3" ModifiersChanged="HK3_ModifiersChanged" KeyChanged="HK3_KeyChanged" RecordedModifiers="{Binding HotKey_ChangeMode_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_ChangeMode_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="ChangeMode" Grid.Row="2" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK4" ModifiersChanged="HK4_ModifiersChanged" KeyChanged="HK4_KeyChanged" RecordedModifiers="{Binding HotKey_OpenSetting_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_OpenSetting_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="OpenSettings" Grid.Row="3" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK5" ModifiersChanged="HK5_ModifiersChanged" KeyChanged="HK5_KeyChanged" RecordedModifiers="{Binding HotKey_PlusSpeed_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_PlusSpeed_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="PlusSpeed" Grid.Row="4" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK6" ModifiersChanged="HK6_ModifiersChanged" KeyChanged="HK6_KeyChanged" RecordedModifiers="{Binding HotKey_MinuSpeed_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_MinuSpeed_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="MinuSpeed" Grid.Row="5" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK7" ModifiersChanged="HK7_ModifiersChanged" KeyChanged="HK7_KeyChanged" RecordedModifiers="{Binding HotKey_PlusLeftNum_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_PlusLeftNum_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="PlusLeftNum" Grid.Row="6" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK8" ModifiersChanged="HK8_ModifiersChanged" KeyChanged="HK8_KeyChanged" RecordedModifiers="{Binding HotKey_MinuLeftNum_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_MinuLeftNum_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="MinuLeftNum" Grid.Row="7" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK9" ModifiersChanged="HK9_ModifiersChanged" KeyChanged="HK9_KeyChanged" RecordedModifiers="{Binding HotKey_PlusRightNum_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_PlusRightNum_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="PlusRightNum" Grid.Row="8" Grid.Column="1" />
+                <wpfc:HotKeyBox x:Name="HK10" ModifiersChanged="HK10_ModifiersChanged" KeyChanged="HK10_KeyChanged" RecordedModifiers="{Binding HotKey_MinuRightNum_Left,Converter={StaticResource modifierCvt}}" RecordedKey="{Binding HotKey_MinuRightNum_Right,Converter={StaticResource keyCvt}}" HotKeyInvoked="MinuRightNum" Grid.Row="9" Grid.Column="1" />
             </Grid>
         </Grid>
     </Viewbox>
