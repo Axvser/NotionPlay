@@ -86,12 +86,6 @@
                            Data="M990.08 111.36a32 32 0 0 0-32 32V960H140.16a32 32 0 0 0 0 64h849.92a32 32 0 0 0 32-32V143.36a32 32 0 0 0-32-32z
                            M393.6 841.6a32 32 0 0 0-32-32H64V64h745.6v300.8a32 32 0 0 0 64 0V32a32 32 0 0 0-32-32H32a32 32 0 0 0-32 32v809.6a32 32 0 0 0 32 32h329.6a32 32 0 0 0 32-32z
                            M625.28 841.6a32 32 0 0 0 32 32h184.32a32 32 0 0 0 32-32v-183.68a32 32 0 1 0-64 0v106.24L256 210.56h106.24a32 32 0 0 0 0-64H178.56a32 32 0 0 0-32 32v184.96a32 32 0 0 0 64 0V256l553.6 553.6h-106.88a32 32 0 0 0-32 32z"/>
-                <!--设定热键-->
-                <fc:Button x:Name="menu8" Width="100" Height="30"
-                               Click="OpenHotKeySetter"
-                               Style="{StaticResource nicebutton}"
-                               ContentScale="0.9"
-                               Data="M868.198326 374.183709H610.334718l231.909091-286.230797a8.992692 8.992692 0 0 0 1.023559-9.650694 9.43136 9.43136 0 0 0-8.407802-5.190903h-448.903473a9.358248 9.358248 0 0 0-8.042244 4.606013L74.501892 589.42342a8.992692 8.992692 0 0 0 0 9.138915 9.43136 9.43136 0 0 0 8.042245 4.606012H286.81715l-104.622291 408.984696c-2.193339 8.91958 8.773358 15.207153 15.57271 8.773357l676.864553-630.950647a8.91958 8.91958 0 0 0 2.193339-10.01625 9.285137 9.285137 0 0 0-8.627135-5.702682z m-549.870199 426.823856l70.552419-275.629657h-184.240514l221.965952-374.329932h262.908288L445.688037 452.120371h246.970022l-374.329932 348.960306z"/>
                 <!--设置-->
                 <fc:Button x:Name="menu4" Width="100" Height="30"
                            Style="{StaticResource nicebutton}"
@@ -106,6 +100,11 @@
                            31.9v121.1c25.5 12.7 51 25.5 70.1 38.2l101.9-63.7c12.7-6.4 31.9-6.4 44.6 12.7l127.4 223c12.7 19.1 6.4 38.2-12.7 44.6l-101.9 63.7v76.5l101.9 63.7c12.7 6.4 19.1 25.5 12.7 44.6L888 881.5c-6.4 12.7-25.5 19.1-44.6 12.7l-101.9-63.7c-19.1 12.7-44.6 
                            31.9-70.1 38.2v121.1c-0.1 19.2-12.8 31.9-32 31.9zM512 703.2c-108.3 0-191.2-82.8-191.2-191.2S403.7 320.8 512 320.8 703.2 403.7 703.2 512 620.3 703.2 512 703.2z m0-318.6c-70.1 0-127.4 57.3-127.4 127.4S441.9 639.4 512 639.4 639.4 582.1 639.4 512 582.1 384.6 512 384.6z"/>
                 <StackPanel x:Name="theorysetter" Orientation="Horizontal" HorizontalAlignment="Left" Width="0">
+                    <fc:Button x:Name="menu8" Width="100" Height="30"
+                               Click="OpenHotKeySetter"
+                               Style="{StaticResource nicebutton}"
+                               ContentScale="0.9"
+                               Data="M868.198326 374.183709H610.334718l231.909091-286.230797a8.992692 8.992692 0 0 0 1.023559-9.650694 9.43136 9.43136 0 0 0-8.407802-5.190903h-448.903473a9.358248 9.358248 0 0 0-8.042244 4.606013L74.501892 589.42342a8.992692 8.992692 0 0 0 0 9.138915 9.43136 9.43136 0 0 0 8.042245 4.606012H286.81715l-104.622291 408.984696c-2.193339 8.91958 8.773358 15.207153 15.57271 8.773357l676.864553-630.950647a8.91958 8.91958 0 0 0 2.193339-10.01625 9.285137 9.285137 0 0 0-8.627135-5.702682z m-549.870199 426.823856l70.552419-275.629657h-184.240514l221.965952-374.329932h262.908288L445.688037 452.120371h246.970022l-374.329932 348.960306z"/>
                     <fc:Button x:Name="menu7" Width="100" Height="30"
                                Click="ChangeTheme"
                                Style="{StaticResource nicebutton}"
@@ -145,15 +144,18 @@
                     <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>
-            <Grid Grid.ColumnSpan="2" Grid.ZIndex="1"
-                  Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Background}"
-                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=GameMaskVisibility}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="17*"/>
-                    <ColumnDefinition Width="33*"/>
-                </Grid.ColumnDefinitions>
+            <!--模拟模式-->
+            <Border Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Background}"
+                    CornerRadius="10">
+                <Grid Grid.ColumnSpan="2" Grid.ZIndex="1"
+                      Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=GameMaskVisibility}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="33*"/>
+                    </Grid.ColumnDefinitions>
 
-            </Grid>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>

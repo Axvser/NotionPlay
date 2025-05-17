@@ -28,81 +28,91 @@ namespace NotionPlay
             EditorHost = Editor;
             SourceViewerHost = SourceManager;
             LoadConfig();
-            AddHotKey();
         }
 
         private void LoadConfig()
         {
-            Loaded += async (s, e) =>
-            {
-                Settings = await SettingsViewModel.FromFile();
-                Theory.Speed = Settings.Speed;
-                Theory.LeftNum = Settings.LeftNum;
-                Theory.RightNum = Settings.RightNum;
-                menu5.Data = $"速度 ⇢ {Settings.Speed}";
-                menu6.Data = $"拍号 ⇢ {Settings.LeftNum} / {Settings.RightNum}";
-            };
-        }
-        private void AddHotKey()
-        {
-            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Z, (s, e) =>
+            Theory.Speed = Settings.Speed;
+            Theory.LeftNum = Settings.LeftNum;
+            Theory.RightNum = Settings.RightNum;
+
+            GlobalHotKey.Register(Settings.HotKey_Start_Left, Settings.HotKey_Start_Right, (s, e) =>
             {
                 SubmitSimulation(Editor);
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.X, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_Stop_Left, Settings.HotKey_Stop_Right, (s, e) =>
             {
                 StopSimulation();
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.C, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_ChangeMode_Left, Settings.HotKey_ChangeMode_Right, (s, e) =>
             {
+                StopSimulation();
                 ChangeRunMode();
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.S, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_OpenSetting_Left, Settings.HotKey_OpenSetting_Right, (s, e) =>
             {
+                StopSimulation();
                 OpenSettings();
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Plus, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_PlusSpeed_Left, Settings.HotKey_PlusSpeed_Right, (s, e) =>
             {
+                StopSimulation();
                 var newValue = Math.Clamp(Theory.Speed + 1, 1, int.MaxValue);
                 Settings.Speed = newValue;
                 Theory.Speed = newValue;
                 menu5.Data = $"速度 ⇢ {newValue}";
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl | VirtualModifiers.Shift, VirtualKeys.Minus, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_MinuSpeed_Left, Settings.HotKey_MinuSpeed_Right, (s, e) =>
             {
+                StopSimulation();
                 var newValue = Math.Clamp(Theory.Speed - 1, 1, int.MaxValue);
                 Settings.Speed = newValue;
                 Theory.Speed = newValue;
                 menu5.Data = $"速度 ⇢ {newValue}";
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl, VirtualKeys.Plus, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_PlusLeftNum_Left, Settings.HotKey_PlusLeftNum_Right, (s, e) =>
             {
+                StopSimulation();
                 var newValue = Math.Clamp(Theory.LeftNum + 1, 1, int.MaxValue);
                 Settings.LeftNum = newValue;
                 Theory.LeftNum = newValue;
                 menu6.Data = $"拍号 ⇢ {newValue} / {Theory.RightNum}";
             });
-            GlobalHotKey.Register(VirtualModifiers.Ctrl, VirtualKeys.Minus, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_MinuLeftNum_Left, Settings.HotKey_MinuLeftNum_Right, (s, e) =>
             {
+                StopSimulation();
                 var newValue = Math.Clamp(Theory.LeftNum - 1, 1, int.MaxValue);
                 Settings.LeftNum = newValue;
                 Theory.LeftNum = newValue;
                 menu6.Data = $"拍号 ⇢ {newValue} / {Theory.RightNum}";
             });
-            GlobalHotKey.Register(VirtualModifiers.Alt, VirtualKeys.Plus, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_PlusRightNum_Left, Settings.HotKey_PlusRightNum_Right, (s, e) =>
             {
+                StopSimulation();
                 var newValue = Math.Clamp(Theory.RightNum *= 2, 1, 64);
                 Settings.RightNum = newValue;
                 Theory.RightNum = newValue;
                 menu6.Data = $"拍号 ⇢ {Theory.LeftNum} / {newValue}";
             });
-            GlobalHotKey.Register(VirtualModifiers.Alt, VirtualKeys.Minus, (s, e) =>
+            GlobalHotKey.Register(Settings.HotKey_MinuRightNum_Left, Settings.HotKey_MinuRightNum_Right, (s, e) =>
             {
+                StopSimulation();
                 var newValue = Math.Clamp(Theory.RightNum /= 2, 1, 64);
                 Settings.RightNum = newValue;
                 Theory.RightNum = newValue;
                 menu6.Data = $"拍号 ⇢ {Theory.LeftNum} / {newValue}";
             });
+
+            Loaded += (s, e) => UpdateTheoryText();
+        }
+
+        private void UpdateTheoryText()
+        {
+            Theory.Speed = Settings.Speed;
+            Theory.LeftNum = Settings.LeftNum;
+            Theory.RightNum = Settings.RightNum;
+            menu5.Data = $"速度 ⇢ {Settings.Speed}";
+            menu6.Data = $"拍号 ⇢ {Settings.LeftNum} / {Settings.RightNum}";
         }
 
         public void ChangeRunMode()
@@ -113,6 +123,8 @@ namespace NotionPlay
             CanSimulate = condition;
             CanPreview = !condition;
             CanHightLight = !condition;
+            menu4.AllowHoverRotate = !condition;
+            CanTheorySetter = condition;
             menu1.BeginTransition(condition ? ts_menuFolded : ts_menuExpended);
             menu2.BeginTransition(condition ? ts_buttonExpended : ts_buttonFolded);
             theorysetter.BeginTransition(ts_theorysetterFolded);
@@ -173,7 +185,7 @@ namespace NotionPlay
         }
         private void OpenHotKeySetter(object sender, RoutedEventArgs e)
         {
-            
+            HotKeySetter.Instance.ShowDialog();
         }
     }
 
@@ -195,7 +207,7 @@ namespace NotionPlay
             .SetProperty(button => button.Width, 0)
             .SetParams(TransitionParams.Hover);
         private static TransitionBoard<StackPanel> ts_theorysetterExpended = Transition.Create<StackPanel>()
-            .SetProperty(button => button.Width, 600)
+            .SetProperty(button => button.Width, 460)
             .SetParams(TransitionParams.Hover);
     }
 
@@ -245,6 +257,7 @@ namespace NotionPlay
         }
         private async void Close_Click(object sender, RoutedEventArgs e)
         {
+            HotKeySetter.Instance.Close();
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
             Close();

@@ -8,11 +8,12 @@ namespace NotionPlay
 {
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            DynamicTheme.StartWith(typeof(Dark));
+            DynamicTheme.FollowSystem(typeof(Dark));
             AudioHelper.Initialize();
+            Settings = await SettingsViewModel.FromFile();
         }
     }
 }

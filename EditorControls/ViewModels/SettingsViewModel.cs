@@ -21,6 +21,56 @@ namespace NotionPlay.EditorControls.ViewModels
         private int leftNum = 4;
         [Observable]
         private int rightNum = 4;
+
+        [Observable]
+        private VirtualModifiers hotKey_Start_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
+        [Observable]
+        private VirtualKeys hotKey_Start_Right = VirtualKeys.Z;
+
+        [Observable]
+        private VirtualModifiers hotKey_Stop_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
+        [Observable]
+        private VirtualKeys hotKey_Stop_Right = VirtualKeys.X;
+
+        [Observable]
+        private VirtualModifiers hotKey_ChangeMode_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
+        [Observable]
+        private VirtualKeys hotKey_ChangeMode_Right = VirtualKeys.C;
+
+        [Observable]
+        private VirtualModifiers hotKey_OpenSetting_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
+        [Observable]
+        private VirtualKeys hotKey_OpenSetting_Right = VirtualKeys.S;
+
+        [Observable]
+        private VirtualModifiers hotKey_PlusSpeed_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
+        [Observable]
+        private VirtualKeys hotKey_PlusSpeed_Right = VirtualKeys.Plus;
+
+        [Observable]
+        private VirtualModifiers hotKey_MinuSpeed_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
+        [Observable]
+        private VirtualKeys hotKey_MinuSpeed_Right = VirtualKeys.Minus;
+
+        [Observable]
+        private VirtualModifiers hotKey_PlusLeftNum_Left = VirtualModifiers.Ctrl;
+        [Observable]
+        private VirtualKeys hotKey_PlusLeftNum_Right = VirtualKeys.Plus;
+
+        [Observable]
+        private VirtualModifiers hotKey_MinuLeftNum_Left = VirtualModifiers.Ctrl;
+        [Observable]
+        private VirtualKeys hotKey_MinuLeftNum_Right = VirtualKeys.Minus;
+
+        [Observable]
+        private VirtualModifiers hotKey_PlusRightNum_Left = VirtualModifiers.Alt;
+        [Observable]
+        private VirtualKeys hotKey_PlusRightNum_Right = VirtualKeys.Plus;
+
+        [Observable]
+        private VirtualModifiers hotKey_MinuRightNum_Left = VirtualModifiers.Alt;
+        [Observable]
+        private VirtualKeys hotKey_MinuRightNum_Right = VirtualKeys.Minus;
     }
 
     public partial class SettingsViewModel
@@ -42,7 +92,7 @@ namespace NotionPlay.EditorControls.ViewModels
             }
             catch
             {
-                
+
             }
         }
 
