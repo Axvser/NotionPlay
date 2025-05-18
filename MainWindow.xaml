@@ -145,16 +145,22 @@
                 </Grid>
             </Grid>
             <!--模拟模式-->
-            <Border Grid.ColumnSpan="2" Grid.ZIndex="1"
+            <Border Grid.ColumnSpan="3"  Grid.ZIndex="1"
                     Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Background}"
                     CornerRadius="10"
                     Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=GameMaskVisibility}">
-                <Grid >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition x:Name="LAR" Height="300"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="17*"/>
-                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition x:Name="LAC" Width="300"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
+                    <ec:LoadingPage x:Name="LoadingAnimator" Grid.Row="1" Grid.Column="1"/>
                 </Grid>
             </Border>
         </Grid>

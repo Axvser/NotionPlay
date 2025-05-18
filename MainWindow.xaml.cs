@@ -53,8 +53,10 @@ namespace NotionPlay
             CanHightLight = !condition;
             menu4.AllowHoverRotate = !condition;
             CanTheorySetter = condition;
+            LoadingAnimator.CanMonoBehaviour = condition;
             menu1.BeginTransition(condition ? ts_menuFolded : ts_menuExpended);
             menu2.BeginTransition(condition ? ts_buttonExpended : ts_buttonFolded);
+            menu4.BeginTransition(condition ? ts_buttonFolded : ts_buttonExpended);
             theorysetter.BeginTransition(ts_theorysetterFolded);
         }
         public void OpenSettings()
@@ -153,6 +155,8 @@ namespace NotionPlay
             var isMax = WindowState == WindowState.Maximized;
             bt_close.Data = (Application.Current.TryFindResource(isMax ? "SVG_WinUnMax" : "SVG_WinMax") as Path)?.Data.ToString() ?? string.Empty;
             CornerRadius = isMax ? new CornerRadius(0) : new CornerRadius(10d);
+            LAR.Height = isMax ? new GridLength(600) : new GridLength(300);
+            LAC.Width = isMax ? new GridLength(600) : new GridLength(300);
         }
         protected async override void OnSourceInitialized(EventArgs e)
         {
