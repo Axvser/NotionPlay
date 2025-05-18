@@ -48,7 +48,7 @@ namespace NotionPlay.EditorControls
         private readonly RotateTransform rotateO = new(0, 0, 0);
         private readonly RotateTransform rotateI = new(0, 0, 0);
 
-        private double opacitydelta = 0.01;
+        private readonly double opacitydelta = 0.01;
         private double textopacitydirection = 1;
 
         partial void Awake()

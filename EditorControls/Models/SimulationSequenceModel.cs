@@ -1,16 +1,17 @@
 ﻿using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
-using NotionPlay.VisualComponents.Models;
-using NotionPlay.VisualComponents;
 using System.Text.Json.Serialization;
-using System.Windows.Controls.Primitives;
 using WindowsInput.Native;
+using NotionPlay.Interfaces;
 
 namespace NotionPlay.EditorControls.Models
 {
     [JsonSerializable(typeof(SimulationSequenceModel))]
     public class SimulationSequenceModel
     {
+        [JsonIgnore]
+        public static SimulationSequenceModel Empty { get; private set; } = new();
+
         public List<SimulationModel> Simulations { get; set; } = [];
 
         public static SimulationSequenceModel FromTreeItemViewModel(TreeItemViewModel viewModel)

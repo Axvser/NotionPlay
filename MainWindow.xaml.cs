@@ -27,6 +27,12 @@ namespace NotionPlay
             Instance = this;
             EditorHost = Editor;
             SourceViewerHost = SourceManager;
+            Loaded += (s, e) =>
+            {
+                GameVisual.Instance.Show();
+                GameVisual.Instance.Visibility = Visibility.Collapsed;
+                GameVisual.Instance.Opacity = 1;
+            };
             LoadConfig();
         }
 
@@ -51,25 +57,10 @@ namespace NotionPlay
             CanSimulate = condition;
             CanPreview = !condition;
             CanHightLight = !condition;
-            menu4.AllowHoverRotate = !condition;
             CanTheorySetter = condition;
             LoadingAnimator.CanMonoBehaviour = condition;
             menu1.BeginTransition(condition ? ts_menuFolded : ts_menuExpended);
             menu2.BeginTransition(condition ? ts_buttonExpended : ts_buttonFolded);
-            menu4.BeginTransition(condition ? ts_buttonFolded : ts_buttonExpended);
-            theorysetter.BeginTransition(ts_theorysetterFolded);
-        }
-        public void OpenSettings()
-        {
-            if (GameMaskVisibility == Visibility.Visible)
-            {
-                CanTheorySetter = false;
-                theorysetter.BeginTransition(ts_theorysetterFolded);
-                return;
-            }
-            StopSimulation();
-            CanTheorySetter = !CanTheorySetter;
-            theorysetter.BeginTransition(CanTheorySetter ? ts_theorysetterExpended : ts_theorysetterFolded);
         }
 
         private void CreateNewProject(object sender, RoutedEventArgs e)
@@ -104,10 +95,6 @@ namespace NotionPlay
         {
             ChangeRunMode();
         }
-        private void OpenSettings(object sender, RoutedEventArgs e)
-        {
-            OpenSettings();
-        }
         private void ChangeTheme(object sender, RoutedEventArgs e)
         {
             if (DynamicTheme.IsThemeChanging) return;
@@ -132,12 +119,6 @@ namespace NotionPlay
             .SetParams(TransitionParams.Hover);
         private static TransitionBoard<MinimalisticWPF.Controls.Button> ts_buttonExpended = Transition.Create<MinimalisticWPF.Controls.Button>()
             .SetProperty(button => button.Width, 100)
-            .SetParams(TransitionParams.Hover);
-        private static TransitionBoard<StackPanel> ts_theorysetterFolded = Transition.Create<StackPanel>()
-            .SetProperty(button => button.Width, 0)
-            .SetParams(TransitionParams.Hover);
-        private static TransitionBoard<StackPanel> ts_theorysetterExpended = Transition.Create<StackPanel>()
-            .SetProperty(button => button.Width, 460)
             .SetParams(TransitionParams.Hover);
     }
 
@@ -192,6 +173,7 @@ namespace NotionPlay
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
             HotKeySetter.Instance.Close();
+            GameVisual.Instance.Close();
             Close();
         }
         private void Size_Click(object sender, RoutedEventArgs e)
