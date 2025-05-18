@@ -20,6 +20,14 @@ namespace NotionPlay.EditorControls.ViewModels
         [Observable]
         private SimulationSequenceModel selectedSimulation = SimulationSequenceModel.Empty;
         [Observable]
+        private string name = string.Empty;
+        [Observable]
+        private string speed = "80";
+        [Observable]
+        private string signature = "4 / 4";
+        [Observable]
+        private string scale = "1";
+        [Observable]
         private double progress = 0d;
         [Observable]
         private int currentIndex = 0;
@@ -35,6 +43,10 @@ namespace NotionPlay.EditorControls.ViewModels
         {
             StopSimulation();
             CurrentIndex = 0;
+            name = newValue.Name;
+            speed = newValue.Speed.ToString();
+            signature = $"{newValue.LeftNum} / {newValue.RightNum}";
+            scale = newValue.Scale.ToString();
         }
     }
 
@@ -45,6 +57,7 @@ namespace NotionPlay.EditorControls.ViewModels
             var source = new CancellationTokenSource();
             return (async () =>
             {
+                GameVisual.Instance.TaskControlSymbol = GameVisual.SVG_Stop;
                 for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
                 {
                     try
@@ -64,6 +77,7 @@ namespace NotionPlay.EditorControls.ViewModels
                 {
                     simulation.KeyUp();
                 }
+                GameVisual.Instance.TaskControlSymbol = GameVisual.SVG_Start;
             }, source);
         }
     }
@@ -90,7 +104,6 @@ namespace NotionPlay.EditorControls.ViewModels
 
             }
         }
-
         public static async Task<GameVisualViewModel> FromFile()
         {
             try

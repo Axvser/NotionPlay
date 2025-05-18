@@ -13,11 +13,20 @@ namespace NotionPlay.EditorControls.Models
         public static SimulationSequenceModel Empty { get; private set; } = new();
 
         public string Name { get; set; } = string.Empty;
+        public int Speed { get; set; } = 80;
+        public int LeftNum { get; set; } = 4;
+        public int RightNum { get; set; } = 4;
+        public double Scale { get; set; } = 1;
         public List<SimulationModel> Simulations { get; set; } = [];
 
         public static SimulationSequenceModel FromTreeItemViewModel(TreeItemViewModel viewModel)
         {
-            var result = new SimulationSequenceModel();
+            var result = new SimulationSequenceModel()
+            {
+                Speed = Theory.Speed,
+                LeftNum = Theory.LeftNum,
+                RightNum = Theory.RightNum,
+            };
 
             switch (viewModel.Type)
             {

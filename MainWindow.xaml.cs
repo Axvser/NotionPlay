@@ -29,6 +29,7 @@ namespace NotionPlay
             SourceViewerHost = SourceManager;
             Loaded += (s, e) =>
             {
+                GameVisual.Instance.Opacity = 0;
                 GameVisual.Instance.Show();
                 GameVisual.Instance.Visibility = Visibility.Hidden;
                 GameVisual.Instance.Opacity = 1;
@@ -182,7 +183,7 @@ namespace NotionPlay
         {
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
-            await GameVisualViewModel.SaveFile((GameVisualViewModel)GameVisual.Instance.DataContext);
+            await GameVisualViewModel.SaveFile(GameVisual.Instance.ViewModel);
             HotKeySetter.Instance.Close();
             GameVisual.Instance.Close();
             Close();
