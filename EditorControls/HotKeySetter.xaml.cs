@@ -58,7 +58,7 @@ namespace NotionPlay.EditorControls
             MainWindow.Instance?.ChangeRunMode();
         }
 
-        private void OpenSettings(object sender, HotKeyEventArgs e)
+        private void OpenGameVisuals(object sender, HotKeyEventArgs e)
         {
             StopSimulation();
             GameVisual.ChangeState();
@@ -148,7 +148,7 @@ namespace NotionPlay.EditorControls
 
         private void HK4_ModifiersChanged(uint arg1, uint arg2)
         {
-            Settings.HotKey_OpenSetting_Left = (VirtualModifiers)arg2;
+            Settings.HotKey_OpenGameVisual_Left = (VirtualModifiers)arg2;
             UpdateHotKeyText(HK4);
         }
 
@@ -208,7 +208,7 @@ namespace NotionPlay.EditorControls
 
         private void HK4_KeyChanged(uint arg1, uint arg2)
         {
-            Settings.HotKey_OpenSetting_Right = (VirtualKeys)arg2;
+            Settings.HotKey_OpenGameVisual_Right = (VirtualKeys)arg2;
             UpdateHotKeyText(HK4);
         }
 
