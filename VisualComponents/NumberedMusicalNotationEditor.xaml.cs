@@ -3,6 +3,7 @@ using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
+using NotionPlay.Tools;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -120,7 +121,7 @@ namespace NotionPlay.VisualComponents
             LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], (s, e) =>
             {
                 EditorHost?.SaveData();
-                NotificationBox.Confirm("√ 已保存");
+                NotificationBox.Confirm("✔ 已保存当前节点");
             });
         }
     }

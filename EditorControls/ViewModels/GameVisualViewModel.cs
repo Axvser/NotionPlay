@@ -2,6 +2,7 @@
 using NotionPlay.EditorControls.Models;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,7 +16,9 @@ namespace NotionPlay.EditorControls.ViewModels
         public static GameVisualViewModel Default { get; private set; } = new();
 
         [Observable]
-        private SimulationSequenceModel simulationSequence = SimulationSequenceModel.Empty;
+        private ObservableCollection<SimulationSequenceModel> simulationSequences = [];
+        [Observable]
+        private SimulationSequenceModel selectedSimulation = SimulationSequenceModel.Empty;
         [Observable]
         private double progress = 0d;
         [Observable]
@@ -26,9 +29,9 @@ namespace NotionPlay.EditorControls.ViewModels
     {
         partial void OnCurrentIndexChanged(int oldValue, int newValue)
         {
-            Progress = (double)(newValue + 1) / Math.Clamp(simulationSequence.Simulations.Count, 1, int.MaxValue);
+            Progress = (double)(newValue + 1) / Math.Clamp(SelectedSimulation.Simulations.Count, 1, int.MaxValue);
         }
-        partial void OnSimulationSequenceChanged(SimulationSequenceModel oldValue, SimulationSequenceModel newValue)
+        partial void OnSelectedSimulationChanged(SimulationSequenceModel oldValue, SimulationSequenceModel newValue)
         {
             StopSimulation();
             CurrentIndex = 0;
@@ -42,22 +45,22 @@ namespace NotionPlay.EditorControls.ViewModels
             var source = new CancellationTokenSource();
             return (async () =>
             {
-                for (int i = CurrentIndex; i < simulationSequence.Simulations.Count; i++)
+                for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
                 {
                     try
                     {
                         if (source.Token.IsCancellationRequested) break;
                         CurrentIndex = i;
-                        simulationSequence.Simulations[i].KeyDown();
-                        await Task.Delay(simulationSequence.Simulations[i].Span, source.Token);
-                        simulationSequence.Simulations[i].KeyUp();
+                        SelectedSimulation.Simulations[i].KeyDown();
+                        await Task.Delay(SelectedSimulation.Simulations[i].Span, source.Token);
+                        SelectedSimulation.Simulations[i].KeyUp();
                     }
                     catch
                     {
 
                     }
                 }
-                foreach (var simulation in simulationSequence.Simulations)
+                foreach (var simulation in SelectedSimulation.Simulations)
                 {
                     simulation.KeyUp();
                 }

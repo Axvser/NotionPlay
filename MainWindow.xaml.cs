@@ -104,6 +104,16 @@ namespace NotionPlay
         {
             HotKeySetter.Instance.ShowDialog();
         }
+        private async void SaveAll_Click(object sender, RoutedEventArgs e)
+        {
+            EditorHost?.SaveData();
+            await FileHelper.SaveProjectsToDefaultPosition();
+            NotificationBox.Confirm("✔ 所有项目已保存", "成功");
+        }
+        private async void SelectSnapshots(object sender, RoutedEventArgs e)
+        {
+            await GameVisual.Instance.LoadMultipleSnapshots();
+        }
     }
 
     public partial class MainWindow
@@ -159,7 +169,7 @@ namespace NotionPlay
             set { SetValue(GameMaskVisibilityProperty, value); }
         }
         public static readonly DependencyProperty GameMaskVisibilityProperty =
-            DependencyProperty.Register("GameMaskVisibility", typeof(Visibility), typeof(MainWindow), new PropertyMetadata(Visibility.Collapsed));
+            DependencyProperty.Register("GameMaskVisibility", typeof(Visibility), typeof(MainWindow), new PropertyMetadata(Visibility.Hidden));
 
         private void WindowDragMove(object sender, MouseButtonEventArgs e)
         {

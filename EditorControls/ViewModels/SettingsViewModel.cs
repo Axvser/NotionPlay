@@ -43,7 +43,7 @@ namespace NotionPlay.EditorControls.ViewModels
         [Observable]
         private VirtualModifiers hotKey_OpenGameVisual_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
         [Observable]
-        private VirtualKeys hotKey_OpenGameVisual_Right = VirtualKeys.S;
+        private VirtualKeys hotKey_OpenGameVisual_Right = VirtualKeys.V;
 
         [Observable]
         private VirtualModifiers hotKey_PlusSpeed_Left = VirtualModifiers.Ctrl | VirtualModifiers.Shift;
