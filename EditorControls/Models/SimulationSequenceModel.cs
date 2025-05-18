@@ -12,6 +12,7 @@ namespace NotionPlay.EditorControls.Models
         [JsonIgnore]
         public static SimulationSequenceModel Empty { get; private set; } = new();
 
+        public string Name { get; set; } = string.Empty;
         public List<SimulationModel> Simulations { get; set; } = [];
 
         public static SimulationSequenceModel FromTreeItemViewModel(TreeItemViewModel viewModel)

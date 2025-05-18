@@ -172,6 +172,7 @@ namespace NotionPlay
         {
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
+            await GameVisualViewModel.SaveFile((GameVisualViewModel)GameVisual.Instance.DataContext);
             HotKeySetter.Instance.Close();
             GameVisual.Instance.Close();
             Close();
