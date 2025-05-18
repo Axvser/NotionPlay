@@ -14,7 +14,7 @@ namespace NotionPlay.EditorControls
 
         public static void ChangeState()
         {
-            Instance.Visibility = Instance.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            Instance.Visibility = Instance.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void Border_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

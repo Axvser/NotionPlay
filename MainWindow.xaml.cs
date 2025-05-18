@@ -30,7 +30,7 @@ namespace NotionPlay
             Loaded += (s, e) =>
             {
                 GameVisual.Instance.Show();
-                GameVisual.Instance.Visibility = Visibility.Collapsed;
+                GameVisual.Instance.Visibility = Visibility.Hidden;
                 GameVisual.Instance.Opacity = 1;
             };
             LoadConfig();
@@ -52,8 +52,8 @@ namespace NotionPlay
         public void ChangeRunMode()
         {
             StopSimulation();
-            var condition = GameMaskVisibility == Visibility.Collapsed;
-            GameMaskVisibility = condition ? Visibility.Visible : Visibility.Collapsed;
+            var condition = GameMaskVisibility == Visibility.Hidden;
+            GameMaskVisibility = condition ? Visibility.Visible : Visibility.Hidden;
             CanSimulate = condition;
             CanPreview = !condition;
             CanHightLight = !condition;
