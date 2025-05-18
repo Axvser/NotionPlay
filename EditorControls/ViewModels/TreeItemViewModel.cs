@@ -181,7 +181,12 @@ namespace NotionPlay.EditorControls.ViewModels
                 var fileName = string.Join("_", snapshotName.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries)) + ".json";
                 var fullPath = Path.Combine(folderPath, fileName);
                 await using var fileStream = File.Create(fullPath);
-                await JsonSerializer.SerializeAsync(fileStream, SimulationSequenceModel.FromTreeItemViewModel(itemToSave), jsonOptions);
+                var snapshot = SimulationSequenceModel.FromTreeItemViewModel(itemToSave);
+                snapshot.Name = snapshotName;
+                snapshot.Speed = Theory.Speed;
+                snapshot.LeftNum = Theory.LeftNum;
+                snapshot.RightNum = Theory.RightNum;
+                await JsonSerializer.SerializeAsync(fileStream, snapshot, jsonOptions);
                 return true;
             }
             catch

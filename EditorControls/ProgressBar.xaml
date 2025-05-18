@@ -13,8 +13,7 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    Foreground="{Binding ElementName=Root,Path=OBrush}"
                    FontSize="{Binding ElementName=Root,Path=FontSize}"
-                   Text="0 %"
-                   Opacity="0"/>
+                   Text="0 %"/>
 
         <drawex:Arc StartAngle="0"
                     Width="230"

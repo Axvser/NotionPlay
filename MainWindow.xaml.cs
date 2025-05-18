@@ -60,6 +60,7 @@ namespace NotionPlay
             CanHightLight = !condition;
             CanTheorySetter = condition;
             LoadingAnimator.CanMonoBehaviour = condition;
+            if (CanPreview) GameVisual.ChangeState();
             menu1.BeginTransition(condition ? ts_menuFolded : ts_menuExpended);
             menu2.BeginTransition(condition ? ts_buttonExpended : ts_buttonFolded);
         }
@@ -113,7 +114,7 @@ namespace NotionPlay
         }
         private async void SelectSnapshots(object sender, RoutedEventArgs e)
         {
-            await GameVisual.Instance.LoadMultipleSnapshots();
+            await GameVisual.Instance.LoadSingleSnapshotAsync();
         }
     }
 

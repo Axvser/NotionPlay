@@ -3,6 +3,8 @@ using NotionPlay.Tools;
 using System.Text.Json.Serialization;
 using WindowsInput.Native;
 using NotionPlay.Interfaces;
+using System.Windows;
+using NotionPlay.VisualComponents.Enums;
 
 namespace NotionPlay.EditorControls.Models
 {
@@ -72,7 +74,7 @@ namespace NotionPlay.EditorControls.Models
                             Simulations.Add(new SimulationModel());
                         }
 
-                        Simulations[atomCounter].Span = Theory.GetSpan(note.DurationType);
+                        Simulations[atomCounter].Span = Theory.GetSpan(DurationTypes.SixtyFour);
                         _ = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
 
                         if (i == 0)

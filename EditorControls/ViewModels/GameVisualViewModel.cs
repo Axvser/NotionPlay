@@ -16,11 +16,9 @@ namespace NotionPlay.EditorControls.ViewModels
         public static GameVisualViewModel Default { get; private set; } = new();
 
         [Observable]
-        private ObservableCollection<SimulationSequenceModel> simulationSequences = [];
-        [Observable]
         private SimulationSequenceModel selectedSimulation = SimulationSequenceModel.Empty;
         [Observable]
-        private string name = string.Empty;
+        private string name = "Default";
         [Observable]
         private string speed = "80";
         [Observable]
@@ -37,16 +35,17 @@ namespace NotionPlay.EditorControls.ViewModels
     {
         partial void OnCurrentIndexChanged(int oldValue, int newValue)
         {
-            Progress = (double)(newValue + 1) / Math.Clamp(SelectedSimulation.Simulations.Count, 1, int.MaxValue);
+            if (newValue == 0 || SelectedSimulation.Simulations.Count == 0) Progress = 0d;
+            else Progress = (double)(newValue + 1) / Math.Clamp(SelectedSimulation.Simulations.Count, 1, int.MaxValue);
         }
         partial void OnSelectedSimulationChanged(SimulationSequenceModel oldValue, SimulationSequenceModel newValue)
         {
             StopSimulation();
             CurrentIndex = 0;
-            name = newValue.Name;
-            speed = newValue.Speed.ToString();
-            signature = $"{newValue.LeftNum} / {newValue.RightNum}";
-            scale = newValue.Scale.ToString();
+            Name = newValue.Name;
+            Speed = newValue.Speed.ToString();
+            Signature = $"{newValue.LeftNum} / {newValue.RightNum}";
+            Scale = newValue.Scale.ToString();
         }
     }
 
@@ -58,6 +57,8 @@ namespace NotionPlay.EditorControls.ViewModels
             return (async () =>
             {
                 GameVisual.Instance.TaskControlSymbol = GameVisual.SVG_Stop;
+                if (CurrentIndex == SelectedSimulation.Simulations.Count - 1) CurrentIndex = 0;
+                var spans = SelectedSimulation.Simulations.Select(x => (int)(x.Span * SelectedSimulation.Scale)).ToArray();
                 for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
                 {
                     try
@@ -65,7 +66,7 @@ namespace NotionPlay.EditorControls.ViewModels
                         if (source.Token.IsCancellationRequested) break;
                         CurrentIndex = i;
                         SelectedSimulation.Simulations[i].KeyDown();
-                        await Task.Delay(SelectedSimulation.Simulations[i].Span, source.Token);
+                        await Task.Delay(spans[i], source.Token);
                         SelectedSimulation.Simulations[i].KeyUp();
                     }
                     catch
@@ -87,7 +88,8 @@ namespace NotionPlay.EditorControls.ViewModels
         private static readonly JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
-            WriteIndented = true
+            WriteIndented = true,
+            ReferenceHandler = ReferenceHandler.Preserve
         };
         private static readonly string ConfigPath = Path.Combine(FileHelper.ConfigsFolder, "GameVisualConfig.json");
 

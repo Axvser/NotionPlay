@@ -93,7 +93,7 @@ namespace NotionPlay.EditorControls
             set { SetValue(PlacementProperty, value); }
         }
         public static readonly DependencyProperty PlacementProperty =
-            DependencyProperty.Register("Placement", typeof(PlacementMode), typeof(MenuNode), new PropertyMetadata(PlacementMode.Bottom));
+            DependencyProperty.Register("Placement", typeof(PlacementMode), typeof(MenuNode), new PropertyMetadata(PlacementMode.Right));
         public virtual bool IsLocked
         {
             get { return (bool)GetValue(IsLockedProperty); }

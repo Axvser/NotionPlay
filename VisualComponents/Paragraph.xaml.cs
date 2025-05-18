@@ -102,7 +102,7 @@ namespace NotionPlay.VisualComponents
                                     atoms.Add(new SimulationAtom());
                                 }
 
-                                atoms[atomCounter].Span = MusicTheory.GetSpan(note.DurationType);
+                                atoms[atomCounter].Span = MusicTheory.GetSpan(DurationTypes.SixtyFour);
                                 _ = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
 
                                 if (i == 0)

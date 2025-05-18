@@ -4,6 +4,7 @@ using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -113,19 +114,25 @@ namespace NotionPlay.EditorControls
         {
             if (NodeInfoSetter.Snapshot(out var fileName))
             {
-                var result = await TreeItemViewModel.SaveSnapshot(ViewModel, FileHelper.SnapshotsFolder, fileName);
+                var result = await TreeItemViewModel.SaveSnapshot(ViewModel, Path.Combine(FileHelper.SnapshotsFolder, FindRoot(ViewModel).Header), fileName);
                 if (result)
                 {
-                    NotificationBox.Confirm("✔ 快照已存储","成功 !");
+                    NotificationBox.Confirm("✔ 快照已存储", "成功 !");
                 }
                 else
                 {
-                    NotificationBox.Confirm("❌ 未能存储快照,可能是文件名存在冲突","⚠ 失败");
+                    NotificationBox.Confirm("❌ 未能存储快照,可能是文件名存在冲突", "⚠ 失败");
                 }
             }
         }
-
-
+        private TreeItemViewModel FindRoot(TreeItemViewModel viewModel)
+        {
+            if (viewModel.Parent is null || viewModel.Parent == TreeItemViewModel.Empty)
+            {
+                return viewModel;
+            }
+            return viewModel.Parent;
+        }
         private void ShowEditor(object sender, RoutedEventArgs e)
         {
             var editors = ViewModel.Type switch

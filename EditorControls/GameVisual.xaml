@@ -8,7 +8,8 @@
              mc:Ignorable="d"
              Title="Game Visual"
              x:Name="Root"
-             Height="300" Width="800" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Visibility="Visible" Topmost="True" Opacity="1">
+             Height="300" Width="800" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" 
+             Visibility="Visible" Topmost="True" Opacity="1">
     <Window.Template>
         <ControlTemplate TargetType="Window">
             <Viewbox>
@@ -55,14 +56,15 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Name >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
-                    <TextBlock Text="Speed >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
-                    <TextBlock Text="Signature >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"/>
-                    <TextBlock Text="Scale >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
-                    <TextBlock Margin="100,0,0,0" Text="{Binding Name}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
-                    <TextBlock Margin="100,0,0,0" Text="{Binding Speed}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
-                    <TextBlock Margin="130,0,0,0" Text="{Binding Signature}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"/>
-                    <TextBlock Margin="90,0,0,0" Text="{Binding Scale}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
+                    <TextBlock Text="名称 >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+                    <TextBlock Text="速度 >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
+                    <TextBlock Text="拍号 >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"/>
+                    <TextBlock Text="延迟倍率 >" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
+                    <TextBlock Margin="90,0,0,0" Text="{Binding Name}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+                    <TextBlock Margin="90,0,0,0" Text="{Binding Speed}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
+                    <TextBlock Margin="90,0,0,0" Text="{Binding Signature}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3"/>
+                    <TextBlock Margin="130,0,0,0" Text="{Binding Scale}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4"/>
+                    <wpfc:Button Click="SelectSong" Data="选择快照 >" Grid.Row="5" ContentScale="0.5" ContentHorizontalAlignment="Left" Style="{StaticResource nicebutton}"/>
                 </Grid>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
@@ -74,9 +76,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <wpfc:Button Grid.Row="1" Style="{StaticResource nicebutton}" Data="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=TaskControlSymbol}" ContentScale="0.618"/>
-                    <wpfc:Button Grid.Row="2" Style="{StaticResource nicebutton}" Data="M827.732731 533.169266L520.922882 839.545615c-11.126508 11.018133-29.008396 11.018133-40.02653 0-11.018133-11.018133-11.018133-28.900021 0-39.954279l288.964087-288.494462-288.964087-288.494461c-11.018133-11.018133-11.018133-28.900021 0-39.954279 11.018133-11.018133 28.900021-11.018133 40.02653 0l306.845974 306.304099c6.032879 6.141254 8.453256 14.23326 7.839131 22.144641 0.578 7.911381-1.806251 16.003387-7.875256 22.072392z m-331.555493-22.072392c0.614125 7.911381-1.770126 16.003387-7.83913 22.072392l-250.346434 249.876808c-11.018133 11.018133-28.900021 11.018133-39.954279 0-11.018133-11.018133-11.018133-28.900021 0-39.95428l232.35617-231.99492-232.320045-232.103295a28.148621 28.148621 0 0 1 0-39.845904c11.018133-11.054258 28.900021-11.054258 39.954279 0l250.346434 249.804558c6.032879 6.141254 8.417131 14.23326 7.803005 22.144641z" ContentScale="0.618"/>
-                    <wpfc:Button Grid.Row="3" Style="{StaticResource nicebutton}" Data="M827.732731 533.169266L520.922882 839.545615c-11.126508 11.018133-29.008396 11.018133-40.02653 0-11.018133-11.018133-11.018133-28.900021 0-39.954279l288.964087-288.494462-288.964087-288.494461c-11.018133-11.018133-11.018133-28.900021 0-39.954279 11.018133-11.018133 28.900021-11.018133 40.02653 0l306.845974 306.304099c6.032879 6.141254 8.453256 14.23326 7.839131 22.144641 0.578 7.911381-1.806251 16.003387-7.875256 22.072392z m-331.555493-22.072392c0.614125 7.911381-1.770126 16.003387-7.83913 22.072392l-250.346434 249.876808c-11.018133 11.018133-28.900021 11.018133-39.954279 0-11.018133-11.018133-11.018133-28.900021 0-39.95428l232.35617-231.99492-232.320045-232.103295a28.148621 28.148621 0 0 1 0-39.845904c11.018133-11.054258 28.900021-11.054258 39.954279 0l250.346434 249.804558c6.032879 6.141254 8.417131 14.23326 7.803005 22.144641z" ContentScale="0.618">
+                    <wpfc:Button Click="StartOrStop" Grid.Row="1" Style="{StaticResource nicebutton}" Data="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=TaskControlSymbol}" ContentScale="0.618"/>
+                    <wpfc:Button Click="PlusScale" Grid.Row="2" Style="{StaticResource nicebutton}" Data="M827.732731 533.169266L520.922882 839.545615c-11.126508 11.018133-29.008396 11.018133-40.02653 0-11.018133-11.018133-11.018133-28.900021 0-39.954279l288.964087-288.494462-288.964087-288.494461c-11.018133-11.018133-11.018133-28.900021 0-39.954279 11.018133-11.018133 28.900021-11.018133 40.02653 0l306.845974 306.304099c6.032879 6.141254 8.453256 14.23326 7.839131 22.144641 0.578 7.911381-1.806251 16.003387-7.875256 22.072392z m-331.555493-22.072392c0.614125 7.911381-1.770126 16.003387-7.83913 22.072392l-250.346434 249.876808c-11.018133 11.018133-28.900021 11.018133-39.954279 0-11.018133-11.018133-11.018133-28.900021 0-39.95428l232.35617-231.99492-232.320045-232.103295a28.148621 28.148621 0 0 1 0-39.845904c11.018133-11.054258 28.900021-11.054258 39.954279 0l250.346434 249.804558c6.032879 6.141254 8.417131 14.23326 7.803005 22.144641z" ContentScale="0.618"/>
+                    <wpfc:Button Click="MinuScale" Grid.Row="3" Style="{StaticResource nicebutton}" Data="M827.732731 533.169266L520.922882 839.545615c-11.126508 11.018133-29.008396 11.018133-40.02653 0-11.018133-11.018133-11.018133-28.900021 0-39.954279l288.964087-288.494462-288.964087-288.494461c-11.018133-11.018133-11.018133-28.900021 0-39.954279 11.018133-11.018133 28.900021-11.018133 40.02653 0l306.845974 306.304099c6.032879 6.141254 8.453256 14.23326 7.839131 22.144641 0.578 7.911381-1.806251 16.003387-7.875256 22.072392z m-331.555493-22.072392c0.614125 7.911381-1.770126 16.003387-7.83913 22.072392l-250.346434 249.876808c-11.018133 11.018133-28.900021 11.018133-39.954279 0-11.018133-11.018133-11.018133-28.900021 0-39.95428l232.35617-231.99492-232.320045-232.103295a28.148621 28.148621 0 0 1 0-39.845904c11.018133-11.054258 28.900021-11.054258 39.954279 0l250.346434 249.804558c6.032879 6.141254 8.417131 14.23326 7.803005 22.144641z" ContentScale="0.618">
                         <wpfc:Button.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="180" CenterX="70" CenterY="27"/>

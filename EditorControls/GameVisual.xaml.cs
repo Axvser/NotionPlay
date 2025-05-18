@@ -7,7 +7,9 @@ using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Input;
 
 namespace NotionPlay.EditorControls
 {
@@ -19,45 +21,44 @@ namespace NotionPlay.EditorControls
     {
         public static GameVisual Instance { get; set; } = new();
 
-        public async Task LoadMultipleSnapshots()
+        public async Task LoadSingleSnapshotAsync()
         {
             var openFileDialog = new OpenFileDialog
             {
                 Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
-                Title = "选择多个快照",
-                Multiselect = true,
+                Title = "选择快照",
+                Multiselect = false,
                 InitialDirectory = FileHelper.SnapshotsFolder,
             };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                var viewModels = new List<SimulationSequenceModel>();
 
-                foreach (var filePath in openFileDialog.FileNames)
+            if (openFileDialog.ShowDialog() is true)
+            {
+                string filePath = openFileDialog.FileName;
+                try
                 {
-                    try
+                    await using var fileStream = File.OpenRead(filePath);
+                    var viewModel = await JsonSerializer
+                        .DeserializeAsync<SimulationSequenceModel>(fileStream, jsonOptions)
+                        .ConfigureAwait(false);
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        await using var fileStream = File.OpenRead(filePath);
-                        var viewModel = await JsonSerializer.DeserializeAsync<SimulationSequenceModel>(fileStream, jsonOptions);
-                        if (viewModel != null && viewModel != SimulationSequenceModel.Empty)
-                        {
-                            viewModels.Add(viewModel);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        NotificationBox.Confirm($"⚠ 无法加载快照文件: {Path.GetFileName(filePath)}\n错误: {ex.Message}", "错误");
-                        continue;
-                    }
+                        ViewModel.SelectedSimulation = viewModel ?? SimulationSequenceModel.Empty;
+                        ViewModel.CurrentIndex = 0;
+                    });
                 }
-                ViewModel.SimulationSequences.Clear();
-                foreach (var viewModel in viewModels)
+                catch (Exception ex)
                 {
-                    ViewModel.SimulationSequences.Add(viewModel);
+                    MessageBox.Show($"⚠ {ex}");
                 }
             }
         }
         public static void ChangeState()
         {
+            if (!CanSimulate)
+            {
+                Instance.Visibility = Visibility.Hidden;
+                return;
+            }
             Instance.Visibility = Instance.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
         }
 
@@ -88,7 +89,8 @@ namespace NotionPlay.EditorControls
         private static readonly JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
-            WriteIndented = true
+            WriteIndented = true,
+            ReferenceHandler = ReferenceHandler.Preserve
         };
 
 
@@ -96,9 +98,13 @@ namespace NotionPlay.EditorControls
         {
             ChangeState();
         }
-        private void Border_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+        private async void SelectSong(object sender, RoutedEventArgs e)
+        {
+            await LoadSingleSnapshotAsync();
         }
     }
 
@@ -106,17 +112,24 @@ namespace NotionPlay.EditorControls
     {
         public void StartOrStop(object sender, RoutedEventArgs e)
         {
-            SubmitSimulation(ViewModel);
+            if (CanEdit)
+            {
+                SubmitSimulation(ViewModel);
+            }
+            else
+            {
+                StopSimulation();
+            }
         }
         public void PlusScale(object sender, RoutedEventArgs e)
         {
             ViewModel.SelectedSimulation.Scale = Math.Clamp(ViewModel.SelectedSimulation.Scale + 0.1, 0, double.MaxValue);
-            ViewModel.Scale = ViewModel.SelectedSimulation.Scale.ToString();
+            ViewModel.Scale = (((int)(ViewModel.SelectedSimulation.Scale * 10)) / 10.0).ToString();
         }
         public void MinuScale(object sender, RoutedEventArgs e)
         {
             ViewModel.SelectedSimulation.Scale = Math.Clamp(ViewModel.SelectedSimulation.Scale - 0.1, 0, double.MaxValue);
-            ViewModel.Scale = ViewModel.SelectedSimulation.Scale.ToString();
+            ViewModel.Scale = (((int)(ViewModel.SelectedSimulation.Scale * 10)) / 10.0).ToString();
         }
     }
 
