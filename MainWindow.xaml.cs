@@ -29,7 +29,6 @@ namespace NotionPlay
             SourceViewerHost = SourceManager;
             Loaded += (s, e) =>
             {
-                GameVisual.Instance.Opacity = 0;
                 GameVisual.Instance.Show();
                 GameVisual.Instance.Visibility = Visibility.Hidden;
                 GameVisual.Instance.Opacity = 1;

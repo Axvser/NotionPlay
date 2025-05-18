@@ -9,7 +9,7 @@
              Title="Game Visual"
              x:Name="Root"
              Height="300" Width="800" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" 
-             Visibility="Visible" Topmost="True" Opacity="1">
+             Visibility="Visible" Topmost="True" Opacity="0">
     <Window.Template>
         <ControlTemplate TargetType="Window">
             <Viewbox>
