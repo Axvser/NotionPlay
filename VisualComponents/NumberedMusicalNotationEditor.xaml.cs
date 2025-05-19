@@ -120,6 +120,7 @@ namespace NotionPlay.VisualComponents
             });
             LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], (s, e) =>
             {
+                StopSimulation();
                 EditorHost?.SaveData();
                 NotificationBox.Confirm("✔ 已保存当前节点");
             });

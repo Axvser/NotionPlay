@@ -287,7 +287,7 @@ namespace NotionPlay.EditorControls
                         }
                     }
                 }
-                viewModel.Notes = newValue;
+                if (!cts.IsCancellationRequested) viewModel.Notes = newValue;
             };
             return paragraph;
         }
