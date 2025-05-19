@@ -98,10 +98,6 @@ namespace NotionPlay
             var node = new TreeNode(vm);
             SourceManager.AddProject(node);
         }
-        private void OpenOutputWindow(object sender, RoutedEventArgs e)
-        {
-            StopSimulation();
-        }
         private void ChangeRunMode(object sender, RoutedEventArgs e)
         {
             ChangeRunMode();
@@ -113,16 +109,19 @@ namespace NotionPlay
         }
         private void OpenHotKeySetter(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             HotKeySetter.Instance.ShowDialog();
         }
         private async void SaveAll_Click(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             EditorHost?.SaveData();
             await FileHelper.SaveProjectsToDefaultPosition();
             NotificationBox.Confirm("✔ 所有项目已保存", "成功");
         }
         private async void SelectSnapshots(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             await GamePopup.LoadSingleSnapshotAsync();
         }
     }
@@ -182,6 +181,7 @@ namespace NotionPlay
         public static readonly DependencyProperty GameMaskVisibilityProperty =
             DependencyProperty.Register("GameMaskVisibility", typeof(Visibility), typeof(MainWindow), new PropertyMetadata(Visibility.Hidden));
 
+        public bool isSavedWhileClose = false;
         private void WindowDragMove(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
