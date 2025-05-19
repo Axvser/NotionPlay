@@ -30,63 +30,61 @@ namespace NotionPlay.EditorControls.Models
                 RightNum = Theory.RightNum,
             };
 
+            int globalAtomCounter = 0;
             switch (viewModel.Type)
             {
                 case TreeItemTypes.Project:
-                    result.ParseSnapshotAtProject(viewModel);
+                    result.ParseSnapshotAtProject(viewModel, ref globalAtomCounter);
                     break;
                 case TreeItemTypes.Package:
-                    result.ParseSnapshotAtPackage(viewModel);
+                    result.ParseSnapshotAtPackage(viewModel, ref globalAtomCounter);
                     break;
                 case TreeItemTypes.Paragraph:
-                    result.ParseSnapshotAtParagraph(viewModel);
+                    result.ParseSnapshotAtParagraph(viewModel, ref globalAtomCounter);
                     break;
             }
-
             return result;
         }
-        private void ParseSnapshotAtProject(TreeItemViewModel viewModel)
+        private void ParseSnapshotAtProject(TreeItemViewModel viewModel, ref int globalAtomCounter)
         {
             foreach (var child in viewModel.Children)
             {
-                ParseSnapshotAtPackage(child);
+                ParseSnapshotAtPackage(child, ref globalAtomCounter);
             }
         }
-        private void ParseSnapshotAtPackage(TreeItemViewModel viewModel)
+        private void ParseSnapshotAtPackage(TreeItemViewModel viewModel, ref int globalAtomCounter)
         {
             foreach (var child in viewModel.Children)
             {
-                ParseSnapshotAtParagraph(child);
+                ParseSnapshotAtParagraph(child, ref globalAtomCounter);
             }
         }
-        private void ParseSnapshotAtParagraph(TreeItemViewModel viewModel)
+        private void ParseSnapshotAtParagraph(TreeItemViewModel viewModel, ref int globalAtomCounter)
         {
             foreach (var trackvalues in viewModel.Notes)
             {
-                var atomCounter = 0;
                 foreach (var note in trackvalues)
                 {
                     int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
                     for (int i = 0; i < steps; i++)
                     {
-                        while (atomCounter >= Simulations.Count)
+                        while (globalAtomCounter >= Simulations.Count)
                         {
                             Simulations.Add(new SimulationModel());
                         }
 
-                        Simulations[atomCounter].Span = Theory.GetSpan(DurationTypes.SixtyFour);
-                        _ = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
+                        Simulations[globalAtomCounter].Span = Theory.GetSpan(DurationTypes.SixtyFour);
 
-                        if (i == 0)
+                        if (i == 0 && KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey))
                         {
-                            Simulations[atomCounter].Keys.Add(virtualKey);
+                            Simulations[globalAtomCounter].Keys.Add(virtualKey);
                         }
                         else
                         {
-                            Simulations[atomCounter].Keys.Add(VirtualKeyCode.NONAME);
+                            Simulations[globalAtomCounter].Keys.Add(VirtualKeyCode.NONAME);
                         }
 
-                        atomCounter++;
+                        globalAtomCounter++;
                     }
                 }
             }
