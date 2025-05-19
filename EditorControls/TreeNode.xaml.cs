@@ -267,12 +267,10 @@ namespace NotionPlay.EditorControls
                 var newValue = new List<List<NoteModel>>();
                 foreach (Track track in paragraph.Items)
                 {
-                    if (cts.IsCancellationRequested) break;
                     var list = new List<NoteModel>();
                     newValue.Add(list);
                     foreach (SingleNote note in track.Items)
                     {
-                        if (cts.IsCancellationRequested) break;
                         list.Add(new NoteModel()
                         {
                             Note = note.Note,
@@ -287,7 +285,7 @@ namespace NotionPlay.EditorControls
                         }
                     }
                 }
-                if (!cts.IsCancellationRequested) viewModel.Notes = newValue;
+                viewModel.Notes = newValue;
             };
             return paragraph;
         }
