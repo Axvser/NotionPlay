@@ -45,15 +45,13 @@ namespace NotionPlay
                 GamePopup.DataContext = gameVisualVM;
                 GamePopup.ViewModel = gameVisualVM;
             };
-            LoadConfig();
-        }
-
-        private void LoadConfig()
-        {
-            Theory.Speed = Settings.Speed;
-            Theory.LeftNum = Settings.LeftNum;
-            Theory.RightNum = Settings.RightNum;
-            Loaded += (s, e) => UpdateTheoryText();
+            Loaded += (s, e) =>
+            {
+                Theory.Speed = Settings.Speed;
+                Theory.LeftNum = Settings.LeftNum;
+                Theory.RightNum = Settings.RightNum;
+                UpdateTheoryText();
+            };
         }
         public void UpdateTheoryText()
         {
