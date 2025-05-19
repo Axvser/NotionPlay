@@ -185,7 +185,7 @@ namespace NotionPlay.EditorControls
                         counter++;
                         if (counter > 3)
                         {
-                            await Task.Delay(16);
+                            await Task.Delay(16, source.Token);
                             counter = 0;
                         }
                     }
@@ -216,7 +216,7 @@ namespace NotionPlay.EditorControls
                 counter++;
                 if (counter > 4)
                 {
-                    await Task.Delay(16);
+                    await Task.Delay(16, cts.Token);
                     counter = 0;
                 }
             }
@@ -236,7 +236,7 @@ namespace NotionPlay.EditorControls
                     counter++;
                     if (counter > 4)
                     {
-                        await Task.Delay(16);
+                        await Task.Delay(16, cts.Token);
                         counter = 0;
                     }
                 }
@@ -260,7 +260,7 @@ namespace NotionPlay.EditorControls
                     trackcounter++;
                     if (trackcounter > 4)
                     {
-                        await Task.Delay(8, cts.Token);
+                        await Task.Delay(16, cts.Token);
                         trackcounter = 0;
                     }
                 }
@@ -287,7 +287,7 @@ namespace NotionPlay.EditorControls
                         notecounter++;
                         if (notecounter > 10)
                         {
-                            await Task.Delay(4, cts.Token);
+                            await Task.Delay(16, cts.Token);
                             notecounter = 0;
                         }
                     }
