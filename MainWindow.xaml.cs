@@ -150,6 +150,18 @@ namespace NotionPlay
     [Theme(nameof(BorderBrush), typeof(Dark), ["White"])]
     public partial class MainWindow
     {
+        protected override async void OnClosing(CancelEventArgs e)
+        {
+            if (!isSavedWhileClose)
+            {
+                await FileHelper.SaveProjectsToDefaultPosition();
+                await SettingsViewModel.SaveFile(Settings);
+                await GameVisualViewModel.SaveFile(GamePopup.ViewModel);
+                HotKeySetter.Instance.Close();
+                GamePopup.IsOpen = false;
+            }
+            base.OnClosing(e);
+        }
         protected override void OnStateChanged(EventArgs e)
         {
             base.OnStateChanged(e);
@@ -196,6 +208,7 @@ namespace NotionPlay
             await GameVisualViewModel.SaveFile(GamePopup.ViewModel);
             HotKeySetter.Instance.Close();
             GamePopup.IsOpen = false;
+            isSavedWhileClose = true;
             Close();
         }
         private void Size_Click(object sender, RoutedEventArgs e)
