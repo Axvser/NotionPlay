@@ -3,7 +3,6 @@ using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
-using NotionPlay.Tools;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

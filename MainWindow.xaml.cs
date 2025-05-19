@@ -1,17 +1,13 @@
 ﻿global using static NotionPlay.GlobalState;
 using MinimalisticWPF.Controls;
-using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using MinimalisticWPF.TransitionSystem;
 using NotionPlay.EditorControls;
 using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
-using NotionPlay.VisualComponents.Models;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Shapes;
 

@@ -1,7 +1,6 @@
 ﻿using MinimalisticWPF.Controls;
 using NotionPlay.EditorControls.Models;
 using NotionPlay.EditorControls.ViewModels;
-using NotionPlay.Interfaces;
 using NotionPlay.Tools;
 using NotionPlay.VisualComponents;
 using System.Diagnostics;

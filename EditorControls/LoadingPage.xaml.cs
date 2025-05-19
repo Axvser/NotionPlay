@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MinimalisticWPF.SourceGeneratorMark;
+using MinimalisticWPF.Theme;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MinimalisticWPF.SourceGeneratorMark;
-using MinimalisticWPF.Theme;
 
 namespace NotionPlay.EditorControls
 {

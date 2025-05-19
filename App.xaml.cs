@@ -1,6 +1,6 @@
 ﻿using MinimalisticWPF.Theme;
-using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.EditorControls;
+using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
 using System.Windows;
 

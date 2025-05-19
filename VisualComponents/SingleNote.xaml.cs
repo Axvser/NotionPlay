@@ -1,5 +1,4 @@
-﻿using MinimalisticWPF.Controls;
-using MinimalisticWPF.HotKey;
+﻿using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;

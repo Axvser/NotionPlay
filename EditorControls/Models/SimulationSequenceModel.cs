@@ -1,10 +1,8 @@
 ﻿using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
+using NotionPlay.VisualComponents.Enums;
 using System.Text.Json.Serialization;
 using WindowsInput.Native;
-using NotionPlay.Interfaces;
-using System.Windows;
-using NotionPlay.VisualComponents.Enums;
 
 namespace NotionPlay.EditorControls.Models
 {
@@ -30,64 +28,74 @@ namespace NotionPlay.EditorControls.Models
                 RightNum = Theory.RightNum,
             };
 
-            int globalAtomCounter = 0;
             switch (viewModel.Type)
             {
                 case TreeItemTypes.Project:
-                    result.ParseSnapshotAtProject(viewModel, ref globalAtomCounter);
+                    result.ParseSnapshotAtProject(viewModel);
                     break;
                 case TreeItemTypes.Package:
-                    result.ParseSnapshotAtPackage(viewModel, ref globalAtomCounter);
+                    result.ParseSnapshotAtPackage(viewModel);
                     break;
                 case TreeItemTypes.Paragraph:
-                    result.ParseSnapshotAtParagraph(viewModel, ref globalAtomCounter);
+                    result.ParseSnapshotAtParagraph(viewModel);
                     break;
             }
             return result;
         }
-        private void ParseSnapshotAtProject(TreeItemViewModel viewModel, ref int globalAtomCounter)
+        private void ParseSnapshotAtProject(TreeItemViewModel viewModel)
         {
             foreach (var child in viewModel.Children)
             {
-                ParseSnapshotAtPackage(child, ref globalAtomCounter);
+                ParseSnapshotAtPackage(child);
             }
         }
-        private void ParseSnapshotAtPackage(TreeItemViewModel viewModel, ref int globalAtomCounter)
+        private void ParseSnapshotAtPackage(TreeItemViewModel viewModel)
         {
             foreach (var child in viewModel.Children)
             {
-                ParseSnapshotAtParagraph(child, ref globalAtomCounter);
+                ParseSnapshotAtParagraph(child);
             }
         }
-        private void ParseSnapshotAtParagraph(TreeItemViewModel viewModel, ref int globalAtomCounter)
+        private void ParseSnapshotAtParagraph(TreeItemViewModel viewModel)
         {
+            var maxAtomCount = viewModel.Notes.Select(list => CalculateAtomCount(list)).Max();
+            if (maxAtomCount == 0) return;
+            var startIndex = Simulations.Count; // 新元素的起始位置
+            while (maxAtomCount + startIndex >= Simulations.Count)
+            {
+                Simulations.Add(new SimulationModel());
+            }
+
             foreach (var trackvalues in viewModel.Notes)
             {
+                var atomCount = 0;
                 foreach (var note in trackvalues)
                 {
                     int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
                     for (int i = 0; i < steps; i++)
                     {
-                        while (globalAtomCounter >= Simulations.Count)
-                        {
-                            Simulations.Add(new SimulationModel());
-                        }
-
-                        Simulations[globalAtomCounter].Span = Theory.GetSpan(DurationTypes.SixtyFour);
+                        Simulations[atomCount + startIndex].Span = Theory.GetSpan(DurationTypes.SixtyFour);
 
                         if (i == 0 && KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey))
                         {
-                            Simulations[globalAtomCounter].Keys.Add(virtualKey);
-                        }
-                        else
-                        {
-                            Simulations[globalAtomCounter].Keys.Add(VirtualKeyCode.NONAME);
+                            Simulations[atomCount + startIndex].Keys.Add(virtualKey);
                         }
 
-                        globalAtomCounter++;
+                        atomCount++;
                     }
                 }
             }
+        }
+        private static int CalculateAtomCount(List<NoteModel> notes)
+        {
+            var result = 0;
+
+            foreach (var note in notes)
+            {
+                result += Math.Clamp(64 / (int)note.DurationType, 1, 64);
+            }
+
+            return result;
         }
     }
 }
