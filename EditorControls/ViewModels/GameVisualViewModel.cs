@@ -56,7 +56,7 @@ namespace NotionPlay.EditorControls.ViewModels
             var source = new CancellationTokenSource();
             return (async () =>
             {
-                GameVisual.Instance.TaskControlSymbol = GameVisual.SVG_Stop;
+                MainWindow.UpdateGameVisualText(GameVisual.SVG_Stop);
                 if (CurrentIndex == SelectedSimulation.Simulations.Count - 1) CurrentIndex = 0;
                 var spans = SelectedSimulation.Simulations.Select(x => (int)(x.Span * SelectedSimulation.Scale)).ToArray();
                 for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
@@ -78,7 +78,7 @@ namespace NotionPlay.EditorControls.ViewModels
                 {
                     simulation.KeyUp();
                 }
-                GameVisual.Instance.TaskControlSymbol = GameVisual.SVG_Start;
+                MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);
             }, source);
         }
     }

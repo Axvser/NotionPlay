@@ -36,6 +36,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <ec:GameVisual x:Name="GamePopup"/>
         <Grid Grid.Row="0">
             <!--顶侧栏-->
             <Grid.ColumnDefinitions>

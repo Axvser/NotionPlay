@@ -61,7 +61,7 @@ namespace NotionPlay.EditorControls
         private void OpenGameVisuals(object sender, HotKeyEventArgs e)
         {
             StopSimulation();
-            GameVisual.ChangeState();
+            MainWindow.ChangeGameVisualState();
         }
 
         private void PlusSpeed(object sender, HotKeyEventArgs e)

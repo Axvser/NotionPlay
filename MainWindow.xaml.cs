@@ -20,6 +20,17 @@ namespace NotionPlay
     public partial class MainWindow : Window
     {
         public static MainWindow? Instance { get; private set; }
+        public static void UpdateGameVisualText(string text)
+        {
+            if (Instance is not null)
+            {
+                Instance.GamePopup.TaskControlSymbol = text;
+            }
+        }
+        public static void ChangeGameVisualState()
+        {
+            Instance?.GamePopup.ChangeState();
+        }
 
         [Constructor]
         private void InitializeNotes()
@@ -27,11 +38,11 @@ namespace NotionPlay
             Instance = this;
             EditorHost = Editor;
             SourceViewerHost = SourceManager;
-            Loaded += (s, e) =>
+            SourceInitialized += async (s, e) =>
             {
-                GameVisual.Instance.Show();
-                GameVisual.Instance.Visibility = Visibility.Hidden;
-                GameVisual.Instance.Opacity = 1;
+                var gameVisualVM = await GameVisualViewModel.FromFile();
+                GamePopup.DataContext = gameVisualVM;
+                GamePopup.ViewModel = gameVisualVM;
             };
             LoadConfig();
         }
@@ -59,7 +70,7 @@ namespace NotionPlay
             CanHightLight = !condition;
             CanTheorySetter = condition;
             LoadingAnimator.CanMonoBehaviour = condition;
-            if (CanPreview) GameVisual.ChangeState();
+            if (CanPreview) GamePopup.ChangeState();
             menu1.BeginTransition(condition ? ts_menuFolded : ts_menuExpended);
             menu2.BeginTransition(condition ? ts_buttonExpended : ts_buttonFolded);
         }
@@ -113,7 +124,7 @@ namespace NotionPlay
         }
         private async void SelectSnapshots(object sender, RoutedEventArgs e)
         {
-            await GameVisual.Instance.LoadSingleSnapshotAsync();
+            await GamePopup.LoadSingleSnapshotAsync();
         }
     }
 
@@ -183,9 +194,9 @@ namespace NotionPlay
         {
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
-            await GameVisualViewModel.SaveFile(GameVisual.Instance.ViewModel);
+            await GameVisualViewModel.SaveFile(GamePopup.ViewModel);
             HotKeySetter.Instance.Close();
-            GameVisual.Instance.Close();
+            GamePopup.IsOpen = false;
             Close();
         }
         private void Size_Click(object sender, RoutedEventArgs e)

@@ -41,6 +41,7 @@ namespace NotionPlay
         public static void StopSimulation()
         {
             CanEdit = false;
+            TreeNode.StopUIUpdate();
             var oldSource = Interlocked.Exchange(ref SimulationTokenSource, null);
             if (oldSource != null)
             {

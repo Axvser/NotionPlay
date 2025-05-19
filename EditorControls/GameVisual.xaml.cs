@@ -1,15 +1,18 @@
 ﻿using Microsoft.Win32;
-using MinimalisticWPF.Controls;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.EditorControls.Models;
 using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace NotionPlay.EditorControls
 {
@@ -17,10 +20,8 @@ namespace NotionPlay.EditorControls
     [Theme(nameof(Background), typeof(Dark), ["#AA1e1e1e"])]
     [Theme(nameof(Foreground), typeof(Light), ["Black"])]
     [Theme(nameof(Foreground), typeof(Dark), ["White"])]
-    public partial class GameVisual : Window
+    public partial class GameVisual : Popup
     {
-        public static GameVisual Instance { get; set; } = new();
-
         public async Task LoadSingleSnapshotAsync()
         {
             var openFileDialog = new OpenFileDialog
@@ -52,14 +53,14 @@ namespace NotionPlay.EditorControls
                 }
             }
         }
-        public static void ChangeState()
+        public void ChangeState()
         {
             if (!CanSimulate)
             {
-                Instance.Visibility = Visibility.Hidden;
+                IsOpen = false;
                 return;
             }
-            Instance.Visibility = Instance.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+            IsOpen = IsOpen != true;
         }
 
         public GameVisualViewModel ViewModel
@@ -86,6 +87,22 @@ namespace NotionPlay.EditorControls
         public static readonly DependencyProperty TaskControlSymbolProperty =
             DependencyProperty.Register("TaskControlSymbol", typeof(string), typeof(GameVisual), new PropertyMetadata(SVG_Start));
 
+        public Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty BackgroundProperty =
+            DependencyProperty.Register("Background", typeof(Brush), typeof(GameVisual), new PropertyMetadata(Brushes.White));
+
+        public Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+        public static readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.Register("Foreground", typeof(Brush), typeof(GameVisual), new PropertyMetadata(Brushes.Black));
+
         private static readonly JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
@@ -100,7 +117,7 @@ namespace NotionPlay.EditorControls
         }
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+
         }
         private async void SelectSong(object sender, RoutedEventArgs e)
         {
@@ -130,6 +147,52 @@ namespace NotionPlay.EditorControls
         {
             ViewModel.SelectedSimulation.Scale = Math.Clamp(ViewModel.SelectedSimulation.Scale - 0.1, 0, double.MaxValue);
             ViewModel.Scale = (((int)(ViewModel.SelectedSimulation.Scale * 10)) / 10.0).ToString();
+        }
+    }
+
+    public partial class GameVisual
+    {
+        private Point _dragStartPopupPosition;
+        private Point _dragStartMousePosition;
+        private bool _isDragging;
+
+        private void TopBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var border = (Border)sender;
+            _dragStartPopupPosition = new Point(HorizontalOffset, VerticalOffset);
+            _dragStartMousePosition = e.GetPosition(Application.Current.MainWindow); // 使用主窗口作为参考
+            _isDragging = true;
+            border.CaptureMouse();
+            e.Handled = true;
+        }
+
+        private void TopBorder_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isDragging)
+            {
+                // 获取相对于主窗口的当前鼠标位置
+                Point currentMousePosition = e.GetPosition(Application.Current.MainWindow);
+
+                // 计算总偏移量（基于初始位置）
+                double totalOffsetX = currentMousePosition.X - _dragStartMousePosition.X;
+                double totalOffsetY = currentMousePosition.Y - _dragStartMousePosition.Y;
+
+                // 直接设置新位置（而不是累加）
+                HorizontalOffset = _dragStartPopupPosition.X + totalOffsetX;
+                VerticalOffset = _dragStartPopupPosition.Y + totalOffsetY;
+
+                e.Handled = true;
+            }
+        }
+
+        private void TopBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_isDragging)
+            {
+                _isDragging = false;
+                ((Border)sender).ReleaseMouseCapture();
+                e.Handled = true;
+            }
         }
     }
 

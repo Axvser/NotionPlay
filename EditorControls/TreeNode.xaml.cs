@@ -45,7 +45,6 @@ namespace NotionPlay.EditorControls
         private void Menu_AddChild(object sender, RoutedEventArgs e)
         {
             StopSimulation();
-            StopUIUpdate();
             var meta = NodeInfoSetter.Open(ViewModel);
             if (meta?.Item3 ?? false) return;
             if (meta is null)
@@ -72,7 +71,6 @@ namespace NotionPlay.EditorControls
         private void Menu_Rename(object sender, RoutedEventArgs e)
         {
             StopSimulation();
-            StopUIUpdate();
             if (NodeInfoSetter.Rename(out var value))
             {
                 if (ViewModel.Type == TreeItemTypes.Project)
@@ -106,7 +104,6 @@ namespace NotionPlay.EditorControls
         private void Menu_Delete(object sender, RoutedEventArgs e)
         {
             StopSimulation();
-            StopUIUpdate();
             if (NotificationBox.Choose($"⚠ 确定要删除名为 : [ {ViewModel.Header} ] 的节点吗? 此操作不可撤销"))
             {
                 ViewModel.Parent.Children.Remove(ViewModel);
@@ -120,7 +117,6 @@ namespace NotionPlay.EditorControls
         private async void MenuItem_Snapshot(object sender, RoutedEventArgs e)
         {
             StopSimulation();
-            StopUIUpdate();
             if (NodeInfoSetter.Snapshot(out var fileName))
             {
                 var result = await TreeItemViewModel.SaveSnapshot(ViewModel, Path.Combine(FileHelper.SnapshotsFolder, FindRoot(ViewModel).Header), fileName);
@@ -156,7 +152,6 @@ namespace NotionPlay.EditorControls
         private async void ShowEditor(object sender, RoutedEventArgs e)
         {
             StopSimulation();
-            StopUIUpdate();
             try
             {
                 CanEdit = false;

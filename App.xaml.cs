@@ -19,9 +19,6 @@ namespace NotionPlay
             DynamicTheme.FollowSystem(Settings.IsDark ? typeof(Dark) : typeof(Light));
             AudioHelper.Initialize();
             HotKeySetter.Instance.DataContext = Settings;
-            var gameVisualVM = await GameVisualViewModel.FromFile();
-            GameVisual.Instance.DataContext = gameVisualVM;
-            GameVisual.Instance.ViewModel = gameVisualVM;
         }
     }
 }
