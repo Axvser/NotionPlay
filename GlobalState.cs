@@ -20,6 +20,7 @@ namespace NotionPlay
         public static MusicTheory Theory { get; set; } = new();
         public static SourceViewer? SourceViewerHost { get; set; }
         public static NumberedMusicalNotationEditor? EditorHost { get; set; }
+        public static GameVisual? GameVisualHost { get; set; }
         public static Style? Default_NoteStyle { get; private set; } = Application.Current.TryFindResource("nicebutton2") as Style;
 
         public static SettingsViewModel Settings { get; set; } = SettingsViewModel.Default;

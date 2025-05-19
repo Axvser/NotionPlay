@@ -37,6 +37,7 @@ namespace NotionPlay
         {
             Instance = this;
             EditorHost = Editor;
+            GameVisualHost = GamePopup;
             SourceViewerHost = SourceManager;
             SourceInitialized += async (s, e) =>
             {

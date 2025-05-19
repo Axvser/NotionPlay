@@ -43,8 +43,16 @@ namespace NotionPlay.EditorControls
         #region HotKey Event Handlers
         private void Start(object sender, HotKeyEventArgs e)
         {
-            if (EditorHost is null) return;
-            SubmitSimulation(EditorHost);
+            StopSimulation();
+            switch (CanSimulate, CanPreview)
+            {
+                case (false, true):
+                    if (EditorHost is not null) SubmitSimulation(EditorHost);
+                    break;
+                case (true, false):
+                    if (GameVisualHost is not null) SubmitSimulation(GameVisualHost.ViewModel);
+                    break;
+            }
         }
 
         private void Stop(object sender, HotKeyEventArgs e)

@@ -138,6 +138,11 @@ namespace NotionPlay.EditorControls
                 StopSimulation();
             }
         }
+        public void ToZero(object sender, RoutedEventArgs e)
+        {
+            StopSimulation();
+            ViewModel.CurrentIndex = 0;
+        }
         public void PlusScale(object sender, RoutedEventArgs e)
         {
             ViewModel.SelectedSimulation.Scale = Math.Clamp(ViewModel.SelectedSimulation.Scale + 0.1, 0, double.MaxValue);
@@ -165,7 +170,6 @@ namespace NotionPlay.EditorControls
             border.CaptureMouse();
             e.Handled = true;
         }
-
         private void TopBorder_MouseMove(object sender, MouseEventArgs e)
         {
             if (_isDragging)
@@ -184,7 +188,6 @@ namespace NotionPlay.EditorControls
                 e.Handled = true;
             }
         }
-
         private void TopBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (_isDragging)
