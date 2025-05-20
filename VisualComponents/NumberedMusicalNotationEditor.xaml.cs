@@ -17,7 +17,8 @@ namespace NotionPlay.VisualComponents
             var source = new CancellationTokenSource();
             async Task func()
             {
-                foreach (Paragraph paragraph in container.Children)
+                object[] childrenCopy = [..container.Children];
+                foreach (Paragraph paragraph in childrenCopy.Cast<Paragraph>())
                 {
                     if (source.IsCancellationRequested) return;
                     await paragraph.GetSimulation(source).Invoke();
