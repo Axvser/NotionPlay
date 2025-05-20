@@ -39,6 +39,14 @@ namespace NotionPlay.Tools
                             source.ViewModel.Children.Add(item);
                         }
                         break;
+                    case (TreeItemTypes.Paragraph, TreeItemTypes.Paragraph):
+                        var paragraph1 = Interlocked.Exchange(ref copy, copy.DeepCopy());
+                        source.ViewModel.Notes.Clear();
+                        foreach (var item in paragraph1.Notes)
+                        {
+                            source.ViewModel.Notes.Add(item);
+                        }
+                        break;
                     default:
                         NotificationBox.Confirm($"❌ 节点 [ {copy.Header} ] 无法粘贴到此处", "失败");
                         break;

@@ -162,6 +162,7 @@ namespace NotionPlay
         {
             if (!isSavedWhileClose)
             {
+                StopSimulation();
                 await FileHelper.SaveProjectsToDefaultPosition();
                 await SettingsViewModel.SaveFile(Settings);
                 await GameVisualViewModel.SaveFile(GamePopup.ViewModel);
@@ -227,6 +228,7 @@ namespace NotionPlay
         }
         private async void Close_Click(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             await FileHelper.SaveProjectsToDefaultPosition();
             await SettingsViewModel.SaveFile(Settings);
             await GameVisualViewModel.SaveFile(GamePopup.ViewModel);
