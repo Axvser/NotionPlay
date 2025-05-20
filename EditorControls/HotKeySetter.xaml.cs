@@ -68,7 +68,6 @@ namespace NotionPlay.EditorControls
 
         private void OpenGameVisuals(object sender, HotKeyEventArgs e)
         {
-            StopSimulation();
             MainWindow.ChangeGameVisualState();
         }
 
