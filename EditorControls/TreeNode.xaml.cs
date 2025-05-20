@@ -142,7 +142,11 @@ namespace NotionPlay.EditorControls
         public static void StopUIUpdate()
         {
             var oldsource = Interlocked.Exchange(ref cts_ui, null);
-            oldsource?.Cancel();
+            if (oldsource != null)
+            {
+                oldsource.Cancel();
+                oldsource.Dispose();
+            }
         }
         private async void ShowEditor(object sender, RoutedEventArgs e)
         {
@@ -187,11 +191,6 @@ namespace NotionPlay.EditorControls
             }
             finally
             {
-                if (!source.IsCancellationRequested)
-                {
-                    source.Cancel();
-                }
-                source.Dispose();
                 CanEdit = true;
             }
         }
