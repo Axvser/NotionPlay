@@ -142,19 +142,15 @@ namespace NotionPlay.EditorControls
         public static void StopUIUpdate()
         {
             var oldsource = Interlocked.Exchange(ref cts_ui, null);
-            if (oldsource is not null)
-            {
-                oldsource.Cancel();
-                oldsource.Dispose();
-            }
+            oldsource?.Cancel();
         }
         private async void ShowEditor(object sender, RoutedEventArgs e)
         {
             StopSimulation();
+            var source = new CancellationTokenSource();
             try
             {
                 CanEdit = false;
-                var source = new CancellationTokenSource();
                 Interlocked.Exchange(ref cts_ui, source);
                 var editors = ViewModel.Type switch
                 {
@@ -191,6 +187,11 @@ namespace NotionPlay.EditorControls
             }
             finally
             {
+                if (!source.IsCancellationRequested)
+                {
+                    source.Cancel();
+                }
+                source.Dispose();
                 CanEdit = true;
             }
         }
@@ -202,28 +203,10 @@ namespace NotionPlay.EditorControls
         private async Task<List<Paragraph>> CreateEditorAtPackage(CancellationTokenSource cts)
         {
             List<Paragraph> result = [];
-            var counter = 0;
-            foreach (TreeItemViewModel vm_paragraph in ViewModel.Children) // 遍历段落视图模型
+            try
             {
-                if (cts.IsCancellationRequested) break;
-                result.Add(await BuildParagraph(vm_paragraph, cts));
-                counter++;
-                if (counter > 4)
-                {
-                    await Task.Delay(16, cts.Token);
-                    counter = 0;
-                }
-            }
-            return result;
-        }
-        private async Task<List<Paragraph>> CreateEditorAtProject(CancellationTokenSource cts)
-        {
-            List<Paragraph> result = [];
-            var counter = 0;
-            foreach (TreeItemViewModel vm_packages in ViewModel.Children) // 遍历包视图模型
-            {
-                if (cts.IsCancellationRequested) break;
-                foreach (TreeItemViewModel vm_paragraph in vm_packages.Children) // 遍历段落视图模型
+                var counter = 0;
+                foreach (TreeItemViewModel vm_paragraph in ViewModel.Children) // 遍历段落视图模型
                 {
                     if (cts.IsCancellationRequested) break;
                     result.Add(await BuildParagraph(vm_paragraph, cts));
@@ -235,57 +218,96 @@ namespace NotionPlay.EditorControls
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return result;
+        }
+        private async Task<List<Paragraph>> CreateEditorAtProject(CancellationTokenSource cts)
+        {
+            List<Paragraph> result = [];
+            try
+            {
+                var counter = 0;
+                foreach (TreeItemViewModel vm_packages in ViewModel.Children) // 遍历包视图模型
+                {
+                    if (cts.IsCancellationRequested) break;
+                    foreach (TreeItemViewModel vm_paragraph in vm_packages.Children) // 遍历段落视图模型
+                    {
+                        if (cts.IsCancellationRequested) break;
+                        result.Add(await BuildParagraph(vm_paragraph, cts));
+                        counter++;
+                        if (counter > 4)
+                        {
+                            await Task.Delay(16, cts.Token);
+                            counter = 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
             return result;
         }
         private static async Task<Paragraph> BuildParagraph(TreeItemViewModel viewModel, CancellationTokenSource cts)
         {
             var paragraph = new Paragraph() { MusicTheory = Theory };
             var notegroups = viewModel.Notes.Select(list => list.Select(v => new SingleNote() { MusicTheory = Theory, Note = v.Note, FrequencyLevel = v.FrequencyLevel, DurationType = v.DurationType }));
-            var trackcounter = 0;
-            foreach (var notegroup in notegroups)
+            try
             {
-                if (cts.IsCancellationRequested) break;
-                var track = new Track() { MusicTheory = Theory, ParentNote = paragraph };
-                foreach (var note in notegroup)
+                var trackcounter = 0;
+                foreach (var notegroup in notegroups)
                 {
                     if (cts.IsCancellationRequested) break;
-                    note.ParentNote = track;
-                    track.Items.Add(note);
-                    trackcounter++;
-                    if (trackcounter > 4)
+                    var track = new Track() { MusicTheory = Theory, ParentNote = paragraph };
+                    foreach (var note in notegroup)
                     {
-                        await Task.Delay(16, cts.Token);
-                        trackcounter = 0;
-                    }
-                }
-                paragraph.Items.Add(track);
-            }
-            var notecounter = 0;
-            paragraph.Saved += async () =>
-            {
-                var newValue = new List<List<NoteModel>>();
-                foreach (Track track in paragraph.Items)
-                {
-                    var list = new List<NoteModel>();
-                    newValue.Add(list);
-                    foreach (SingleNote note in track.Items)
-                    {
-                        list.Add(new NoteModel()
-                        {
-                            Note = note.Note,
-                            FrequencyLevel = note.FrequencyLevel,
-                            DurationType = note.DurationType,
-                        });
-                        notecounter++;
-                        if (notecounter > 10)
+                        if (cts.IsCancellationRequested) break;
+                        note.ParentNote = track;
+                        track.Items.Add(note);
+                        trackcounter++;
+                        if (trackcounter > 4)
                         {
                             await Task.Delay(16, cts.Token);
-                            notecounter = 0;
+                            trackcounter = 0;
                         }
                     }
+                    paragraph.Items.Add(track);
                 }
-                viewModel.Notes = newValue;
-            };
+                var notecounter = 0;
+                paragraph.Saved += async () =>
+                {
+                    var newValue = new List<List<NoteModel>>();
+                    foreach (Track track in paragraph.Items)
+                    {
+                        var list = new List<NoteModel>();
+                        newValue.Add(list);
+                        foreach (SingleNote note in track.Items)
+                        {
+                            list.Add(new NoteModel()
+                            {
+                                Note = note.Note,
+                                FrequencyLevel = note.FrequencyLevel,
+                                DurationType = note.DurationType,
+                            });
+                            notecounter++;
+                            if (notecounter > 100)
+                            {
+                                await Task.Delay(16);
+                                notecounter = 0;
+                            }
+                        }
+                    }
+                    viewModel.Notes = newValue;
+                };
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
             return paragraph;
         }
     }
