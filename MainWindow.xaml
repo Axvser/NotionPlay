@@ -118,29 +118,31 @@
             <!--核心区-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="2" />
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Margin="0,1,0,0">
                 <!--简谱编辑区-->
                 <vc:NumberedMusicalNotationEditor x:Name="Editor"/>
+                <Border x:Name="backprogress" Height="1" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=ProgressBackground}"/>
             </Grid>
             <!-- 分割线（可拖拽调整） -->
             <GridSplitter Grid.Column="1"
-                              Width="5"
-                              HorizontalAlignment="Stretch"
-                              Background="Transparent"/>
-            <Grid Grid.Column="2">
+                          Width="2"
+                          Margin="0,1,0,0"
+                          HorizontalAlignment="Stretch"
+                          Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
+            <Grid Grid.Column="2" Margin="0,1,0,0">
                 <Grid Grid.Row="1">
                     <!--资源列表-->
                     <ec:SourceViewer x:Name="SourceManager"/>
-                    <Border BorderThickness="1,0,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
+                    <Border BorderThickness="0,1,0,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 </Grid>
             </Grid>
             <!--模拟模式-->
             <Border Grid.ColumnSpan="3"  Grid.ZIndex="1"
                     Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Background}"
-                    CornerRadius="10"
+                    CornerRadius="0,0,10,10"
                     Visibility="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=GameMaskVisibility}">
                 <Grid>
                     <Grid.RowDefinitions>

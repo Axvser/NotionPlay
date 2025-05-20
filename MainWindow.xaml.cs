@@ -8,7 +8,9 @@ using NotionPlay.EditorControls.ViewModels;
 using NotionPlay.Tools;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace NotionPlay
@@ -26,6 +28,16 @@ namespace NotionPlay
         public static void ChangeGameVisualState()
         {
             Instance?.GamePopup.ChangeState();
+        }
+        public static void StartLoadingTransition()
+        {
+            if (Instance is null) return;
+            Instance.ProgressBackground = Brushes.Violet;
+        }
+        public static void EndLoadingTransition()
+        {
+            if(Instance is null) return;
+            Instance.ProgressBackground = Brushes.White;
         }
 
         [Constructor]
@@ -180,6 +192,22 @@ namespace NotionPlay
         }
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(MainWindow), new PropertyMetadata(new CornerRadius(10d)));
+
+        public Brush ProgressBackground
+        {
+            get { return (Brush)GetValue(ProgressBackgroundProperty); }
+            set { SetValue(ProgressBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty ProgressBackgroundProperty =
+            DependencyProperty.Register("ProgressBackground", typeof(Brush), typeof(MainWindow), new PropertyMetadata(Brushes.White));
+
+        public Transform ProgressTransform
+        {
+            get { return (Transform)GetValue(ProgressTransformProperty); }
+            set { SetValue(ProgressTransformProperty, value); }
+        }
+        public static readonly DependencyProperty ProgressTransformProperty =
+            DependencyProperty.Register("ProgressTransform", typeof(Transform), typeof(MainWindow), new PropertyMetadata(Transform.Identity));
 
         public Visibility GameMaskVisibility
         {

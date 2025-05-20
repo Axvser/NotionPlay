@@ -155,6 +155,7 @@ namespace NotionPlay.EditorControls
             try
             {
                 CanEdit = false;
+                MainWindow.StartLoadingTransition();
                 Interlocked.Exchange(ref cts_ui, source);
                 var editors = ViewModel.Type switch
                 {
@@ -191,6 +192,7 @@ namespace NotionPlay.EditorControls
             }
             finally
             {
+                MainWindow.EndLoadingTransition();
                 CanEdit = true;
             }
         }
