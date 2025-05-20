@@ -125,7 +125,7 @@ namespace NotionPlay
             StopSimulation();
             EditorHost?.SaveData();
             await FileHelper.SaveProjectsToDefaultPosition();
-            NotificationBox.Confirm("✔ 所有项目已保存", "成功");
+            NotificationBox.Confirm("✔ 已全部保存", "成功");
         }
         private async void SelectSnapshots(object sender, RoutedEventArgs e)
         {

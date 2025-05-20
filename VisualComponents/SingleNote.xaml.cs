@@ -1,4 +1,5 @@
-﻿using MinimalisticWPF.HotKey;
+﻿using MinimalisticWPF.Controls;
+using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
@@ -50,6 +51,17 @@ namespace NotionPlay.VisualComponents
                 }
             }
             return (func, source);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotificationBox.Choose("⚠ 您试图删除一个音符，此操作不可逆，确定要继续吗 ?", "询问"))
+            {
+                if (Parent is Track track)
+                {
+                    track.Items.Remove(this);
+                }
+            }
         }
     } // 默认
 

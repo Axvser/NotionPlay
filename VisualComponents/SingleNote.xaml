@@ -4,8 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NotionPlay.VisualComponents"
+             xmlns:v="clr-namespace:MinimalisticWPF.Controls;assembly=MinimalisticWPF.Controls"
              mc:Ignorable="d"
              Height="50" Width="15">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="× 删除音符" Click="MenuItem_Click">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <v:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <UserControl.Template>
         <ControlTemplate>
             <Grid Background="{TemplateBinding Background}"

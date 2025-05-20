@@ -1,4 +1,5 @@
-﻿using MinimalisticWPF.SourceGeneratorMark;
+﻿using MinimalisticWPF.Controls;
+using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
@@ -94,6 +95,17 @@ namespace NotionPlay.VisualComponents
             if (Items.Count > 0)
             {
                 Items.RemoveAt(Items.Count - 1);
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (NotificationBox.Choose("⚠ 您试图删除一个音轨，此操作不可逆，确定要继续吗 ?", "询问"))
+            {
+                if (Parent is Paragraph paragraph)
+                {
+                    paragraph.Items.Remove(this);
+                }
             }
         }
     }

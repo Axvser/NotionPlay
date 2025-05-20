@@ -3,6 +3,7 @@ using MinimalisticWPF.HotKey;
 using MinimalisticWPF.SourceGeneratorMark;
 using MinimalisticWPF.Theme;
 using NotionPlay.Interfaces;
+using NotionPlay.Tools;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,7 +18,7 @@ namespace NotionPlay.VisualComponents
             var source = new CancellationTokenSource();
             async Task func()
             {
-                object[] childrenCopy = [..container.Children];
+                object[] childrenCopy = [.. container.Children];
                 foreach (Paragraph paragraph in childrenCopy.Cast<Paragraph>())
                 {
                     if (source.IsCancellationRequested) return;
@@ -118,11 +119,12 @@ namespace NotionPlay.VisualComponents
                 scale.ScaleX = Math.Clamp(scale.ScaleX - 0.1, 1, 5);
                 scale.ScaleY = Math.Clamp(scale.ScaleY - 0.1, 1, 5);
             });
-            LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], (s, e) =>
+            LocalHotKey.Register(this, [Key.LeftCtrl, Key.S], async (s, e) =>
             {
                 StopSimulation();
                 EditorHost?.SaveData();
-                NotificationBox.Confirm("✔ 已保存当前节点");
+                await FileHelper.SaveProjectsToDefaultPosition();
+                NotificationBox.Confirm("✔ 已全部保存", "成功");
             });
         }
     }
