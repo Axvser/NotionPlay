@@ -124,6 +124,7 @@
             <Grid Grid.Column="0" Margin="0,1,0,0">
                 <!--简谱编辑区-->
                 <vc:NumberedMusicalNotationEditor x:Name="Editor"/>
+                <Border Height="1" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=Foreground}"/>
                 <Border x:Name="backprogress" Height="1" VerticalAlignment="Top" Background="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},Path=ProgressBackground}"/>
             </Grid>
             <!-- 分割线（可拖拽调整） -->

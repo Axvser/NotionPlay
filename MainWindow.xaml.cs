@@ -36,8 +36,8 @@ namespace NotionPlay
         }
         public static void EndLoadingTransition()
         {
-            if(Instance is null) return;
-            Instance.ProgressBackground = Brushes.White;
+            if (Instance is null) return;
+            Instance.ProgressBackground = Brushes.Transparent;
         }
 
         [Constructor]
