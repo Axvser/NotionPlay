@@ -19,6 +19,54 @@ namespace NotionPlay.EditorControls.ViewModels
         Paragraph = 3,
     }
 
+    public partial class TreeItemViewModel
+    {
+        public TreeItemViewModel DeepCopy()
+        {
+            return DeepCopyInternal();
+        }
+        private TreeItemViewModel DeepCopyInternal()
+        {
+            var copy = new TreeItemViewModel
+            {
+                Parent = Empty,
+                StateIcon = this.StateIcon,
+                TypeIcon = this.TypeIcon,
+                Header = this.Header,
+                AddedName = this.AddedName,
+                RemovedName = this.RemovedName,
+                IsOpened = this.IsOpened,
+                Type = this.Type,
+                ItemsVisibility = this.ItemsVisibility,
+                IsContextMenuEnabled = this.IsContextMenuEnabled,
+                CanAddChild = this.CanAddChild
+            };
+
+            foreach (var child in this.Children)
+            {
+                var childCopy = child.DeepCopyInternal();
+                childCopy.Parent = copy;
+                copy.Children.Add(childCopy);
+            }
+
+            if (this.notes != null)
+            {
+                copy.notes = new List<List<NoteModel>>(this.notes.Count);
+                foreach (var noteList in this.notes)
+                {
+                    var newNoteList = new List<NoteModel>(noteList.Count);
+                    foreach (var note in noteList)
+                    {
+                        newNoteList.Add(note.DeepCopy());
+                    }
+                    copy.notes.Add(newNoteList);
+                }
+            }
+
+            return copy;
+        }
+    }
+
     [JsonSerializable(typeof(TreeItemViewModel))]
     public partial class TreeItemViewModel
     {

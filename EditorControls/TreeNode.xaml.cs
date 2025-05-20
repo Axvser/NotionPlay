@@ -51,11 +51,6 @@ namespace NotionPlay.EditorControls
                 NotificationBox.Confirm("⚠ 输入了不合法的节点名", "错误");
                 return;
             }
-            if (ViewModel.Children.Any(c => c.Header == meta.Value.Item1))
-            {
-                NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
-                return;
-            }
             var vm = new TreeItemViewModel()
             {
                 Header = meta.Value.Item1,
@@ -76,7 +71,7 @@ namespace NotionPlay.EditorControls
                 {
                     if (SourceViewerHost?.TreeNodes.ContainsKey(value) ?? false)
                     {
-                        NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
+                        NotificationBox.Confirm("⚠ 不允许出现同名项目", "错误");
                         return;
                     }
                     else
@@ -88,15 +83,7 @@ namespace NotionPlay.EditorControls
                 }
                 else
                 {
-                    if (ViewModel.Parent.Children.Any(v => v.Header == value))
-                    {
-                        NotificationBox.Confirm("⚠ 同一层级存在同名节点", "错误");
-                        return;
-                    }
-                    else
-                    {
-                        ViewModel.Header = value;
-                    }
+                    ViewModel.Header = value;
                 }
             }
         }
@@ -113,6 +100,16 @@ namespace NotionPlay.EditorControls
                 }
             }
         }
+        private void MenuItem_Copy(object sender, RoutedEventArgs e)
+        {
+            StopSimulation();
+            Auxiliary.TreeItem.Copy(this);
+        }
+        private void MenuItem_Paste(object sender, RoutedEventArgs e)
+        {
+            StopSimulation();
+            Auxiliary.TreeItem.Paste(this);
+        }
         private async void MenuItem_Snapshot(object sender, RoutedEventArgs e)
         {
             StopSimulation();
@@ -121,7 +118,7 @@ namespace NotionPlay.EditorControls
                 var result = await TreeItemViewModel.SaveSnapshot(ViewModel, Path.Combine(FileHelper.SnapshotsFolder, FindRoot(ViewModel).Header), fileName);
                 if (result)
                 {
-                    NotificationBox.Confirm("✔ 快照已存储", "成功 !");
+                    NotificationBox.Confirm($"✔ 节点 [ {ViewModel.Header} ] 快照已存储", "成功 !");
                 }
                 else
                 {

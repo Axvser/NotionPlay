@@ -19,6 +19,20 @@
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
+            <MenuItem Header="₪ 复制" Click="MenuItem_Copy">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
+            </MenuItem>
+            <MenuItem Header="↡ 粘贴" Click="MenuItem_Paste">
+                <MenuItem.Template>
+                    <ControlTemplate TargetType="MenuItem">
+                        <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
+                    </ControlTemplate>
+                </MenuItem.Template>
+            </MenuItem>
             <MenuItem Header="⇢ 重命名" Click="Menu_Rename">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
@@ -26,14 +40,14 @@
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
-            <MenuItem Header="{Binding RemovedName}" Click="Menu_Delete">
+            <MenuItem Header="◩ 创建快照" Click="MenuItem_Snapshot">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
                         <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>
                     </ControlTemplate>
                 </MenuItem.Template>
             </MenuItem>
-            <MenuItem Header="◩ 创建快照" Click="MenuItem_Snapshot">
+            <MenuItem Header="{Binding RemovedName}" Click="Menu_Delete">
                 <MenuItem.Template>
                     <ControlTemplate TargetType="MenuItem">
                         <wpfc:Button Height="30" Width="100" ContentScale="0.618" Data="{TemplateBinding Header}" Style="{StaticResource menubutton}"/>

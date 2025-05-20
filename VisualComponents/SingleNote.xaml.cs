@@ -58,6 +58,11 @@ namespace NotionPlay.VisualComponents
         [Constructor]
         private void InitializeDefaultNote()
         {
+            MouseEnter += (s, e) =>
+            {
+                InputMethod.SetPreferredImeState(this, InputMethodState.Off);
+                InputMethod.SetIsInputMethodEnabled(this, false);
+            };
             Loaded += (s, e) => UpdateNote();
             MouseEnter += (s, e) => Focus();
             Style = Default_NoteStyle;
@@ -145,6 +150,46 @@ namespace NotionPlay.VisualComponents
                 Note = Notes.La;
             });
             LocalHotKey.Register(this, [Key.D7], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.Si;
+            });
+            LocalHotKey.Register(this, [Key.NumPad0], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.None;
+            });
+            LocalHotKey.Register(this, [Key.NumPad1], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.Do;
+            });
+            LocalHotKey.Register(this, [Key.NumPad2], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.Re;
+            });
+            LocalHotKey.Register(this, [Key.NumPad3], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.Mi;
+            });
+            LocalHotKey.Register(this, [Key.NumPad4], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.Fa;
+            });
+            LocalHotKey.Register(this, [Key.NumPad5], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.Sol;
+            });
+            LocalHotKey.Register(this, [Key.NumPad6], (s, e) =>
+            {
+                if (!CanEdit) return;
+                Note = Notes.La;
+            });
+            LocalHotKey.Register(this, [Key.NumPad7], (s, e) =>
             {
                 if (!CanEdit) return;
                 Note = Notes.Si;
