@@ -65,7 +65,7 @@ namespace NotionPlay.EditorControls.ViewModels
                         if (source.Token.IsCancellationRequested) break;
                         CurrentIndex = i;
                         SelectedSimulation.Simulations[i].KeyDown();
-                        await Task.Delay(spans[i], source.Token);
+                        await Task.Delay(spans[i]);
                         SelectedSimulation.Simulations[i].KeyUp();
                     }
                     catch
@@ -73,9 +73,13 @@ namespace NotionPlay.EditorControls.ViewModels
 
                     }
                 }
-                foreach (var simulation in SelectedSimulation.Simulations)
+                var currentIndex = CurrentIndex;
+                var counter = 0;
+                while (currentIndex > -1 && currentIndex < SelectedSimulation.Simulations.Count && counter < 64)
                 {
-                    simulation.KeyUp();
+                    SelectedSimulation.Simulations[currentIndex].KeyUp();
+                    currentIndex--;
+                    counter++;
                 }
                 MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);
             }, source);

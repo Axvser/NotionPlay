@@ -142,11 +142,7 @@ namespace NotionPlay.EditorControls
         public static void StopUIUpdate()
         {
             var oldsource = Interlocked.Exchange(ref cts_ui, null);
-            if (oldsource != null)
-            {
-                oldsource.Cancel();
-                oldsource.Dispose();
-            }
+            oldsource?.Cancel();
         }
         private async void ShowEditor(object sender, RoutedEventArgs e)
         {

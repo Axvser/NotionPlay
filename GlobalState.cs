@@ -31,11 +31,7 @@ namespace NotionPlay
             CanEdit = false;
             var meta = container.GetSimulation();
             var oldSource = Interlocked.Exchange(ref SimulationTokenSource, meta.Item2);
-            if (oldSource != null)
-            {
-                oldSource.Cancel();
-                oldSource.Dispose();
-            }
+            oldSource?.Cancel();
             await meta.Item1.Invoke();
             CanEdit = true;
         }
@@ -44,11 +40,7 @@ namespace NotionPlay
             CanEdit = false;
             TreeNode.StopUIUpdate();
             var oldSource = Interlocked.Exchange(ref SimulationTokenSource, null);
-            if (oldSource != null)
-            {
-                oldSource.Cancel();
-                oldSource.Dispose();
-            }
+            oldSource?.Cancel();
             CanEdit = true;
         }
     }
