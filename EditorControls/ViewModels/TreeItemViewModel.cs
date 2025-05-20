@@ -194,7 +194,7 @@ namespace NotionPlay.EditorControls.ViewModels
                 }
             }
         }
-        public static async Task Save(TreeItemViewModel itemToSave, string folderPath)
+        public static async Task Save(TreeItemViewModel itemToSave, string folderPath, CancellationToken token)
         {
             if (itemToSave == null || string.IsNullOrWhiteSpace(folderPath))
             {
@@ -208,7 +208,11 @@ namespace NotionPlay.EditorControls.ViewModels
                 var fileName = string.Join("_", itemToSave.Header.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries)) + ".json";
                 var fullPath = Path.Combine(folderPath, fileName);
                 await using var fileStream = File.Create(fullPath);
-                await JsonSerializer.SerializeAsync(fileStream, itemToSave, jsonOptions);
+                if(token.IsCancellationRequested)
+                {
+                    return;
+                }
+                await JsonSerializer.SerializeAsync(fileStream, itemToSave, jsonOptions, token);
             }
             catch
             {

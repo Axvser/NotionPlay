@@ -11,7 +11,7 @@ namespace NotionPlay.Tools
         public static readonly string SnapshotsFolder = Path.Combine(AppRootPath, "Snapshots");
         public static readonly string ConfigsFolder = Path.Combine(AppRootPath, "Configs");
 
-        private static bool CanSaveProjects = true;
+        private static CancellationTokenSource? cts;
 
         public static string SelectFolder() // 唤起文件夹选择窗口
         {
@@ -27,17 +27,16 @@ namespace NotionPlay.Tools
         }
         public static async Task SaveProjectsToDefaultPosition()
         {
-            if (CanSaveProjects)
+            var source = new CancellationTokenSource();
+            var oldSource = Interlocked.Exchange(ref cts, source);
+            oldSource?.Cancel();
+            if (SourceViewerHost is not null)
             {
-                CanSaveProjects = false;
-                if (SourceViewerHost is not null)
+                foreach (var node in SourceViewerHost.TreeNodes)
                 {
-                    foreach (var node in SourceViewerHost.TreeNodes)
-                    {
-                        await TreeItemViewModel.Save(node.Value.ViewModel, ProjectsFolder);
-                    }
+                    await TreeItemViewModel.Save(node.Value.ViewModel, ProjectsFolder, source.Token);
                 }
             }
-        } // 仅用于在程序关闭时保存当前所有项目到默认位置
+        } // 保存当前所有项目到默认位置
     }
 }
