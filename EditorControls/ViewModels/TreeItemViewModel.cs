@@ -208,7 +208,7 @@ namespace NotionPlay.EditorControls.ViewModels
                 var fileName = string.Join("_", itemToSave.Header.Split(invalidChars, StringSplitOptions.RemoveEmptyEntries)) + ".json";
                 var fullPath = Path.Combine(folderPath, fileName);
                 await using var fileStream = File.Create(fullPath);
-                if(token.IsCancellationRequested)
+                if (token.IsCancellationRequested)
                 {
                     return;
                 }
