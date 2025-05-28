@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="NotionPlay.EditorControls.PianoVisual"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotionPlay.EditorControls"
+             mc:Ignorable="d" 
+             Height="270" Width="390">
+    <Grid x:Name="container">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Height="10" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="1" Height="20" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="2" Height="30" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="3" Height="40" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="4" Height="50" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="5" Height="60" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="6" Height="70" VerticalAlignment="Bottom" BorderThickness="0,0,1,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+
+        <Border Grid.Column="7" Height="10" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="8" Height="20" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="9" Height="30" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="10" Height="40" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="11" Height="50" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="12" Height="60" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="13" Height="70" VerticalAlignment="Bottom" BorderThickness="0,0,1,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+
+        <Border Grid.Column="14" Height="10" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="15" Height="20" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="16" Height="30" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="17" Height="40" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="18" Height="50" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="19" Height="60" VerticalAlignment="Bottom" BorderThickness="0,0,0.5,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+        <Border Grid.Column="20" Height="70" VerticalAlignment="Bottom" BorderThickness="0,0,1,0" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=local:GameVisual},Path=Foreground}"/>
+    </Grid>
+</UserControl>
