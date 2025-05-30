@@ -73,7 +73,20 @@ namespace NotionPlay.EditorControls.ViewModels
                 {
                     MainWindow.UpdateGameVisualText(GameVisual.SVG_Stop);
                     if (CurrentIndex == SelectedSimulation.Simulations.Count - 1) CurrentIndex = 0;
+                    for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
+                    {
+                        try
+                        {
+                            if (source.Token.IsCancellationRequested) break;
+                            CurrentIndex = i;
+                            GameVisualHost?.piano.ShowFloatingKey(SelectedSimulation.Simulations[i]);
+                            await Task.Delay(SelectedSimulation.Span, source.Token);
+                        }
+                        catch
+                        {
 
+                        }
+                    }
                     MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);
                 }, source);
             }

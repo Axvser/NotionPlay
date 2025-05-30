@@ -52,37 +52,6 @@ namespace NotionPlay.EditorControls
                 }
             }
         }
-        public async Task LoadSinglePianoAsync()
-        {
-            var openFileDialog = new OpenFileDialog
-            {
-                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
-                Title = "选择钢琴",
-                Multiselect = false,
-                InitialDirectory = FileHelper.PianoFolder,
-            };
-
-            if (openFileDialog.ShowDialog() is true)
-            {
-                string filePath = openFileDialog.FileName;
-                try
-                {
-                    await using var fileStream = File.OpenRead(filePath);
-                    var viewModel = await JsonSerializer
-                        .DeserializeAsync<SimulationSequenceModel>(fileStream, jsonOptions)
-                        .ConfigureAwait(false);
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        ViewModel.SelectedSimulation = viewModel ?? SimulationSequenceModel.Empty;
-                        ViewModel.CurrentIndex = 0;
-                    });
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"⚠ {ex}");
-                }
-            }
-        }
         public void ChangeState()
         {
             if (!CanSimulate)
@@ -200,18 +169,13 @@ namespace NotionPlay.EditorControls
         }
         public void VisualPiano(object sender, RoutedEventArgs e)
         {
+            StopSimulation();
             IsPiano = !IsPiano;
         }
         private async void SelectSong(object sender, RoutedEventArgs e)
         {
-            if (IsPiano)
-            {
-                await LoadSinglePianoAsync();
-            }
-            else
-            {
-                await LoadSingleSnapshotAsync();
-            }
+            StopSimulation();
+            await LoadSingleSnapshotAsync();
         }
         public void PlusScale(object sender, RoutedEventArgs e)
         {

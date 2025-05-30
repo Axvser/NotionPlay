@@ -12,6 +12,7 @@ namespace NotionPlay.EditorControls.Models
 
         public List<VirtualKeyCode> Downs { get; set; } = []; // 原子需要按下的按键
         public List<VirtualKeyCode> Ups { get; set; } = []; // 原子需要释放的按键
+        public List<PianoGeneration> PianoValues { get; set; } = []; // 虚拟钢琴生成所需的数据
 
         public void Act()
         {

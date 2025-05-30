@@ -73,12 +73,18 @@ namespace NotionPlay.EditorControls.Models
                 foreach (var note in trackvalues)
                 {
                     int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
+                    var isKeyExsist = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
                     for (int i = 0; i < steps; i++)
                     {
-                        var isKeyExsist = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
                         if (i == 0 && isKeyExsist)
                         {
                             Simulations[atomCount + startIndex].Downs.Add(virtualKey);
+                            Simulations[atomCount + startIndex].PianoValues.Add(new()
+                            {
+                                Key = virtualKey,
+                                Span = Theory.GetSpan(note.DurationType) + (Theory.GetSpan(DurationTypes.One) - Theory.GetSpan(note.DurationType)),
+                                DurationType = note.DurationType
+                            });
                         }
                         if (i == steps - 1 && isKeyExsist)
                         {

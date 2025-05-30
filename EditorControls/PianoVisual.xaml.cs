@@ -2,6 +2,7 @@
 using NotionPlay.EditorControls.Models;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
+using NotionPlay.VisualComponents.Enums;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,14 +22,14 @@ namespace NotionPlay.EditorControls
 
         public void ShowFloatingKey(SimulationModel simulation)
         {
-            foreach (var key in simulation.Downs)
+            foreach (var value in simulation.PianoValues)
             {
-                if (key is VirtualKeyCode.NONAME) continue;
+                if (value.Key is VirtualKeyCode.NONAME) continue;
 
                 var floatingKey = _floatingKeyPool.Get();
-                var trackHeight = GetKeyHeight(unit.Duration);
+                var trackHeight = GetKeyHeight(value.DurationType);
                 floatingKey.Height = trackHeight;
-                Grid.SetColumn(floatingKey, GetKeyPosition(unit.Key));
+                Grid.SetColumn(floatingKey, GetKeyPosition(value.Key));
                 Transition.Create<PianoFloatingKey>()
                     .SetProperty(b => b.RenderTransform, [new TranslateTransform(0, 270)])
                     .SetParams((p) =>
@@ -38,7 +39,7 @@ namespace NotionPlay.EditorControls
                             floatingKey.Visibility = Visibility.Visible;
                             container.Children.Add(floatingKey);
                         };
-                        p.Duration = unit.Duration / 1000d + 1;
+                        p.Duration = value.Span / 1000d;
                         p.Completed += (s, e) =>
                         {
                             floatingKey.Recycle();
@@ -78,7 +79,17 @@ namespace NotionPlay.EditorControls
                 _ => 21,
             };
         }
-        public static double GetKeyHeight(int span) => (double)span;
+        public static double GetKeyHeight(DurationTypes durationTypes) => durationTypes switch
+        {
+            DurationTypes.SixtyFour => 3,
+            DurationTypes.ThirtyTwo => 6,
+            DurationTypes.Sixteen => 12,
+            DurationTypes.Eight => 24,
+            DurationTypes.Four => 48,
+            DurationTypes.Two => 96,
+            DurationTypes.One => 192,
+            _ =>0
+        };
 
         public partial class PianoFloatingKey : Border, IRecyclable<PianoFloatingKey>
         {
