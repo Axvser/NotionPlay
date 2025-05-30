@@ -11,7 +11,8 @@ namespace NotionPlay.EditorControls.Models
         [JsonIgnore]
         public static SimulationSequenceModel Empty { get; private set; } = new();
 
-        public string Name { get; set; } = string.Empty;
+        public int Span { get; set; } = 1000; // 原子耗时
+        public string Name { get; set; } = string.Empty; // 快照名
         public int Speed { get; set; } = 80;
         public int LeftNum { get; set; } = 4;
         public int RightNum { get; set; } = 4;
@@ -22,6 +23,7 @@ namespace NotionPlay.EditorControls.Models
         {
             var result = new SimulationSequenceModel()
             {
+                Span = Theory.GetSpan(DurationTypes.SixtyFour), // 以64分音符持续时间为一个原子耗时
                 Speed = Theory.Speed,
                 LeftNum = Theory.LeftNum,
                 RightNum = Theory.RightNum,
@@ -64,7 +66,7 @@ namespace NotionPlay.EditorControls.Models
             {
                 Simulations.Add(new SimulationModel());
             }
-
+            Simulations.Add(new SimulationModel()); // 始终确保原子可以持续足够的时长，因为它比 startIndex 多偏移一个单位
             foreach (var trackvalues in viewModel.Notes)
             {
                 var atomCount = 0;
@@ -73,13 +75,22 @@ namespace NotionPlay.EditorControls.Models
                     int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
                     for (int i = 0; i < steps; i++)
                     {
-                        Simulations[atomCount + startIndex].Span = Theory.GetSpan(DurationTypes.SixtyFour);
-
-                        if (i == 0 && KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey))
+                        var isKeyExsist = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
+                        if (i == 0 && isKeyExsist)
                         {
-                            Simulations[atomCount + startIndex].Keys.Add(virtualKey);
+                            Simulations[atomCount + startIndex].Downs.Add(virtualKey);
                         }
-
+                        if (i == steps - 1 && isKeyExsist)
+                        {
+                            if (i > 0)
+                            {
+                                Simulations[atomCount + startIndex].Ups.Add(virtualKey);
+                            }
+                            else
+                            {
+                                Simulations[atomCount + startIndex + 1].Ups.Add(virtualKey);
+                            }
+                        }
                         atomCount++;
                     }
                 }

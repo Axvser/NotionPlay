@@ -2,21 +2,9 @@
 using NotionPlay.EditorControls.Models;
 using NotionPlay.Interfaces;
 using NotionPlay.Tools;
-using NotionPlay.VisualComponents.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WindowsInput.Native;
 
 namespace NotionPlay.EditorControls
@@ -33,14 +21,14 @@ namespace NotionPlay.EditorControls
 
         public void ShowFloatingKey(SimulationModel simulation)
         {
-            foreach (var key in simulation.Keys)
+            foreach (var key in simulation.Downs)
             {
                 if (key is VirtualKeyCode.NONAME) continue;
 
                 var floatingKey = _floatingKeyPool.Get();
-                var trackHeight = GetKeyHeight(simulation.Span);
+                var trackHeight = GetKeyHeight(unit.Duration);
                 floatingKey.Height = trackHeight;
-                Grid.SetColumn(floatingKey, GetKeyPosition(key));
+                Grid.SetColumn(floatingKey, GetKeyPosition(unit.Key));
                 Transition.Create<PianoFloatingKey>()
                     .SetProperty(b => b.RenderTransform, [new TranslateTransform(0, 270)])
                     .SetParams((p) =>
@@ -50,7 +38,7 @@ namespace NotionPlay.EditorControls
                             floatingKey.Visibility = Visibility.Visible;
                             container.Children.Add(floatingKey);
                         };
-                        p.Duration = simulation.Span / 1000d +1;
+                        p.Duration = unit.Duration / 1000d + 1;
                         p.Completed += (s, e) =>
                         {
                             floatingKey.Recycle();

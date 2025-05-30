@@ -5,6 +5,7 @@ using NotionPlay.Tools;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Windows;
 
 namespace NotionPlay.EditorControls.ViewModels
 {
@@ -28,10 +29,23 @@ namespace NotionPlay.EditorControls.ViewModels
         private double progress = 0d;
         [Observable]
         private int currentIndex = 0;
+        [Observable]
+        private bool isPiano = false;
+        [Observable]
+        private Visibility infoVisibility = Visibility.Visible;
+        [Observable]
+        private Visibility pianoVisibility = Visibility.Hidden;
     }
 
     public partial class GameVisualViewModel
     {
+        partial void OnIsPianoChanged(bool oldValue, bool newValue)
+        {
+            StopSimulation();
+            CurrentIndex = 0;
+            PianoVisibility = IsPiano ? Visibility.Visible : Visibility.Hidden;
+            InfoVisibility = IsPiano ? Visibility.Hidden : Visibility.Visible;
+        }
         partial void OnCurrentIndexChanged(int oldValue, int newValue)
         {
             if (newValue == 0 || SelectedSimulation.Simulations.Count == 0) Progress = 0d;
@@ -53,36 +67,50 @@ namespace NotionPlay.EditorControls.ViewModels
         public (Func<Task>, CancellationTokenSource) GetSimulation()
         {
             var source = new CancellationTokenSource();
-            return (async () =>
+            if (IsPiano)
             {
-                MainWindow.UpdateGameVisualText(GameVisual.SVG_Stop);
-                if (CurrentIndex == SelectedSimulation.Simulations.Count - 1) CurrentIndex = 0;
-                var spans = SelectedSimulation.Simulations.Select(x => (int)(x.Span * SelectedSimulation.Scale)).ToArray();
-                for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
+                return (async () =>
                 {
-                    try
-                    {
-                        if (source.Token.IsCancellationRequested) break;
-                        CurrentIndex = i;
-                        SelectedSimulation.Simulations[i].KeyDown();
-                        await Task.Delay(spans[i]);
-                        SelectedSimulation.Simulations[i].KeyUp();
-                    }
-                    catch
-                    {
+                    MainWindow.UpdateGameVisualText(GameVisual.SVG_Stop);
+                    if (CurrentIndex == SelectedSimulation.Simulations.Count - 1) CurrentIndex = 0;
 
-                    }
-                }
-                var currentIndex = CurrentIndex;
-                var counter = 0;
-                while (currentIndex > -1 && currentIndex < SelectedSimulation.Simulations.Count && counter < 64)
+                    MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);
+                }, source);
+            }
+            else
+            {
+                return (async () =>
                 {
-                    SelectedSimulation.Simulations[currentIndex].KeyUp();
-                    currentIndex--;
-                    counter++;
-                }
-                MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);
-            }, source);
+                    MainWindow.UpdateGameVisualText(GameVisual.SVG_Stop);
+                    if (CurrentIndex == SelectedSimulation.Simulations.Count - 1) CurrentIndex = 0;
+                    var span = (int)(SelectedSimulation.Span * SelectedSimulation.Scale);
+                    for (int i = CurrentIndex; i < SelectedSimulation.Simulations.Count; i++)
+                    {
+                        try
+                        {
+                            if (source.Token.IsCancellationRequested) break;
+                            CurrentIndex = i;
+                            SelectedSimulation.Simulations[i].Act();
+                            await Task.Delay(span, source.Token);
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+
+                    // 从任何时刻终止时，向前遍历64个原子以确保所有按键均释放
+                    var currentIndex = CurrentIndex;
+                    var counter = 0;
+                    while (currentIndex > -1 && currentIndex < SelectedSimulation.Simulations.Count && counter < 64)
+                    {
+                        SelectedSimulation.Simulations[currentIndex].Release();
+                        currentIndex--;
+                        counter++;
+                    }
+                    MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);
+                }, source);
+            }
         }
     }
 

@@ -10,21 +10,42 @@ namespace NotionPlay.EditorControls.Models
         [JsonIgnore]
         public static readonly InputSimulator Simulator = new();
 
-        public List<VirtualKeyCode> Keys { get; set; } = [];
-        public int Span { get; set; } = 0;
+        public List<VirtualKeyCode> Downs { get; set; } = []; // 原子需要按下的按键
+        public List<VirtualKeyCode> Ups { get; set; } = []; // 原子需要释放的按键
 
-        public void KeyDown()
+        public void Act()
         {
-            foreach (var key in Keys)
+            if (Downs.Count > 0)
             {
-                Simulator.Keyboard.KeyDown(key);
+                foreach (var key in Downs)
+                {
+                    Simulator.Keyboard.KeyDown(key);
+                }
+            }
+            if (Ups.Count > 0)
+            {
+                foreach (var key in Ups)
+                {
+                    Simulator.Keyboard.KeyUp(key);
+                }
             }
         }
-        public void KeyUp()
+
+        public void Release()
         {
-            foreach (var key in Keys)
+            if (Downs.Count > 0)
             {
-                Simulator.Keyboard.KeyUp(key);
+                foreach (var key in Downs)
+                {
+                    Simulator.Keyboard.KeyUp(key);
+                }
+            }
+            if (Ups.Count > 0)
+            {
+                foreach (var key in Ups)
+                {
+                    Simulator.Keyboard.KeyUp(key);
+                }
             }
         }
     }

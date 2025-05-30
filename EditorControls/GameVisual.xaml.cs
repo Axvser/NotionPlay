@@ -99,7 +99,14 @@ namespace NotionPlay.EditorControls
             set { SetValue(IsPianoProperty, value); }
         }
         public static readonly DependencyProperty IsPianoProperty =
-            DependencyProperty.Register("IsPiano", typeof(bool), typeof(GameVisual), new PropertyMetadata(false));
+            DependencyProperty.Register("IsPiano", typeof(bool), typeof(GameVisual), new PropertyMetadata(false, (s, e) =>
+            {
+                if (s is GameVisual visual)
+                {
+                    visual.ViewModel.IsPiano = (bool)e.NewValue;
+                    visual.ModelControlSymbol = (bool)e.NewValue ? SVG_Piano : SVG_Auto;
+                }
+            }));
 
         public GameVisualViewModel ViewModel
         {
@@ -107,7 +114,13 @@ namespace NotionPlay.EditorControls
             set { SetValue(ViewModelProperty, value); }
         }
         public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register("ViewModel", typeof(GameVisualViewModel), typeof(GameVisual), new PropertyMetadata(GameVisualViewModel.Default));
+            DependencyProperty.Register("ViewModel", typeof(GameVisualViewModel), typeof(GameVisual), new PropertyMetadata(GameVisualViewModel.Default, (s, e) =>
+            {
+                if (s is GameVisual visual)
+                {
+                    visual.IsPiano = ((GameVisualViewModel)e.NewValue).IsPiano;
+                }
+            }));
 
         public CornerRadius CornerRadius
         {
@@ -149,23 +162,6 @@ namespace NotionPlay.EditorControls
         public static readonly DependencyProperty ForegroundProperty =
             DependencyProperty.Register("Foreground", typeof(Brush), typeof(GameVisual), new PropertyMetadata(Brushes.Black));
 
-        public Visibility InfoVisibility
-        {
-            get { return (Visibility)GetValue(InfoVisibilityProperty); }
-            set { SetValue(InfoVisibilityProperty, value); }
-        }
-        public static readonly DependencyProperty InfoVisibilityProperty =
-            DependencyProperty.Register("InfoVisibility", typeof(Visibility), typeof(GameVisual), new PropertyMetadata(Visibility.Visible));
-
-        public Visibility PianoVisibility
-        {
-            get { return (Visibility)GetValue(PianoVisibilityProperty); }
-            set { SetValue(PianoVisibilityProperty, value); }
-        }
-
-        public static readonly DependencyProperty PianoVisibilityProperty =
-            DependencyProperty.Register("PianoVisibility", typeof(Visibility), typeof(GameVisual), new PropertyMetadata(Visibility.Hidden));
-
         private static readonly JsonSerializerOptions jsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,
@@ -205,15 +201,12 @@ namespace NotionPlay.EditorControls
         public void VisualPiano(object sender, RoutedEventArgs e)
         {
             IsPiano = !IsPiano;
-            ModelControlSymbol = IsPiano ? SVG_Piano : SVG_Auto;
-            PianoVisibility = IsPiano ? Visibility.Visible : Visibility.Hidden;
-            InfoVisibility = IsPiano ? Visibility.Hidden : Visibility.Visible;
         }
         private async void SelectSong(object sender, RoutedEventArgs e)
         {
             if (IsPiano)
             {
-
+                await LoadSinglePianoAsync();
             }
             else
             {
