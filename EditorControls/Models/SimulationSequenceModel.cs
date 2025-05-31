@@ -66,7 +66,6 @@ namespace NotionPlay.EditorControls.Models
             {
                 Simulations.Add(new SimulationModel());
             }
-            Simulations.Add(new SimulationModel());
             foreach (var trackvalues in viewModel.Notes)
             {
                 var atomCount = 0;
@@ -88,14 +87,7 @@ namespace NotionPlay.EditorControls.Models
                         }
                         if (i == steps - 1 && isKeyExsist)
                         {
-                            if (i > 0)
-                            {
-                                Simulations[atomCount + startIndex].Ups.Add(virtualKey);
-                            }
-                            else
-                            {
-                                Simulations[atomCount + startIndex + 1].Ups.Add(virtualKey);
-                            }
+                            Simulations[atomCount + startIndex].Ups.Add(virtualKey);
                         }
                         atomCount++;
                     }

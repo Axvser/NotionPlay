@@ -88,7 +88,7 @@ namespace NotionPlay.EditorControls
             DurationTypes.Four => 48,
             DurationTypes.Two => 96,
             DurationTypes.One => 192,
-            _ =>0
+            _ => 0
         };
 
         public partial class PianoFloatingKey : Border, IRecyclable<PianoFloatingKey>
