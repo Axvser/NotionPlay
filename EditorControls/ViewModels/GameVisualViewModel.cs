@@ -103,9 +103,9 @@ namespace NotionPlay.EditorControls.ViewModels
                         {
                             if (source.Token.IsCancellationRequested) break;
                             CurrentIndex = i;
-                            SelectedSimulation.Simulations[i].Act();
+                            SelectedSimulation.Simulations[i].KeyUp();
+                            SelectedSimulation.Simulations[i].KeyDown();
                             await Task.Delay(span, source.Token);
-                            SelectedSimulation.Simulations[i].Release();
                         }
                         catch
                         {
@@ -113,13 +113,13 @@ namespace NotionPlay.EditorControls.ViewModels
                         }
                     }
 
-                    // 从任何时刻终止时，向前遍历64个原子以确保所有按键均释放
+                    // 从任何时刻终止时，向后遍历64个原子以确保所有按键均释放
                     var currentIndex = CurrentIndex;
                     var counter = 0;
                     while (currentIndex > -1 && currentIndex < SelectedSimulation.Simulations.Count && counter < 64)
                     {
-                        SelectedSimulation.Simulations[currentIndex].Release();
-                        currentIndex--;
+                        SelectedSimulation.Simulations[currentIndex].KeyUp();
+                        currentIndex++;
                         counter++;
                     }
                     MainWindow.UpdateGameVisualText(GameVisual.SVG_Start);

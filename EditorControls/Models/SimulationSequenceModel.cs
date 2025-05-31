@@ -62,10 +62,11 @@ namespace NotionPlay.EditorControls.Models
             var maxAtomCount = viewModel.Notes.Select(list => CalculateAtomCount(list)).Max();
             if (maxAtomCount == 0) return;
             var startIndex = Simulations.Count; // 新元素的起始位置
-            while (maxAtomCount + startIndex >= Simulations.Count)
+            for (int i = 0; i < maxAtomCount; i++)
             {
                 Simulations.Add(new SimulationModel());
             }
+            Simulations.Add(new SimulationModel());
             foreach (var trackvalues in viewModel.Notes)
             {
                 var atomCount = 0;
@@ -73,10 +74,9 @@ namespace NotionPlay.EditorControls.Models
                 {
                     int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
                     var isKeyExsist = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
-                    if (!isKeyExsist) continue;
                     for (int i = 0; i < steps; i++)
                     {
-                        if (i == 0)
+                        if (i == 0 && isKeyExsist)
                         {
                             Simulations[atomCount + startIndex].Downs.Add(virtualKey);
                             Simulations[atomCount + startIndex].PianoValues.Add(new()
@@ -86,9 +86,16 @@ namespace NotionPlay.EditorControls.Models
                                 DurationType = note.DurationType
                             });
                         }
-                        if (i == steps - 1)
+                        if (i == steps - 1 && isKeyExsist)
                         {
-                            Simulations[atomCount + startIndex].Ups.Add(virtualKey);
+                            if (i > 0)
+                            {
+                                Simulations[atomCount + startIndex].Ups.Add(virtualKey);
+                            }
+                            else
+                            {
+                                Simulations[atomCount + startIndex + 1].Ups.Add(virtualKey);
+                            }
                         }
                         atomCount++;
                     }
