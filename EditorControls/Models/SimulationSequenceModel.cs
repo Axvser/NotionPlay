@@ -66,7 +66,6 @@ namespace NotionPlay.EditorControls.Models
             {
                 Simulations.Add(new SimulationModel());
             }
-            Simulations.Add(new SimulationModel()); // 始终确保原子可以持续足够的时长，因为它比 startIndex 多偏移一个单位
             foreach (var trackvalues in viewModel.Notes)
             {
                 var atomCount = 0;
@@ -74,9 +73,10 @@ namespace NotionPlay.EditorControls.Models
                 {
                     int steps = Math.Clamp(64 / (int)note.DurationType, 1, 64);
                     var isKeyExsist = KeyValueHelper.TryGetKeyCode((note.Note, note.FrequencyLevel), out var virtualKey);
+                    if (!isKeyExsist) continue;
                     for (int i = 0; i < steps; i++)
                     {
-                        if (i == 0 && isKeyExsist)
+                        if (i == 0)
                         {
                             Simulations[atomCount + startIndex].Downs.Add(virtualKey);
                             Simulations[atomCount + startIndex].PianoValues.Add(new()
@@ -86,16 +86,9 @@ namespace NotionPlay.EditorControls.Models
                                 DurationType = note.DurationType
                             });
                         }
-                        if (i == steps - 1 && isKeyExsist)
+                        if (i == steps - 1)
                         {
-                            if (i > 0)
-                            {
-                                Simulations[atomCount + startIndex].Ups.Add(virtualKey);
-                            }
-                            else
-                            {
-                                Simulations[atomCount + startIndex + 1].Ups.Add(virtualKey);
-                            }
+                            Simulations[atomCount + startIndex].Ups.Add(virtualKey);
                         }
                         atomCount++;
                     }

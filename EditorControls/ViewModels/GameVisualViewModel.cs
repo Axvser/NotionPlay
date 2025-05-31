@@ -105,6 +105,7 @@ namespace NotionPlay.EditorControls.ViewModels
                             CurrentIndex = i;
                             SelectedSimulation.Simulations[i].Act();
                             await Task.Delay(span, source.Token);
+                            SelectedSimulation.Simulations[i].Release();
                         }
                         catch
                         {

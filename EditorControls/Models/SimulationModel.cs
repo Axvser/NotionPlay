@@ -16,37 +16,17 @@ namespace NotionPlay.EditorControls.Models
 
         public void Act()
         {
-            if (Downs.Count > 0)
+            foreach (var key in Downs)
             {
-                foreach (var key in Downs)
-                {
-                    Simulator.Keyboard.KeyDown(key);
-                }
-            }
-            if (Ups.Count > 0)
-            {
-                foreach (var key in Ups)
-                {
-                    Simulator.Keyboard.KeyUp(key);
-                }
+                Simulator.Keyboard.KeyDown(key);
             }
         }
 
         public void Release()
         {
-            if (Downs.Count > 0)
+            foreach (var key in Ups)
             {
-                foreach (var key in Downs)
-                {
-                    Simulator.Keyboard.KeyUp(key);
-                }
-            }
-            if (Ups.Count > 0)
-            {
-                foreach (var key in Ups)
-                {
-                    Simulator.Keyboard.KeyUp(key);
-                }
+                Simulator.Keyboard.KeyUp(key);
             }
         }
     }
